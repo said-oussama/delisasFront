@@ -1,0 +1,372 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+     <!-- Kitchen Sink Datatables -->
+     <section id="ngx-datatable-kitchen-sink"*ngIf="displayForm==false ; else addFormRunsheet" >
+      <core-card-snippet>
+        <h4 class="card-title">Gestion runsheet</h4>
+        <div class="row">
+          <div class="col-12 mb-50">
+            <button type="button" class="btn btn-primary ml-1" (click)="openCreateModal(addFormRunsheet)" rippleEffect>
+              <span [data-feather]="'plus'" [class]="'mr-0 mr-sm-1'"></span>Ajouter Runsheet</button
+            >
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center"
+                >Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                runsheets</label
+              >
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"
+                ><input
+                  type="search"
+                  placeholder="Recherche"
+                  class="form-control ml-25 btn-outline-primary"
+                  (keyup)="filterUpdate($event)"
+              /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable
+          [rows]="kitchenSinkRows"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [limit]="basicSelectedOption"
+        >
+          <ngx-datatable-column name="Code à barres" prop="barCode" [width]="110"> </ngx-datatable-column>
+          <ngx-datatable-column name="Nom Livreur" prop="personnel.nom" [width]="130">
+            <ng-template let-row="row" let-name="value"  ngx-datatable-cell-template>
+              {{row.livreur.nom}} {{row.livreur.prenom}}
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Date de création" prop="creationDate" [width]="150">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'short'}}
+            </ng-template>
+  
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Etat" prop="etat" [width]="150" >
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill"
+                [ngClass]="{
+                  'badge-light-primary': row.etat === 'nonCloture',
+                  'badge-light-success': row.etat == 'cloture'
+                
+                }"
+              >
+             {{value}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Prix Total" prop="totalPrix" [width]="90"></ngx-datatable-column>
+          <ngx-datatable-column name="Action" [width]="70" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                <a class="mr-1 text-warning" container="body" placement="top" (click)="getRunsheetPdf(row.id)"
+                ngbTooltip="Télécharger pdf"
+                  ><i size="18" data-feather="file"></i
+                ></a>
+                <!-- <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body" placement="top" ngbTooltip="Modifier Runsheet"
+                  ><i size="18" data-feather="edit-2"></i
+                ></a> -->
+                <a
+                  class="mr-1 text-danger"
+                  (click)="openDeleteModal(row,modalDelete)"
+                  container="body"
+                  placement="top "
+                  ngbTooltip="Supprimer Runsheet"
+                  ><i size="18" data-feather="trash-2"></i
+                ></a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+
+<ng-template #addFormRunsheet let-modal >   
+    <!-- ADD FOrm Runsheet -->
+    <section id="multiple-column-form">
+      <div class="row match-height">
+        <div class="col-12">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter Runsheet</h5>
+          </div>
+              <form #addRunsheetForm="ngForm">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label"  >Colis Code à barre</label>
+                      <input type="text" class="form-control" placeholder="Saisir code à barre colis"
+                        aria-describedby="button-addon2" 
+                        [(ngModel)]="bar_codeVar"
+                        #bar_codeVarRef="ngModel"
+                        name="bar_code"
+                        id="bar_code"
+                        (keyup)="onAddBar_code($event)"
+                        />
+                  </div>
+                  <div class="form-group form-password-toggle col-md-6">
+                    <label class="form-label" for="password">Livreur </label>
+                    <ng-select  [items]="testLivreurList" id="personnel.iduser"  name="personnel.iduser"  bindLabel="nom"  bindValue="iduser" 
+                    [(ngModel)]="personnel_idVar"
+                    placeholder="Choisir livreur"  
+                    #personnel_idVarRef="ngModel"
+                    [class.error]="addRunsheetForm.submitted && personnel_idVarRef.invalid"
+                    required
+                    >
+                    <span *ngIf="addRunsheetForm.submitted && personnel_idVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="personnel_idVarRef.errors.required"
+                        >Ce champ est obligatoire!</small 
+                      >
+                      </span>
+                      <ng-template ng-label-tmp let-item="item">
+                        <span >{{ "Livreur d'ID " + item.iduser + " : "+ item.nom  }}</span>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                          <span >{{ "Livreur d'ID " + item.iduser  + " : "+ item.nom }}</span>
+                    </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <div class="basic-table">
+                  <table class="table " *ngIf="ListColisRows">
+                    <thead>
+                      <tr>
+                        <th>Code à barres</th>
+                        <th>Nom client</th>
+                        <th>Numéro de téléphone</th>
+                        <th>Date de création</th>
+                        <th>Etat</th>
+                        <th>COD</th>
+                        <th>Supprimer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor ="let colis of ListColisRows">
+                        <td>
+                          {{colis.bar_code}}
+                        </td>
+                        <td>
+                            {{colis.nom_c}} {{colis.prenom_c}}
+                        </td>
+                        <td>
+                            {{colis.tel_c_1}}
+                        </td>
+                        <td>
+                            {{colis.date_creation | date:'short'}}
+                        </td>
+                        <td>
+                          {{colis.etat}}
+                      </td>
+                        <td>
+                            {{colis.cod}}
+                        </td>
+                        <td>
+                          <a (click)="openDeleteColisModal(colis.bar_code,modalDeleteColis)" class="btn  btn-just-icon">
+                            <i data-feather="x-circle" class="text-danger cursor-pointer" ></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>  
+                <div class="modal-footer">
+              <button id="ajouterBtn" class="btn btn-primary btn-submit float-right mr-1" 
+                (click)="onAddRunsheet(addRunsheetForm)" rippleEffect 
+                  >Ajouter</button>
+                  <button class="btn btn-outline-secondary btn-submit float-right mr-1" 
+                  (click)="modal.close('Accept click')" rippleEffect >Annuler</button>
+                </div>
+              </form>
+            
+        </div>
+      </div>
+    </section>
+  </ng-template>
+    <!-- ADD FOrm Runsheet -->
+
+     <!-- Modal update Runsheet -->
+     <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Runsheet</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+          <div class="card-body">
+            <form class="form" #editForm="ngForm">
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Colis Code à barre</label>
+                  <div class="input-group">
+                  <input  class="form-control" [(ngModel)] ="editRunsheet.code_runsheet" id="code_runsheet" name="code_runsheet"  type="number"
+                  hidden
+                  >
+                  <input type="text" class="form-control" placeholder="Ajouter colis au runsheet"
+                    aria-describedby="button-addon2" 
+                    [(ngModel)]="addBar_codeVar"
+                    #addBar_codeVarRef="ngModel"
+                    name="addbar_code"
+                    (keyup)="onUpdateRunsheetListColis($event)"
+                  />
+                </div>
+              </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label">Livreur ID</label>
+                  <ng-select [items]="testLivreurList" id="personnel.iduser"  name="personnel.iduser"  bindLabel="nom"  bindValue="iduser" 
+                  [(ngModel)]="editRunsheet.personnel.iduser"> 
+                      <ng-template ng-label-tmp let-item="item">
+                        <span >{{ "Livreur d'ID " + item.iduser + " : "+ item.nom  }}</span>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                          <span >{{ "Livreur d'ID " + item.iduser  + " : "+ item.nom }}</span>
+                    </ng-template>
+                    </ng-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <input  class="form-control" [(ngModel)] ="editRunsheet.date_creation_runsheet" id="date_creation_runsheet" name="date_creation_runsheet" hidden /> 
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <input class="form-control" [(ngModel)] ="editRunsheet.etat_debrief" id="etat_debrief" name="etat_debrief" hidden/>
+                </div>
+              </div>
+              <br>
+              <div class="basic-table">
+              <table class="table " >
+                <thead>
+                  <tr>
+                    <th>Code à barres</th>
+                    <th>Etat</th>
+                    <th>Date de création</th>
+                    <th>COD</th>
+                    <th>Retirer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor ="let colis of ListColisForUpdate">
+                    <td>
+                      {{colis.bar_code}}
+                    </td>
+                    <td>
+                        {{colis.etat }}
+                    </td>
+                    <td>
+                        {{colis.date_creation | date:'short'}}
+                    </td>
+                    <td>
+                      {{colis.cod }}
+                  </td>
+                    <td>
+                      <a (click)="openDeleteColisUpdateModal(colis.reference,modalDeleteColisUpdate)" class="btn  btn-just-icon">
+                        <i data-feather="x-circle" class="text-danger cursor-pointer" ></i>
+                      </a>
+                  </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </form>
+          </div>
+      </div>
+   <!-- <div class="row">
+        <div class="col-md-6 col-12 mb-1">
+          <div class="input-group">
+          </div>
+        </div>
+        <div class="col-md-6 col-12 mb-1">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Ajouter colis au runsheet"
+              aria-describedby="button-addon2" 
+              [(ngModel)]="addBar_codeVar"
+              #addBar_codeVarRef="ngModel"
+              (keyup)="onUpdateRunsheetListColis($event)"
+            />
+          </div>
+        </div>
+        
+      </div>-->
+      <div class="modal-footer">
+        <button type="button" id ="btnAnnulerUpdate" class="btn btn-outline-secondary" (click)="modal.close('Accept click'); onUpdateRunsheet(editRunsheet);" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateRunsheet(editRunsheet)" rippleEffect>
+          Modifier
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Runsheet-->
+    <!-- Modal delete Runsheet -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Runsheet</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce runsheet ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteRunsheet(deleteRunsheet.id)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #modalDeleteColis let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce colis ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="RemoveColisFromRunsheet2(deleteColis)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #modalDeleteColisUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce colis ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="RemoveColisFromRunsheet(deleteColisUpdate)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Runsheet -->
+
+  </div>
+</div>

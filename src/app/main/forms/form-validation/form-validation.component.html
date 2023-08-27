@@ -1,0 +1,981 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+      <!-- Statistics Card -->
+      <div class="col-xl-12 col-md-6 col-12"  >
+        <div class="card card-statistics">
+          <div class="card-header">
+            <h4 class="card-title">Statistique</h4>
+            <div class="d-flex align-items-center">
+            </div>
+          </div>
+          <div class="card-body statistics-body">
+            <div class="row">
+              <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                <div class="media">
+                  <div class="avatar bg-light-secondary mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis(undefined)"  class="btn  btn-just-icon">
+                        <i data-feather="clipboard" class="avatar-icon"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.total}}</h4>
+                    <p class="card-text font-small-3 mb-0">Tout les colis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <p></p><br>
+              <br>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                <div class="media">
+                  <div class="avatar bg-light-primary mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('cree')"  class="btn  btn-just-icon" >
+                        <i data-feather="edit"  class="avatar-icon"> </i>
+                      </a> 
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.cree}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis crées</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                <div class="media">
+                  <div class="avatar bg-light-secondary mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('enAttenteDEnlevement')"  class="btn  btn-just-icon">
+                        <img src="assets/images/icons/file-icons/att.png" alt="" width="30px" height="30px">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.enAttenteDEnlevement}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis en attente d'enlevement</p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="col-sm-6 col-xl-3 mb-2 mb-sm-0">
+                <div class="media">
+                  <div class="avatar bg-light-info mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('enStock')"  class="btn  btn-just-icon">
+                        <i data-feather="archive" class="avatar-icon"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.enStock}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis en stock</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-success mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('enCoursDeLivraison')"  class="btn  btn-just-icon">
+                      <i data-feather="truck" class="avatar-icon"></i>
+                    </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.enCoursDeLivraison}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis en cours de livraison</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          <div class="row">
+            <p></p><br>
+            <br>
+          </div>
+            <div class="row">
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-warning mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('livre')"  class="btn  btn-just-icon">
+                        <img src="assets/images/icons/file-icons/livré.png" alt="" width="40px" height="40px">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.livre}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis livrés</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-success mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('livrePaye')" class="btn  btn-just-icon">
+                        <img src="assets/images/icons/file-icons/payé.png" alt="" width="35px" height="35px">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.livrePaye}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis livrés et payés</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-warning mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('planificationRetour')"  class="btn  btn-just-icon">
+                        <i data-feather="rotate-cw" class="avatar-icon"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.planificationRetour}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis planifiés retour</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-danger mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('retourne')"   class="btn  btn-just-icon">
+                      <i data-feather="refresh-cw" class="avatar-icon"></i>
+                    </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.retourne}}</h4>
+                    <p class="card-text font-small-3 mb-0">Colis retournés </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <p></p><br>
+              <br>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-warning mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('enCoursDeTransfert')"  class="btn  btn-just-icon">
+                      <i data-feather="truck" class="avatar-icon"></i>
+                    </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.enCoursDeTransfert}}</h4>
+                    <p class="card-text font-small-3 mb-0">En Cours De Transfert</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <div class="media">
+                  <div class="avatar bg-light-success mr-2">
+                    <div class="avatar-content">
+                      <a  (click)="filterColis('retourEchange')" class="btn  btn-just-icon">
+                        <i data-feather="refresh-cw" class="avatar-icon"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{totalstate.retourEchange}}</h4>
+                    <p class="card-text font-small-3 mb-0">Retour Echange</p>
+                  </div>
+                </div>
+              </div>
+          
+        
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Statistics Card -->
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink" *ngIf="displayForm==false">
+      <core-card-snippet >
+        <h4 class="card-title">Gestion des colis</h4>
+        <div class="row">
+          <div class="col-12 mb-50">
+            <button type="button" class="btn btn-primary ml-1" (click)="openCreateModal(modalCreate)" rippleEffect>
+              <span [data-feather]="'plus'" [class]="'mr-0 mr-sm-1'"></span>Ajouter Colis</button
+            >
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center"
+                >Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                colis</label
+              >
+            </div>
+          </div>
+         
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"
+                ><input
+                  type="search"
+                  placeholder="Recherche"
+                  class="form-control ml-25 btn-outline-primary"
+                  (keyup)="filterUpdate($event)"
+
+              /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable
+          [rows]="kitchenSinkRows"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [selectionType]="SelectionType.checkbox"
+          [limit]="basicSelectedOption"
+          let row
+        >
+          <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="170"></ngx-datatable-column>
+          <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.nom_c}} {{ row.prenom_c}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
+          <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'short'}}
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="Etat" prop="etat" [width]="'auto'" [minWidth]="150" >
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill badge-light-success"
+                [ngClass]="{
+                  'badge-light-primary': row.etat === 'cree',
+                  'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
+                  'badge-light-warning': row.etat === 'livre',
+                  'badge-light-secondary': row.etat === 'livrePaye',
+                  'badge-light-dark': row.etat === 'planificationRetour' || row.etat === 'enCoursDeTransfert',
+                  'badge-light-danger': row.etat === 'retourne',
+                  'badge-light-info': row.etat === 'enAttenteDEnlevement' || row.etat === 'retourEchange'
+                }"
+              >
+             {{ value }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+          <ngx-datatable-column name="Adresse Livraison" prop="adresse" [width]="'auto'" [minWidth]="300"></ngx-datatable-column>
+          <ngx-datatable-column name="Action" [width]="80" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                <!-- <a class="mr-1 text-secondary" (click)="openHistory(row.reference, modalHistorique)" container="body" placement="top" ngbTooltip="Historique"
+                ><i size="18" data-feather="clipboard"></i
+              ></a> -->
+                <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body" placement="top" ngbTooltip="Modifier Colis"
+                  ><i size="18" data-feather="edit-2"></i
+                ></a>
+                <a
+                  class="cursor-pointer text-danger"
+                  (click)="openDeleteModal(row,modalDelete)"
+                  container="body"
+                  placement="top "
+                  ngbTooltip="Supprimer Colis"
+                  ><i size="18" data-feather="trash-2"></i
+                ></a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+    <!-- ADD form colis -->
+   
+       <!-- Horizontal Wizard -->
+  
+    <!--/ Horizontal Wizard -->
+    <ng-template #modalCreate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter un colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <section id="horizontal-wizard-id" class="horizontal-wizard">
+          <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+            <div class="bs-stepper-header">
+              <div class="step" data-target="#account-details">
+                <button class="step-trigger">
+                  <span class="bs-stepper-box">1</span>
+                  <span class="bs-stepper-label">
+                    
+                    <span class="bs-stepper-title">Information Colis</span>
+                    <span class="bs-stepper-subtitle">Ajouter les informations du colis</span>
+                  </span>
+                </button>
+              </div>
+              <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+              <div class="step" data-target="#social-links">
+                <button class="step-trigger">
+                  <span class="bs-stepper-box">2</span>
+                  <span class="bs-stepper-label">
+                    <span class="bs-stepper-title">Information Client</span>
+                    <span class="bs-stepper-subtitle">Ajouter les information du client</span>
+                    
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="bs-stepper-content">
+              <form (ngSubmit)="(HWForm.form.valid)" #HWForm="ngForm">
+                <div id="account-details" class="content">
+                  <form form #accountDetailsForm="ngForm">
+                    <div class="content-header">
+                      <h5 class="mb-0">Information Colis</h5>
+                      <small class="text-muted">Saisir les informations du colis.</small>
+                    </div>
+                    <div class="row">
+                     <div *ngIf="isAdmin" class="form-group col-md-6">
+                        <label class="form-label"  >Fournisseur</label>
+                        <ng-select [items]="listFournisseur" name="fournisseur" bindLabel="nom_f"  bindValue="iduser" 
+                        [(ngModel)]="fournisseurVar"
+                          placeholder="Choisir fournisseur"  
+                          #fournisseurVarRef="ngModel"
+                          [class.error]="accountDetailsForm.submitted && fournisseurVarRef.invalid"
+                          required > 
+                          <ng-template ng-label-tmp let-item="item">
+                            <span >{{ "Fournisseur d'ID " + item.iduser + " : "+ item.nom_f + ' ' + item.prenom_f }}</span>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                              <span >{{ "Fournisseur d'ID " + item.iduser  + " : "+ item.nom_f + ' ' + item.prenom_f }}</span>
+                        </ng-template>
+                        </ng-select>
+                        <span *ngIf="accountDetailsForm.submitted && fournisseurVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="fournisseurVarRef.errors.required"
+                            >Ce champ est obligatoire!</small
+                          >
+                        </span>
+                      </div>
+                      </div>
+                      <div class ="row">
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label for="basicSelect">Service </label>
+                            <ng-select [items]="services" name="service" bindLabel="viewValue"  bindValue="value" [(ngModel)]="serviceVar"
+                            placeholder="Choisir service"  
+                            #serviceVarRef="ngModel"
+                            [class.error]="accountDetailsForm.submitted && serviceVarRef.invalid"
+                            required >
+                          </ng-select>
+                          <span *ngIf="accountDetailsForm.submitted && serviceVarRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="serviceVarRef.errors.required"
+                              >Ce champ est obligatoire!</small
+                            >
+                          </span>
+                        </div>
+                        <div *ngIf="serviceVar === 'echange'" class="form-group form-password-toggle col-md-3">
+
+                          <label class="form-label" >code à barre ancien colis</label>
+                          <input class="form-control" id="barCodeAncienColis" name="barCodeAncienColis" placeholder="Saisir barcode Ancien colis" type="number"
+                          [(ngModel)]="barCodeAncienColis"
+                          #barCodeAncienColisRef="ngModel" 
+                          [required]="serviceVar === 'echange'"
+                          [class.error]="!barCodeAncienColisRef.valid && accountDetailsForm.submitted"
+                          /> 
+                          <span *ngIf="accountDetailsForm.submitted && barCodeAncienColisRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="barCodeAncienColisRef.errors.required"
+                              >Ce champ est obligatoire!</small
+                            >
+                          </span>
+                          </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label" >COD</label>
+                          <input class="form-control" id="cod" name="cod" placeholder="Saisir COD" type="number"
+                          [(ngModel)]="codVar"
+                          #codVarRef="ngModel" 
+                          required  
+                          [class.error]="!codVarRef.valid && accountDetailsForm.submitted"
+                          /> 
+                          <span *ngIf="accountDetailsForm.submitted && codVarRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="codVarRef.errors.required"
+                              >Ce champ est obligatoire!</small
+                            >
+                          </span>
+                          <input type="text" class="form-control" id="reference" name="reference" placeholder="Saisir COD" type="number"
+                          [(ngModel)]="referenceVar"
+                          #referenceVarRef="ngModel" hidden
+                          /> 
+                          <input type="text" class="form-control" id="fournisseur.id" name="fournisseur.id" placeholder="Saisir COD" type="number"
+                          [(ngModel)]="fournisseur_idVar"
+                          #fournisseur_idVarRef="ngModel" hidden
+                          /> 
+                    </div>
+                    <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label" >Mode de paiement</label>
+                          <ng-select [items]="mode_pay" name="mode_paiement" bindLabel="viewValue"  bindValue="value" [(ngModel)]="mode_paiementVar"
+                          placeholder="Choisir mode de paiement"  
+                          #mode_paiementVarRef="ngModel"
+                          [class.error]="!mode_paiementVarRef.valid && accountDetailsForm.submitted"
+                            required >
+                          </ng-select>
+                          <span *ngIf="accountDetailsForm.submitted && mode_paiementVarRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="mode_paiementVarRef.errors.required"
+                              >Ce champ est obligatoire!</small
+                            >
+                          </span>
+                    </div>
+                    
+                     </div>
+                    <div class="row">
+                      <div class="form-group form-password-toggle col-md-6">
+                        <label class="form-label" for="password">Désignation ( facultatif ) </label>
+                        <input type="text" class="form-control" id="designation" name="designation"placeholder="Saisir Désignation"
+                        [(ngModel)]="designationVar"
+                        pattern=[a-zA-Z0-9\s,_]{0,90}
+                        #designationVarRef="ngModel"
+                        />
+                        <span *ngIf="accountDetailsForm.submitted && designationVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="designationVarRef.errors.pattern"
+                            >Uniquement des caractères et des chiffres!</small
+                          >
+                        </span>
+                        
+                      </div>
+                      <div class="form-group form-password-toggle col-md-6">
+                        <label class="form-label" >Nombre des produits ( facultatif )</label>
+                        <input class="form-control" id="nb_p" name="nb_p" placeholder="Saisir le nombre des produits" type="number"
+                        [(ngModel)]="nb_pVar"
+                        #nb_pVarRef="ngModel"
+                        /> 
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" for="password">Longeur ( facultatif )</label>
+                        <input class="form-control" id="longeur" name="longeur" placeholder="Saisir Longeur" type="number"
+                        [(ngModel)]="longeurVar"
+                        #longeurVarRef="ngModel" />
+                      </div>
+                      <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" >Largeur ( facultatif )</label>
+                        <input  class="form-control" id="largeur" name="largeur" placeholder="Saisir Largeur" type="number" 
+                        [(ngModel)]="largeurVar"
+                        #largeurVarRef="ngModel"
+                        /> 
+                      </div>
+                      <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" for="password">Hauteur ( facultatif )</label>
+                        <input  class="form-control" id="hauteur" name="hauteur" placeholder="Saisir Hauteur" type ="number" 
+                        [(ngModel)]="hauteurVar"
+                        #hauteurVarRef="ngModel"
+                        />
+                      </div>
+                      <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" >Poids ( facultatif )</label>
+                        <input  class="form-control" id="poids" name="poids" placeholder="Saisir Poids" type ="number"
+                        [(ngModel)]="poidsVar"
+                        #poidsVarRef="ngModel"
+                        /> 
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="basicTextarea">Remarque ( facultatif )</label>
+                        <fieldset class="form-group">
+                          <textarea class="form-control" id="remarque" name="remarque" rows="3" placeholder="Saisir Remarque"
+                          [(ngModel)]="remarqueVar"
+                          #remarqueVarRef="ngModel"
+                          pattern=[a-zA-Z0-9\s,_]{0,90}
+                         ></textarea>
+                        </fieldset>
+                        <span *ngIf="accountDetailsForm.submitted && remarqueVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="remarqueVarRef.errors.pattern"
+                            >Uniquement des caractères et des chiffres!</small
+                          >
+                        </span>
+                      </div>
+                      <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" for="password">Taille ( facultatif )</label>
+                        <ng-select [items]="tailleList" name="taille" bindLabel="viewValue"  bindValue="value" [(ngModel)]="TailleVar"
+                        placeholder="Choisir Taille"  
+                        #TailleVarRef="ngModel" 
+                         >
+                        </ng-select>
+                      
+                      </div>
+                      <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" >Fragile ( facultatif )</label>
+                        
+                        <div class="custom-control custom-switch" for="fragile">
+                          <input type="checkbox" class="custom-control-input" checked id="fragile" />
+                          <label class="custom-control-label" name="fragile" [(ngModel)]="fragileVar" #fragileVarRef="ngModel"  for="fragile"></label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                    <div class="d-flex justify-content-between">
+                      <button
+                        (click)=" btnAnnulerForm ()"
+                        class="btn btn-outline-secondary btn-prev"
+                       
+                        rippleEffect
+                      >
+                        <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                        <span class="align-middle d-sm-inline-block d-none">Précédent</span>
+                      </button>
+                      <button
+                        (click)="horizontalWizardStepperNext(accountDetailsForm)"
+                        type="submit"
+                        class="btn btn-primary btn-next"
+                        rippleEffect
+                      >
+                        <span class="align-middle d-sm-inline-block d-none">Suivant</span>
+                        <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div id="social-links" class="content">
+                  <form #socialLinkForm="ngForm">
+                    <div class="content-header">
+                      <h5 class="mb-0">Information Client</h5>
+                      <small>Saisir les information du Client.</small>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="nom_c">Nom du Client</label>
+                        <input type="text" class="form-control" id ="nom_c" name="nom_c" placeholder="Saisir Nom du client"
+                        [(ngModel)]="nom_cVar"
+                        #nom_cVarRef="ngModel"
+                        pattern=[a-zA-Z\s]{0,30}
+                        [class.error]="socialLinkForm.submitted && nom_cVarRef.invalid"
+                        required
+                        />
+                        <span *ngIf="socialLinkForm.submitted && nom_cVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="nom_cVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                          <small class="form-text text-danger" *ngIf="nom_cVarRef.errors.pattern"
+                            >Ce champ doit contenir seulement des caractéres!</small 
+                          >
+                        </span>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="email">Prénom du Client</label>
+                        <input type="text" class="form-control" id="prenom_c" name ="prenom_c" placeholder="Saisir Prénom du client" 
+                        [(ngModel)]="prenom_cVar"
+                        #prenom_cVarRef="ngModel"
+                        [class.error]="socialLinkForm.submitted && prenom_cVarRef.invalid"
+                        pattern=[a-zA-Z\s]{0,30}
+                        required
+                        />
+                        <span *ngIf="socialLinkForm.submitted && prenom_cVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="prenom_cVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                          <small class="form-text text-danger" *ngIf="prenom_cVarRef.errors.pattern"
+                            >Ce champ doit contenir seulement des caractéres!</small 
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="tel_c_1">Numéro de téléphone </label>
+                        <input class="form-control" id="tel_c_1" name ="tel_c_1" placeholder="Saisir Numéro de téléphone" type="number"
+                        [class.error]="socialLinkForm.submitted && !tel_c_1VarRef.valid"
+                        [(ngModel)]="tel_c_1Var"
+                        #tel_c_1VarRef="ngModel"
+                        pattern="[2,4,5,7,9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+                        minlength="8"
+                        maxlength="8"
+                        required
+                        />
+                        <span *ngIf="socialLinkForm.submitted && tel_c_1VarRef.invalid" class="invalid-form">
+                          
+                          <small class="form-text text-danger" *ngIf="tel_c_1VarRef.errors.pattern">
+                            Numéro de téléphone est invalide !</small
+                          >
+                          <small class="form-text text-danger" *ngIf="tel_c_1VarRef.errors.required"
+                            >Ce champ est obligatoire!</small
+                          >
+                        </span>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="email">Numéro de téléphone 2 (facultatif)</label>
+                        <input type="text" class="form-control" id="tel_c_2" name ="tel_c_2" placeholder="Saisir Numéro de téléphone 2 " type="number"
+                        [(ngModel)]="tel_c_2Var"
+                        #tel_c_2VarRef="ngModel"
+                        pattern="[2,4,5,7,9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+                        minlength="8"
+                        maxlength="8"
+                        />
+                        <span *ngIf="socialLinkForm.submitted && tel_c_2VarRef.invalid" class="invalid-form">
+                          
+                          <small class="form-text text-danger" *ngIf="tel_c_2VarRef.errors.pattern">
+                            Numéro de téléphone est invalide !</small
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-4">
+                        <label class="form-label" for="username">Gouvernorat</label>
+                        <ng-select [items]="gouvernoratList" name="gouvernorat" bindLabel="viewValue"  bindValue="value" [(ngModel)]="gouvernoratVar"
+                            placeholder="Choisir gouvernorat"  
+                            #gouvernoratVarRef="ngModel" 
+                            [class.error]="socialLinkForm.submitted && gouvernoratVarRef.invalid"
+                            required >
+                            </ng-select>
+                        <span *ngIf="socialLinkForm.submitted && gouvernoratVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="gouvernoratVarRef.errors.required"
+                            >Ce champ est obligatoire!</small
+                          >
+                        </span>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="form-label" for="email">Délégation</label>
+                        <input type="text" class="form-control" id="delegation" name="delegation" placeholder="Saisir Délégation" 
+                        [(ngModel)]="delegationVar"
+                        #delegationVarRef="ngModel"
+                        /> 
+                        
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="form-label" for="email">Adresse </label>
+                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Saisir adresse" 
+                        [(ngModel)]="adresseVar"
+                        #adresseVarRef="ngModel"
+                        [class.error]="socialLinkForm.submitted && adresseVarRef.invalid"
+                        required
+                        />
+                        <span *ngIf="socialLinkForm.submitted && adresseVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="adresseVarRef.errors.required"
+                            >Ce champ est obligatoire!</small
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button
+                      id="thisbtn"
+                        type="button"
+                        (click)="horizontalWizardStepperPrevious()"
+                        class="btn btn-primary btn-prev"
+                        rippleEffect
+                      >
+                        <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                        <span class="align-middle d-sm-inline-block d-none">Précédent</span>
+                      </button>
+                      
+                      <button id="ajouterBtn" class="btn btn-primary btn-submit "   (click)="onAddColis(accountDetailsForm,socialLinkForm)" rippleEffect 
+                      
+                      >Ajouter</button>
+                      
+                    </div>
+                  </form>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section> 
+         
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" id ="btnAnnulerUpdate" class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateColis(editForm.value)" rippleEffect>
+          Modifier
+        </button>
+      </div> -->
+    </ng-template>
+     <!-- ADD form colis -->
+      <!-- Modal update Colis -->
+    <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form class="form" #editForm="ngForm"><br>
+              <div class="row">
+               <!-- <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label"  >Fournisseur</label>
+                    <ng-select [items]="listFournisseur" bindLabel="nom_f"  bindValue="iduser"
+                    [(ngModel)] ="editColis.fournisseur.iduser" id="fournisseur.iduser" name="fournisseur.iduser" > 
+                      <ng-template ng-label-tmp let-item="item">
+                        <span >{{ "Fournisseur d'ID " + item.iduser + " : "+ item.nom_f + ' ' + item.prenom_f }}</span>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                          <span >{{ "Fournisseur d'ID " + item.iduser  + " : "+ item.nom_f + ' ' + item.prenom_f }}</span>
+                    </ng-template>
+                    </ng-select>
+                  </div> -->
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" for="password">service</label>
+                    <ng-select [items]="services" bindLabel="viewValue"  bindValue="value"
+                      [(ngModel)] ="editColis.service" id="service" name="service" > 
+                      </ng-select>
+                    <input  class="form-control" [(ngModel)]="editColis.bar_code" id="bar_code" name="bar_code"  type="hidden" >
+                    <input  class="form-control" [(ngModel)]="editColis.reference" id="reference" name="reference"  type="hidden" >
+                    <input  class="form-control" [(ngModel)]="editColis.date_creation" id="date_creation" name="date_creation"  type="hidden" >
+                    <input  class="form-control" [(ngModel)]="editColis.hub" id="hub" name="hub"  type="hidden" >
+                  </div>
+                  <!--<div class="form-group form-password-toggle col-md-6">
+                    <label class="form-label"  >Etat</label>
+                      <ng-select [items]="listEtat" bindLabel="viewValue"  bindValue="value"
+                      [(ngModel)] ="editColis.etat" id="etat" name="etat" >
+                      </ng-select>
+                  </div>-->
+                </div>
+              <div class="row">
+                
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >COD</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.cod" id="cod" name="cod"  type="number"/> 
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">Mode de paiement</label>
+                  <ng-select [items]="mode_pay" name="mode_paiement" id="mode_paiement" bindLabel="viewValue"  bindValue="value"
+                        placeholder="Choisir mode de paiement"  
+                        [(ngModel)]="editColis.mode_paiement">
+                  </ng-select>
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >Nombre des produits</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.nb_p" id="nb_p" name="nb_p"  type="number"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">designation</label>
+                  <input  class="form-control" [(ngModel)]="editColis.designation" id="designation" name="designation"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Remarque</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.remarque" id="remarque" name="remarque"  type="text"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">longeur</label>
+                  <input  class="form-control" [(ngModel)]="editColis.longeur" id="longeur" name="longeur"  type="number" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >largeur</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.largeur" id="largeur" name="largeur"  type="number"/> 
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">hauteur</label>
+                  <input  class="form-control" [(ngModel)]="editColis.hauteur" id="hauteur" name="hauteur"  type="number" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >poids</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.poids" id="poids" name="poids"  type="number"/> 
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">Nom client</label>
+                  <input  class="form-control" [(ngModel)]="editColis.nom_c" id="nom_c" name="nom_c"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >Prénom client</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.prenom_c" id="prenom_c" name="prenom_c"  type="text"/> 
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">Numéro de téléphone</label>
+                  <input  class="form-control" [(ngModel)]="editColis.tel_c_1" id="tel_c_1" name="tel_c_1"  type="number" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >Numéro de téléphone 2 </label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.tel_c_2" id="tel_c_2" name="tel_c_2"  type="number"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Adresse client</label>
+                  <input  class="form-control" [(ngModel)]="editColis.adresse" id="adresse" name="adresse"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Gouvernorat client</label>
+                  <ng-select [items]="gouvernoratList" name="gouvernorat" id="gouvernorat" bindLabel="viewValue"  bindValue="value" 
+                        placeholder="Choisir gouvernorat"  
+                        [(ngModel)]  ="editColis.gouvernorat" >
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Délégation client</label>
+                  <input  class="form-control" [(ngModel)]="editColis.delegation" id="delegation" name="delegation"  type="text" >
+                </div>
+                <!--<div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Code postal client</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.code_postal" id="code_postal" name="code_postal"  type="text"/> 
+                </div>-->
+              </div>
+              
+            </form>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" id ="btnAnnulerUpdate" class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateColis(editForm.value)" rippleEffect>
+          Modifier
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Colis-->
+    <!-- Modal delete Colis -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce colis ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteColis(deleteColis.reference)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-template #modalHistorique let-modal>
+      <core-card-snippet [snippetCode]="_snippetCodeBasic">
+        <h4 class="card-title">Historique de colis {{ref}}</h4>
+        <div class="card-body" >
+          <ul class="timeline" *ngFor = "let eta of historiqueEtat"  >
+            <li class="timeline-item"  >
+              <span class="timeline-point timeline-point-indicator"
+              [ngClass]="{
+                'timeline-point-primary': listofEtat[eta.etat] === 'cree',
+                'timeline-point-success': listofEtat[eta.etat] === 'enStock' || listofEtat[eta.etat]  === 'enCoursDeLivraison',
+                'timeline-point-warning': listofEtat[eta.etat] === 'livre',
+                'timeline-point-secondary': listofEtat[eta.etat] === 'livrePaye',
+                'timeline-point-dark': listofEtat[eta.etat] === 'planificationRetour' || listofEtat[eta.etat]  === 'enCoursDeTransfert',
+                'timeline-point-danger': listofEtat[eta.etat] === 'retourne',
+                'timeline-point-info': listofEtat[eta.etat] === 'en Attente DEnlevement' || listofEtat[eta.etat] === 'retourEchange'
+              }"
+              ></span>
+              <div class="timeline-event">
+                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                  <div
+                     class="badge badge-pill badge-light-success" name="Etat" prop="etat" 
+                  
+                [ngClass]="{
+                  'badge-light-primary': listofEtat[eta.etat] === 'cree',
+                  'badge-light-success': listofEtat[eta.etat] === 'enStock' || listofEtat[eta.etat]  === 'enCoursDeLivraison',
+                  'badge-light-warning': listofEtat[eta.etat] === 'livre',
+                  'badge-light-secondary': listofEtat[eta.etat] === 'livrePaye',
+                  'badge-light-dark': listofEtat[eta.etat] === 'planificationRetour' || listofEtat[eta.etat]  === 'enCoursDeTransfert',
+                  'badge-light-danger': listofEtat[eta.etat] === 'retourne',
+                  'badge-light-info': listofEtat[eta.etat] === 'en Attente DEnlevement' || listofEtat[eta.etat] === 'retourEchange'
+                }"
+              >
+              {{ listofEtat[eta.etat] }}
+              </div>
+              
+                  <span name="Date de modification d'etat" prop="revtstmp"  >{{eta.revtstmp | date:'short'}}</span>
+                
+              </div>
+                
+              </div>
+            </li>
+           
+          </ul>
+        </div>
+      </core-card-snippet>
+    </ng-template>
+    
+
+   <!--<ng-template #modalHistorique let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Historique de colis {{ref}}</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <ngx-datatable
+          [rows]="historiqueEtat"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [limit]="basicSelectedOption"
+          let row
+        >
+         
+          <ngx-datatable-column name="Date de modification d'etat" prop="revtstmp" [width]="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <span class="timeline-event-time">
+                {{value | date:'short'}}
+              </span>
+              
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Etat" prop="etat" [width]="150" >
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <span class="timeline-point timeline-point-indicator"></span>
+
+              <div
+                class="badge badge-pill badge-light-success"
+                [ngClass]="{
+                  'badge-light-primary': listofEtat[row.etat] === 'cree',
+                  'badge-light-success': listofEtat[row.etat] == 'enStock' || listofEtat[row.etat]  === 'enCoursDeLivraison',
+                  'badge-light-warning': listofEtat[row.etat] === 'livre',
+                  'badge-light-secondary': listofEtat[row.etat] === 'livrePaye',
+                  'badge-light-dark': listofEtat[row.etat] === 'planificationRetour' || listofEtat[row.etat]  === 'enCoursDeTransfert',
+                  'badge-light-danger': listofEtat[row.etat] === 'retourne',
+                  'badge-light-info': listofEtat[row.etat] === 'enAttenteDEnlevement' || listofEtat[row.etat] === 'retourEchange'
+                }"
+              >
+             {{ listofEtat[value] }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+  
+        </ngx-datatable>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Fermer
+        </button>
+      
+      </div>
+    </ng-template>-->
+    <!-- / Modal delete Colis -->
+  </div>
+</div>

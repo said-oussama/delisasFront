@@ -1,0 +1,256 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet>
+        <h4 class="card-title">Gestion Console</h4>
+
+          <div class="row d-flex align-items-end" style="
+          justify-content: left;
+      ">
+            <div class="col-md-3 col-12" style="
+            margin-left: 50px;
+        ">
+              <div class="form-group">
+                <label for="barCode">Barcode de console</label>
+                <input (blur)="approver()" type="text" class="form-control" [(ngModel)]="barCodeConsole" name="barCodeConsole"
+                  id="barCodeConsole" placeholder="barCodeConsole" />
+              </div>
+            </div>
+
+
+
+
+          
+          </div>
+          <hr />
+          
+
+        <div class="row">
+
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center">Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                console</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"><input type="search" placeholder="Recherche"
+                  class="form-control ml-25 btn-outline-primary" (keyup)="filterUpdate($event)" /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable [rows]="listConsole" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+          [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" 
+          [scrollbarH]="true" [limit]="basicSelectedOption" let row>
+          <ngx-datatable-column name="Console Barcode" prop="barCode" [width]="150"> </ngx-datatable-column>
+          <ngx-datatable-column name="Date de création" prop="dateCreation" [width]="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'short'}}
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Etat" prop="etat" [width]="150">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div class="badge badge-pill" [ngClass]="{
+                  'badge-light-primary': row.etat === 'enAttente',
+                  'badge-light-warning': row.etat === 'approuve'
+                }">
+               {{value}}
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Départ" prop="titreHubDepart" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Arrivée" prop="titreHubArrivee" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Nom Livreur" prop="livreur" [width]="130">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row?.livreur?.nom}} {{row?.livreur?.prenom}}
+            </ng-template>
+
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Action" [width]="40" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                <a class="mr-1 text-warning" container="body" placement="top" (click)="getConsolePdf(row.barCode)"
+                ngbTooltip="Télécharger pdf"
+                  ><i size="18" data-feather="file"></i
+                ></a>
+                <a class="cursor-pointer text-danger" (click)="openDeleteModal(row,modalDelete)" container="body"
+                  placement="top " ngbTooltip="Supprimer console"><i size="18" data-feather="trash-2"></i></a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+    <!-- ADD FOrm HUB -->
+    <ng-template #approveModal let-modal>
+      <section id="multiple-column-form">
+        <div class="row match-height">
+          <div class="col-12">
+            <div class="modal-header">
+              <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter Les colis</h5>
+            </div>
+            <div class="modal-body" tabindex="0" ngbAutofocus>
+              <div class="row">
+                <div style="
+                margin-left: 4px;
+                margin-right: 10px;
+                margin-bottom: 50px;
+            " class="col-md-6 col-12">
+
+                  Nombre des colis a approuvé : {{count}}
+              </div>
+              </div>
+                <div class="row d-flex align-items-end" style="
+                justify-content: left;
+            ">
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label for="barCode">Barcode de colis</label>
+                      <input (keyup)="approverColis()" type="text" class="form-control" [(ngModel)]="barCodeColis" name="barCodeColis"
+                        id="barCodeColis" placeholder="barCodeColis" />
+                    </div>
+                  </div>
+
+               
+                </div>
+                <hr />
+              <ngx-datatable [rows]="approvedColis" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+                [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" let row>
+                <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="170"></ngx-datatable-column>
+                <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nom_c}} {{ row.prenom_c}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value | date:'short'}}
+                  </ng-template>
+
+                </ngx-datatable-column>
+                <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+               -->
+                <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+                <ngx-datatable-column name="Adresse Livraison" prop="adresse" [width]="'auto'" [minWidth]="300"></ngx-datatable-column>
+         <!-- <ngx-datatable-column name="Etat" prop="etat" [width]="150">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" [ngClass]="{
+                      'badge-light-primary': row.etat === 'cree',
+                      'badge-light-success': row.etat === 'enStock',
+                      'badge-light-success': row.etat === 'enCoursDeLivraison',
+                      'badge-light-warning': row.etat === 'livre',
+                      'badge-light-secondary': row.etat === 'livrePaye',
+                      'badge-light-dark': row.etat === 'planificationRetour',
+                      'badge-light-dark': row.etat === 'enCoursDeTransfert',
+                      'badge-light-danger': row.etat === 'retourne',
+                      'badge-light-info': row.etat === 'enAttenteDePrelevement'
+                    }">
+                      {{value}}
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column> -->
+              
+              </ngx-datatable>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btnAnnulerUpdate" class="btn btn-outline-secondary"
+                (click)="modal.close('Accept click')" rippleEffect>
+                Annuler
+              </button>
+              <button [disabled]="count != 0" type="button" class="btn btn-primary" (click)="approveConsole()"
+                rippleEffect>
+                Approuver
+              </button>
+            </div>
+            <br>
+
+            <br>
+
+          </div>
+        </div>
+      </section>
+    </ng-template>
+    <!-- Modal update HUB -->
+    <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Console</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="card-body">
+          <form class="form" #editForm="ngForm">
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Départ</label>
+                <input class="form-control" [(ngModel)]="editHub.titreHubDepart" id="depart" name="depart" type="text" />
+              </div>
+              <!--  <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Gouvernorat Hub</label>
+                <ng-select [items]="selectMulti"  ngModel ="{{editHub.gouvernorat}}" id="gouvernorat" name="gouvernorat" > </ng-select>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Arrivée </label>
+                <input class="form-control" [(ngModel)]="editHub.titreHubArrivee" id="arrivee" name="arrivee"
+                  type="text" />
+
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Livreur</label>
+                <ng-select [items]="selectMulti" [multiple]="false" id="personnel.iduser" name="personnel.iduser"
+                  bindLabel="nom" bindValue="iduser" [closeOnSelect]="true" [searchable]="false">
+                </ng-select>
+
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerUpdate" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateConsole(editHub)" rippleEffect>
+          Approuver
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Personnel-->
+    <!-- Modal delete Personnel -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer hub</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer cette console ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteHub(deleteHub.id_console)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Personnel -->

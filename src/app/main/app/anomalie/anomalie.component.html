@@ -1,0 +1,232 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet>
+        <h4 class="card-title">Gestion Anomalie</h4>
+        <div class="row">
+          <div class="col-12 mb-50">
+            <button type="button" class="btn btn-primary ml-1" (click)="openCreateModal(addFormAnomalie)"
+              rippleEffect>
+              <span [data-feather]="'plus'" [class]="'mr-0 mr-sm-1'"></span>Ajouter Anomalie</button>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center">Show
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                entries</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"><input type="Recherche" placeholder="Search"
+                  class="form-control ml-25 btn-outline-primary" (keyup)="filterUpdate($event)" /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable [rows]="kitchenSinkRows" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+          [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+          [limit]="basicSelectedOption">
+          <ngx-datatable-column name="Anomalie ID" prop="id" [width]="110"> </ngx-datatable-column>
+         
+        
+          <ngx-datatable-column name="Acronyme" prop="acronyme" [width]="160"></ngx-datatable-column>
+          <ngx-datatable-column name="Designation" prop="designation" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="Nombre des tentatives" prop="nbrTentative" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="Type" prop="type" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="Action" [width]="40" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                
+                <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body"
+                  placement="top" ngbTooltip="Modifier Fournisseur"><i size="18" data-feather="edit-2"></i></a>
+                <a class="cursor-pointer text-danger" (click)="openDeleteModal(row,modalDelete)" container="body"
+                  placement="top " ngbTooltip="Supprimer Fournisseur"><i size="18" data-feather="trash-2"></i></a>
+              
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+    <div class="modal-size-lg d-inline-block">
+      <!-- Modal update Fournisseur -->
+      <ng-template #modalUpdate let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Anomalie</h5>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+         
+          <hr size="0.05" width="100%" style="opacity:0.1" color="black">
+          <form class="form" #editForm="ngForm">
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Acronyme</label>
+                <input class="form-control" [(ngModel)]="editAnomalie.acronyme" id="acronyme"
+                  name="acronyme" type="text" />
+
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Designation</label>
+                <input type="text" class="form-control" id="designation" name="designation"
+                [(ngModel)]="editAnomalie.designation" #designationVarRef="ngModel" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="nbrTentative">Nombre des tentatives</label>
+                <input class="form-control"   [(ngModel)]="editAnomalie.nbrTentative" id="nbrTentative" name="nbrTentative" type="number" />
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Type</label>
+              
+                  <ng-select [items]="typesList" name="type" bindLabel="viewValue"  bindValue="value" 
+                  placeholder="Choisir type d'anomalie"  
+                  [(ngModel)]="editAnomalie.type"
+                  #typeVarRef="ngModel"
+                  required >
+                  </ng-select>
+              </div>
+            
+            </div>
+         
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnAnnulerUpdate" class="btn btn-outline-secondary"
+            (click)="modal.close('Accept click')" rippleEffect>
+            Annuler
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onUpdateAnomalie(editForm.value)" rippleEffect>
+            Modifier
+          </button>
+        </div>
+      </ng-template>
+      <!-- / Modal update Fournisseur-->
+    </div>
+
+    <!-- Modal delete Fournisseur -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Anomalie</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer cette anomalie ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteAnomalie(deleteAnomalie.id)"
+          rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #addFormAnomalie let-modal>
+      <section id="multiple-column-form">
+        <div class="row match-height">
+          <div class="col-12">
+              <div class="modal-header">
+                <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter Anomalie</h5>
+              </div>
+              <div class="modal-body" tabindex="0" ngbAutofocus>
+                <form #addAnomalieForm="ngForm">
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Acronyme</label>
+                      <input type="text" class="form-control" id="acronyme" name ="acronyme" placeholder="Saisir l'acronyme d'anomalie"
+                      [(ngModel)]="acronymeVar"
+                      #acronymeRef="ngModel"
+                      [class.error]="addAnomalieForm.submitted && acronymeRef.invalid"
+                      required
+                      />
+                      <span *ngIf="addAnomalieForm.submitted && acronymeRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="acronymeRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                     
+                      </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Designation</label>
+                      <input type="text" class="form-control" id="designation" name ="designation" placeholder="Saisir la designation d'anomalie"
+                      [(ngModel)]="designationVar"
+                      #designationVarRef="ngModel"
+                      pattern=[a-zA-Z\s]{0,30}
+                      [class.error]="addAnomalieForm.submitted && designationVarRef.invalid"
+                      required
+                      />
+                      <span *ngIf="addAnomalieForm.submitted && designationVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="designationVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                       
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Nombre des tentatives</label>
+                      <input type="number" class="form-control" id="nbrTentative" name ="nbrTentative" placeholder="Saisir la nombre des tentatives d'anomalie"
+                      [(ngModel)]="nbrTentativeVar"
+                      #nbrTentativeVarRef="ngModel"
+                      [class.error]="addAnomalieForm.submitted && nbrTentativeVarRef.invalid"
+                      required
+                      />
+                      <span *ngIf="addAnomalieForm.submitted && nbrTentativeVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="nbrTentativeVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                       
+                      </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Type</label>
+                      <ng-select [items]="typesList" name="type" bindLabel="viewValue"  bindValue="value" 
+                      placeholder="Choisir type d'anomalie"  
+                      [(ngModel)]="typeVar"
+                      #typeVarRef="ngModel"
+                      required >
+                      </ng-select>
+                      <span *ngIf="addAnomalieForm.submitted && typeVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="typeVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                       
+                      </span>
+                    </div>
+                  </div>
+               
+                  <div class="modal-footer">
+                  <button id="ajouterBtn" class="btn btn-primary btn-submit float-right mr-1"  [disabled]="disabledButton"
+                  (click)="onAddAnomalie(addAnomalieForm)" rippleEffect ><i class="fa fa-spinner fa-spin" [hidden]="!disabledButton"></i>Ajouter</button>
+                  <button class="btn btn-outline-secondary btn-submit float-right mr-1" 
+                  (click)="modal.close('Accept click')" rippleEffect >Annuler</button>
+                </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+    <!-- / Modal delete Fournisseur -->
+
+    <!-- add fournisseur form ------------------------------------------------------------------------------->
+  
+  
+    <!-- add fournisseur form ------------------------------------------------------------------------------->
+
+  </div>
+</div>

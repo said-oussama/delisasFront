@@ -1,0 +1,94 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet > 
+        <h4 class="card-title">Liste retour</h4>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center"
+                >Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                colis</label
+              >
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"
+                ><input
+                  type="search"
+                  placeholder="Recherche"
+                  class="form-control ml-25 btn-outline-primary"
+                  (keyup)="filterUpdate($event)"
+              /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable
+          [rows]="kitchenSinkRows1"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [limit]="basicSelectedOption"
+        >
+          <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="170"></ngx-datatable-column>
+          <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.nom_c}} {{ row.prenom_c}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
+          <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'short'}}
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+      <!--    <ngx-datatable-column name="Etat" prop="etat" [width]="150" >
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill"
+                [ngClass]="{
+                  'badge-light-primary': row.etat === 'Crée',
+                  'badge-light-info': row.etat === 'En stock',
+                  'badge-light-success': row.etat === 'En cours de livraison',
+                  'badge-light-warning': row.etat === 'Livré',
+                  'badge-light-secondary': row.etat === 'Livré payé',
+                  'badge-light-dark': row.etat === 'Planifié retour',
+                  'badge-light-danger': row.etat === 'Retourné'
+                }"
+              >
+                {{value}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column> -->
+          <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+          <ngx-datatable-column name="Suivi" [width]="80" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+              <div class="d-flex align-items-center">
+                <a (click)="modalOpenVC(modalVC,row.reference)" class="btn  btn-just-icon" ngbTooltip="Suivi colis">
+                <i data-feather="map-pin" class="text-danger cursor-pointer" ></i>
+                </a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+     </core-card-snippet> 
+    </section>
+  </div>
+</div>

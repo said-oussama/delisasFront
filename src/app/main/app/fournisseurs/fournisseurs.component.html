@@ -1,0 +1,740 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet>
+        <h4 class="card-title">Gestion fournisseurs</h4>
+        <div class="row">
+          <div class="col-12 mb-50">
+            <button type="button" class="btn btn-primary ml-1" (click)="openCreateModal(addFormFournisseur)"
+              rippleEffect>
+              <span [data-feather]="'plus'" [class]="'mr-0 mr-sm-1'"></span>Ajouter Fournisseur</button>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center">Show
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                entries</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"><input type="Recherche" placeholder="Search"
+                  class="form-control ml-25 btn-outline-primary" (keyup)="filterUpdate($event)" /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable [rows]="kitchenSinkRows" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+          [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+          [limit]="basicSelectedOption">
+          <ngx-datatable-column name="Nom Société" prop="nom_societe" [width]="120">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <div class="cell-line-height  ">
+                  <p class="line-height-1 mb-25">{{row.nom_societe }}</p>
+                </div>
+              </div>
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Nom Fournisseur" prop="nom_f" [width]="170">
+
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <div *ngIf="row.image ; else customAvatar">
+                  <img class="rounded-circle mr-1" src="{{ apiServerUrl+'/logoFournisseur/'+row?.iduser}}" height="32"
+                    width="32" />
+                </div>
+                <ng-template class="avatar mr-1 ml-0 bg-light-warning" #customAvatar>
+                  <div class="avatar mr-1 ml-0 bg-light-warning">
+                    <div class="avatar-content">{{row.nom_f |initials }}{{ row.prenom_f | initials}}</div>
+                  </div>
+                </ng-template>
+                <div class="cell-line-height  ">
+                  <p class="line-height-1 mb-25">{{row.nom_f }} {{ row.prenom_f}}</p>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <!-- <ngx-datatable-column name="Utilisateur actif" prop="isDeleted" [width]="120">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div>
+                {{booleanConnect[value]}}
+              </div>
+            </ng-template>  
+          </ngx-datatable-column> -->
+          <ngx-datatable-column name="Numéro de téléphone" prop="tel" [width]="160"></ngx-datatable-column>
+          <ngx-datatable-column name="Numéro CIN" prop="cin" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="Gouvernorat Société" prop="gouvernorat_societe" [width]="160"></ngx-datatable-column>
+
+          <ngx-datatable-column name="Action" [width]="40" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                <a class="mr-1 text-secondary" routerLink="/fournisseurs/fournisseur-view/{{ row.iduser }}"
+                container="body"
+                placement="top " ngbTooltip="Detail Fournisseur"><i size="18" data-feather="eye"></i></a>
+                <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body"
+                  placement="top" ngbTooltip="Modifier Fournisseur"><i size="18" data-feather="edit-2"></i></a>
+                <a class="cursor-pointer text-danger" (click)="openDeleteModal(row,modalDelete)" container="body"
+                  placement="top " ngbTooltip="Supprimer Fournisseur"><i size="18" data-feather="trash-2"></i></a>
+              
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+    <div class="modal-size-lg d-inline-block">
+      <!-- Modal update Fournisseur -->
+      <ng-template #modalUpdate let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Fournisseur</h5>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+          <div class="media">
+            <a href="javascript:void(0);" class="mr-25">
+              <img src="{{ apiServerUrl+'/logoFournisseur/'+editFournisseur?.iduser}}" class="rounded mr-50"
+                *ngIf="editFournisseur?.image ; else noPhoto" height="76" width="80" />
+            </a>
+            <ng-template #noPhoto>
+              <a href="javascript:void(0);" class="mr-25">
+                <div class="avatar bg-light-primary avatar-xl rounded mr-50">
+                  <div class="avatar-content">{{editFournisseur.nom_f | initials }}{{ editFournisseur.prenom_f |
+                    initials}}</div>
+                </div>
+              </a>
+            </ng-template>
+            <!-- upload and reset button -->
+            <div class="media-body mt-75 ml-1">
+              <br><br>
+              <button class="btn btn-sm btn-outline-secondary float-right mr-1 mb-75" rippleEffect>Supprimer</button>
+
+              <button (click)="file.click()" for="account-upload"
+                class="btn btn-sm btn-primary mb-75 float-right mr-1 mr-75" rippleEffect>
+                Importer une photo
+              </button>
+              <input type="file" #file accept="image/*" id="account-upload" hidden accept="image/*"
+                (change)="uploadImage($event)" />
+
+            </div>
+
+            <!--/ upload and reset button -->
+          </div>
+          <hr size="0.05" width="100%" style="opacity:0.1" color="black">
+          <form class="form" #editForm="ngForm">
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Nom société</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.nom_societe" id="nom_societe"
+                  name="nom_societe" type="text" />
+                <input class="form-control" [(ngModel)]="editFournisseur.iduser" id="iduser" name="iduser" hidden />
+                <input class="form-control" [(ngModel)]="editFournisseur.image" id="logo" name="logo" type="hidden" />
+
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Date Fin contrat</label>
+                <input type="date" class="form-control" id="date_fin_contrat" name="date_fin_contrat" min=""
+                [(ngModel)]="editFournisseur.date_fin_contrat" #date_fin_contratVarRef="ngModel" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label" for="password">Nom Fournisseur</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.nom_f" id="nom_f" name="nom_f" type="text" />
+              </div>
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label" for="password">Prénom Fournisseur</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.prenom_f" id="prenom_f" name="prenom_f"
+                  type="text" />
+              </div>
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label">Numéro CIN</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.cin" id="cin" name="cin" type="number" />
+              </div>
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label">Numéro de téléphone</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.tel" id="tel" name="tel" type="number" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">E-mail Fournisseur</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.email" id="email" name="email"
+                  type="text" />
+              </div>
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label" for="password">Gouvernorat société</label>
+                <ng-select [items]="gouvernoratList" name="gouvernorat_societe" id="gouvernorat_societe"
+                  bindLabel="viewValue" bindValue="value" placeholder="Choisir gouvernorat"
+                  [(ngModel)]="editFournisseur.gouvernorat_societe">
+                </ng-select>
+              </div>
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label">Délégation société</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.delegation_societe" (ngModelChange)="update()"
+                  id="delegation_societe" name="delegation_societe" type="text" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Adresse société</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.adresse_societe" id="adresse_societe"
+                  name="adresse_societe" type="text" />
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Adresse livraison</label>
+                <input class="form-control" [(ngModel)]="editFournisseur.adresse_livraison" id="adresse_livraison"
+                  name="adresse_livraison" type="text" />
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Gouvernorat livraison</label>
+                <ng-select [items]="gouvernoratList" name="gouvernorat_livraison" id="gouvernorat_livraison"
+                  bindLabel="viewValue" bindValue="value" placeholder="Choisir gouvernorat"
+                  ngModel="{{editFournisseur.gouvernorat_livraison}}">
+                </ng-select>
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Délégation livraison</label>
+                <input class="form-control" ngModel="{{editFournisseur.delegation_livraison}}" id="delegation_livraison"
+                  name="delegation_livraison" type="text" />
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label" for="password">Prix livraison</label>
+                <input class="form-control" ngModel="{{editFournisseur.prix_livraison}}" id="prix_livraison"
+                  name="prix_livraison" type="text" />
+              </div>
+              <div class="form-group form-password-toggle col-md-3">
+                <label class="form-label">Prix retour</label>
+                <input class="form-control" ngModel="{{editFournisseur.prix_retour}}" id="prix_retour"
+                  name="prix_retour" type="text" />
+                <input class="form-control" ngModel="{{editFournisseur.localite_livraison}}" id="localite_livraison"
+                  name="localite_livraison" type="hidden" />
+                <input class="form-control" ngModel="{{editFournisseur.localite_livraison}}" id="localite_livraison"
+                  name="localite_livraison" type="hidden" />
+                <input class="form-control" ngModel="{{editFournisseur.isDeleted}}" id="isDeleted" name="isDeleted"
+                  type="hidden" />
+                <input class="form-control" ngModel="{{editFournisseur.societeLiv}}" id="societeLiv" name="societeLiv"
+                  type="hidden" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnAnnulerUpdate" class="btn btn-outline-secondary"
+            (click)="modal.close('Accept click')" rippleEffect>
+            Annuler
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onUpdateFournisseur(editForm.value)" rippleEffect>
+            Modifier
+          </button>
+        </div>
+      </ng-template>
+      <!-- / Modal update Fournisseur-->
+    </div>
+
+    <!-- Modal delete Fournisseur -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Fournisseur</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce fournisseur ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteFournisseur(deleteFournisseur.iduser)"
+          rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Fournisseur -->
+
+    <!-- add fournisseur form ------------------------------------------------------------------------------->
+    <ng-template #addFormFournisseur let-modal>
+
+      <section id="horizontal-wizard-id" class="horizontal-wizard">
+
+        <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+          <div class="bs-stepper-header">
+              <div class="step" data-target="#account-details">
+                <button class="step-trigger">
+                  <span class="bs-stepper-box">1</span>
+                  <span class="bs-stepper-label">
+                    <span class="bs-stepper-title">Information Fournisseur</span>
+                    <span class="bs-stepper-subtitle">Ajouter les informations du fournisseur</span>
+                  </span>
+                </button>
+              </div>
+            <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+
+
+
+
+              <div class="step" data-target="#social-links">
+                <button class="step-trigger">
+                  <span class="bs-stepper-box">2</span>
+                  <span class="bs-stepper-label">
+                    <span class="bs-stepper-title">Information société</span>
+                    <span class="bs-stepper-subtitle">Ajouter les information de la société</span>
+                  </span>
+                </button>
+              </div>
+          </div>
+          <div class="bs-stepper-content">
+            <form [formGroup]="addFormPersonal" novalidate class="tooltip-label-right">
+
+            <div id="account-details" class="content">
+
+              <div class="content-header">
+                <h5 class="mb-0">Information Fournisseur</h5>
+                <small class="text-muted">Ajouter les information du Fournisseur </small>
+              </div>
+              <div class="row">
+              <div class="form-group col-md-12">
+                <label class="form-label" for="email">Nom société </label>
+                <input type="text" class="form-control" id="nom_societe" name="nom_societe"
+                  placeholder="Saisir Nom de la société" formControlName="nom_societe"
+                  [class.error]="submitted && f.nom_societe.invalid" required />
+                <span *ngIf="submitted && f.nom_societe.invalid" class="invalid-form">
+                  <small class="form-text text-danger" *ngIf="f.nom_societe.errors.required">Ce champ est
+                    obligatoire!</small>
+                  <small class="form-text text-danger" *ngIf="f.nom_societe.errors.pattern">Ce champ doit contenir
+                    seulement des caractéres!</small>
+                </span>
+              </div>
+            </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Nom du Fournisseur</label>
+                  <input type="text" class="form-control" id="nom_f" name="nom_f"
+                    placeholder="Saisir nom du fournisseur" formControlName="nom_f"
+                    [class.error]="submitted && f.nom_f.errors" required />
+                  <span *ngIf="submitted && f.nom_f.errors" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="f.nom_f.errors.required">Ce champ est
+                      obligatoire!</small>
+                    <small class="form-text text-danger" *ngIf="f.nom_f.errors.pattern">Ce champ doit contenir
+                      seulement des caractéres!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Prénom du Fournisseur</label>
+                  <input type="text" class="form-control" id="prenom_f" name="prenom_f"
+                    placeholder="Saisir Prénom du fournisseur" formControlName="prenom_f"
+                    [class.error]="submitted && f.prenom_f.errors" required />
+                  <span *ngIf="submitted && f.prenom_f.errors" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="f.prenom_f.errors.required">Ce champ est
+                      obligatoire!</small>
+                    <small class="form-text text-danger" *ngIf="f.prenom_f.errors.pattern">Ce champ doit contenir
+                      seulement des caractéres!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Numéro CIN</label>
+                  <input type="number" class="form-control" id="cin" name="cin" placeholder="Saisir numéro CIN"
+                    formControlName="cin" [class.error]="submitted && f.cin.invalid" required />
+                  <span *ngIf="submitted && f.cin.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="f.cin.errors.required">Ce champ est
+                      obligatoire!</small>
+                    <small class="form-text text-danger" *ngIf="f.cin.errors.pattern">Numéro CIN invalid!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Date fin Contrat</label>
+                  <div class="input-group">
+                    <input type="date" class="form-control" id="date_fin_contrat" name="date_fin_contrat"
+                      formControlName="date_fin_contrat" [class.error]="submitted && f.date_fin_contrat.invalid"
+                      required />
+                  </div>
+                  <span *ngIf="submitted && f.date_fin_contrat.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="f.date_fin_contrat.errors.required">Ce champ est
+                      obligatoire!</small>
+
+                  </span>
+                  <span *ngIf="problemDate" class="invalid-form">
+                    <small class="form-text text-danger">Date invalide !</small>
+
+                  </span>
+                  <!-- <span *ngIf=" accountDetailsForm.submitted && !date_fin_contratVarRefCompare()  " class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="date_fin_contratVarRef.errors.required"
+                        >Date depassée!</small 
+                      >
+                    </span>-->
+
+                </div>
+                <!--     <div class="form-group col-md-6"> 
+                <label class="form-label" for="email">Date Fin Contrat</label>
+               <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="yyyy-mm-dd"
+                      name="date_fin_contrat"
+                      ngbDatepicker
+                      #date_fin_contratVarRef="ngbDatepicker"
+                      [(ngModel)]="date_fin_contratVar"
+                      required
+                    />
+                    
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-outline-secondary feather icon-calendar"
+                        (click)="date_fin_contratVarRef.toggle()"
+                        type="button"
+                        rippleEffect
+                      ></button>
+                    </div> 
+                  </div>
+                <div>
+                 <span *ngIf="accountDetailsForm.submitted && date_fin_contratVarRef.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="date_fin_contratVarRef.errors.required"
+                      >Ce champ est obligatoire!</small
+                    >
+                  </span> 
+                </div> 
+              </div>-->
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Adresse E-mail </label>
+                  <input type="text" class="form-control" id="email" name="email"
+                    placeholder="Saisir Adresse E-mail" formControlName="email"
+                    [class.error]="submitted && f.email.invalid" required />
+                  <span *ngIf="submitted && f.email.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="f.email.errors.required">Ce champ est
+                      obligatoire!</small>
+                    <small class="form-text text-danger" *ngIf="f.email.errors.pattern">Ce champ doit contenir
+                      seulement des caractéres!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="tel">Numéro de téléphone </label>
+                  <input type="number" class="form-control" id="tel" name="tel"
+                    placeholder="Saisir Numéro de téléphone" formControlName="tel"
+                    [class.error]="submitted && f.tel.invalid" required />
+                  <span *ngIf="submitted && f.tel.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="f.tel.errors.required">Ce champ est
+                      obligatoire!</small>
+                    <small class="form-text text-danger" *ngIf="f.tel.errors.pattern">Numéro de téléphone
+                      invalid!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <img [src]="imageURL" *ngIf="imgURL">
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <fieldset class="form-group">
+                    <label for="file-upload-single">Choisir image:</label>
+                    <div class="custom-file">
+                      <input type="file" accept="image/*" class="custom-file-input" type="file" ng2FileSelect
+                        id="file-upload-single" (change)="onSelectImage($event)" />
+                      <label class="custom-file-label">{{this.userFileName}}</label>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button (click)=" btnAnnulerForm ()" class="btn btn-outline-secondary btn-prev" rippleEffect>
+                  <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                  <span class="align-middle d-sm-inline-block d-none">Précédent</span>
+                </button>
+                <button (click)="horizontalWizardStepperNext()" type="submit" class="btn btn-primary btn-next"
+                  rippleEffect>
+                  <span class="align-middle d-sm-inline-block d-none">Suivant</span>
+                  <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                </button>
+              </div>
+
+            </div>
+          </form>
+          <form [formGroup]="addFormSociete"  novalidate class="tooltip-label-right">
+
+            <div id="social-links" class="content">
+
+              <div class="content-header">
+                <h5 class="mb-0">Information Societe</h5>
+                <small>Saisir les information de la société.</small>
+              </div>
+              <div class="row">
+
+                <div class="form-group col-md-12">
+                  <label class="form-label" for="email">Adresse société </label>
+                  <input type="text" class="form-control" id="adresse_societe" name="adresse_societe"
+                    placeholder="Saisir adresse de la société" formControlName="adresse_societe"
+                    [class.error]="submitted1 && fs.adresse_societe.invalid" required />
+                  <span *ngIf="submitted1 && fs.adresse_societe.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="fs.adresse_societe.errors.required">Ce champ est
+                      obligatoire!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <fieldset class="form-group">
+                    <label for="file-upload-single">Choisir Patente:</label>
+                    <div class="custom-file">
+                      <input type="file" accept="image/*" class="custom-file-input" type="file" ng2FileSelect
+                        id="file-upload-single" (change)="onSelectPatente($event)" />
+                      <label class="custom-file-label">{{this.userPatenteName}}</label>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Gouvernorat société </label>
+                  <ng-select [items]="gouvernoratList" name="gouvernorat_societe" bindLabel="viewValue"
+                    bindValue="value" formControlName="gouvernorat_societe"
+                    [class.error]="submitted1 && fs.gouvernorat_societe.invalid" required>
+                  </ng-select>
+                  <span *ngIf="submitted1 && fs.gouvernorat_societe.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="fs.gouvernorat_societe.errors.required">Ce champ est
+                      obligatoire!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label" for="email">Délégation Société </label>
+                  <input type="text" class="form-control" id="delegation_societe" name="delegation_societe"
+                    placeholder="Saisir délégation société" formControlName="delegation_societe" />
+                </div>
+                <!-- <div class="form-group col-md-3">
+                    <label class="form-label" for="email">Code postal Société </label>
+                    <input type="number" class="form-control" id="code_postal_societe" name="code_postal_societe" placeholder="Saisir Code postal société" 
+                    [(ngModel)]="code_postal_societeVar"
+                    #code_postal_societeVarRef="ngModel"
+                    [class.error]="socialLinkForm.submitted1 && code_postal_societeVarRef.invalid"
+                    required
+                    />
+                    <span *ngIf="socialLinkForm.submitted1 && code_postal_societeVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="code_postal_societeVarRef.errors.required"
+                        >Ce champ est obligatoire!</small
+                      >
+                    </span>
+                  </div> -->
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="email">Adresse Livraison </label>
+                  <input type="text" class="form-control" id="adresse_livraison" name="adresse_livraison"
+                    placeholder="Saisir adresse Livraison" formControlName="adresse_livraison"
+                    [class.error]="submitted1 && fs.adresse_livraison.invalid" required />
+                  <span *ngIf="submitted1 && fs.adresse_livraison.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="fs.adresse_livraison.errors.required">Ce champ est
+                      obligatoire!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label" for="email">Gouvernorat livraison </label>
+                  <ng-select [items]="gouvernoratList" name="gouvernorat_livraison" bindLabel="viewValue"
+                    bindValue="value" formControlName="gouvernorat_livraison"
+                    [class.error]="submitted1 && fs.gouvernorat_livraison.invalid" required>
+                  </ng-select>
+                  <span *ngIf="submitted1 && fs.gouvernorat_livraison.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="fs.gouvernorat_livraison.errors.required">Ce champ est
+                      obligatoire!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label" for="email">Délégation livraison </label>
+                  <input type="text" class="form-control" id="delegation_livraison" name="delegation_livraison"
+                    placeholder="Saisir délégation livraison" formControlName="delegation_livraison"
+                    [class.error]="submitted1 && fs.delegation_livraison.invalid" />
+                </div>
+              </div>
+              <div class="row">
+                <!-- <div class="form-group col-md-6">
+                    <label class="form-label" for="email">Code postal Livraison </label>
+                    <input type="number" class="form-control" id="code_postal_livraison" name="code_postal_livraison" placeholder="Saisir code postal livraison"
+                    [(ngModel)]="code_postal_livraisonVar"
+                    #code_postal_livraisonVarRef="ngModel"
+                    [class.error]="socialLinkForm.submitted1 && code_postal_livraisonVarRef.invalid"
+                    required
+                    />
+                    <span *ngIf="socialLinkForm.submitted1 && code_postal_livraisonVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="code_postal_livraisonVarRef.errors.required"
+                        >Ce champ est obligatoire!</small
+                      >
+                    </span>
+                  </div> -->
+                <div class="form-group col-md-3">
+                  <label class="form-label" for="email">Prix livraison </label>
+                  <input type="number" class="form-control" id="prix_livraison" name="prix_livraison"
+                    placeholder="Saisir prix livraison" formControlName="prix_livraison"
+                    [class.error]="submitted1 && fs.prix_livraison.invalid" required />
+                  <span *ngIf="submitted1 && fs.prix_livraison.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="fs.prix_livraison.errors.required">Ce champ est
+                      obligatoire!</small>
+                  </span>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label" for="email">Prix retour </label>
+                  <input type="number" class="form-control" id="prix_retour" name="prix_retour"
+                    placeholder="Saisir prix retour" formControlName="prix_retour"
+                    [class.error]="submitted1 && fs.prix_retour.invalid" required />
+                  <span *ngIf="submitted1 && fs.prix_retour.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="fs.prix_retour.errors.required">Ce champ est
+                      obligatoire!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button id="thisbtn" type="button" (click)="horizontalWizardStepperPrevious()"
+                  class="btn btn-primary btn-prev" rippleEffect>
+                  <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                  <span class="align-middle d-sm-inline-block d-none">Précédent</span>
+                </button>
+
+                <button id="ajouterBtn" class="btn btn-primary btn-submit " (click)="onSubmit()" rippleEffect> <i
+                    class="fa fa-spinner fa-spin" [hidden]="!disabledButton"></i>Ajouter</button>
+              </div>
+
+            </div>
+            </form>
+
+          </div>
+        </div>
+
+      </section>
+    </ng-template>
+    <ng-template #modalView let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Details de fournisseur</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+
+      <div class="media">
+        <a href="javascript:void(0);" class="mr-25">
+          <img src="{{ apiServerUrl+'/logoFournisseur/'+viewFournisseur?.iduser}}" class="rounded mr-50"
+            *ngIf="viewFournisseur?.image ; else noPhoto" height="76" width="80" />
+        </a>
+        <ng-template #noPhoto>
+          <a href="javascript:void(0);" class="mr-25">
+            <div class="avatar bg-light-primary avatar-xl rounded mr-50">
+              <div class="avatar-content">{{viewFournisseur.nom_f | initials }}{{ viewFournisseur.prenom_f |
+                initials}}</div>
+            </div>
+          </a>
+        </ng-template>
+       
+      </div>
+      <hr class="invoice-spacing" />
+
+      <div class="card-body invoice-padding pt-0">
+        <div class="row invoice-spacing">
+          <div class="col-xl-5 p-0">
+            <h6 class="mb-2">Information Fournisseur:</h6>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="pr-1">Nom:</td>
+                  <td>
+                    <span class="font-weight-bold">{{ viewFournisseur?.nom_f }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Prénom:</td>
+                  <span class="font-weight-bold">{{ viewFournisseur?.prenom_f }}</span>
+                </tr>
+                <tr>
+                  <td class="pr-1">Numéro CIN:</td>
+                  <td>{{ viewFournisseur?.cin }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Date fin de contrat:</td>
+                  <td>{{ viewFournisseur?.date_fin_contrat }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Numéro de telephone:</td>
+                  <td>{{ viewFournisseur?.tel }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Email:</td>
+                  <td>{{ viewFournisseur?.email }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-xl-2">
+
+          </div>
+          <div class="col-xl-5 p-0 mt-xl-0 mt-2">
+            <h6 class="mb-2">Information Societe:</h6>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="pr-1">Nom de societe:</td>
+                  <td>
+                    <span class="font-weight-bold">{{ viewFournisseur.nom_societe }}</span>
+                  </td>
+                </tr>
+          
+                <tr>
+                  <td class="pr-1">Gouvernorat de societé:</td>
+                  <td>{{ viewFournisseur?.gouvernorat_societe }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Adresse de societé:</td>
+                  <td>{{ viewFournisseur?.adresse_societe }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Delegation de societé:</td>
+                  <td>{{ viewFournisseur?.delegation_societe }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Gouvernorat de livraison:</td>
+                  <td>{{ viewFournisseur?.delegation_livraison }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Adresse de livraison:</td>
+                  <td>{{ viewFournisseur?.adresse_livraison }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Delegation de livraison:</td>
+                  <td>{{ viewFournisseur?.delegation_livraison }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Prix de livraison:</td>
+                  <td>{{ viewFournisseur?.prix_livraison }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Prix de retour:</td>
+                  <td>{{ viewFournisseur?.prix_retour }}</td>
+                </tr>
+                <tr>
+                  <td class="pr-1">Patente:</td>
+                  <td> <a class="mr-1 text-primary" (click)="downloadPatente(viewFournisseur?.iduser)" container="body"
+                    placement="top" ngbTooltip="Télecharget patente"><i size="18" data-feather="download"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+    </ng-template>
+    <!-- add fournisseur form ------------------------------------------------------------------------------->
+
+  </div>
+</div>
