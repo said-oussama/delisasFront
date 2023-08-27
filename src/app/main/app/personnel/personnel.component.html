@@ -1,0 +1,612 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+   
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet>
+        <h4 class="card-title">Gestion personnel</h4>
+        <div class="row">
+          <div class="col-12 mb-50">
+            <button type="button" class="btn btn-primary ml-1" (click)="openCreateModal(addFormPersonnel)" rippleEffect>
+              <span [data-feather]="'plus'" [class]="'mr-0 mr-sm-1'"></span>Ajouter Personnel</button
+            >
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center"
+                >Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                personnel</label
+              >
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"
+                ><input
+                  type="search"
+                  placeholder="Recherche"
+                  class="form-control ml-25 btn-outline-primary"
+                  (keyup)="filterUpdate($event)"
+              /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable
+          [rows]="listPersonnel"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [limit]="basicSelectedOption"
+        >
+          <!-- <ngx-datatable-column name="Utilisateur actif" prop="canConnect" [width]="90">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div>
+                {{booleanConnect[value]}}
+              </div>
+            </ng-template>  
+          </ngx-datatable-column> -->
+          <ngx-datatable-column name="Nom personnel" prop="nom" [width]="170">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                  <div *ngIf="row?.image ; else customAvatar">
+                    <img
+                      class="rounded-circle mr-1"
+                      src="{{apiServerUrl+'/imagePersonnel/'+row.iduser}}"
+                      height="32"
+                      width="32"
+                    />
+                  </div>
+                <ng-template class="avatar mr-1 ml-0" #customAvatar>
+                 <div class="avatar mr-1 ml-0"
+                  [ngClass]="{
+                    'bg-light-info': row.role_personnel === 'magasinier',
+                    'bg-light-success': row.role_personnel === 'livreur',
+                    'bg-light-warning': row.role_personnel === 'commercial',
+                    'bg-light-danger': row.role_personnel === 'gérant'
+                  }"
+                  
+                  >
+                        <div class="avatar-content">{{row.nom |initials }}{{ row.prenom | initials}}</div>
+                    </div>
+                  </ng-template>    
+                    <div class="cell-line-height  ">
+                      <p class="line-height-1 mb-25">{{row.nom }} {{ row.prenom}}</p>
+                      <span class="text-muted font-small-2"> {{ row.role_personnel }}</span>
+                    </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Numéro de téléphone" prop="tel" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="Adresse E-email" prop="email" [width]="180"></ngx-datatable-column>
+          <ngx-datatable-column name="Role personnel" prop="role_personnel" [width]="120">
+
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill"
+                [ngClass]="{
+                  'badge-light-info': row.role_personnel === 'magasinier',
+                  'badge-light-success': row.role_personnel === 'livreur',
+                  'badge-light-warning': row.role_personnel === 'commercial',
+                  'badge-light-danger': row.role_personnel === 'gerant'
+                }"
+              >
+                {{value}}
+              </div>
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Action" [width]="40" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                <a
+                  class="mr-1"
+                  container="body"
+                  placement="top"
+                  ngbTooltip="Detail Personnel"
+                  routerLink="/personnel/personnel-view/{{ row.iduser }}"
+                  ><i size="18" data-feather="eye"></i
+                ></a>
+
+                <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body" placement="top" ngbTooltip="Modifier Personnel"
+                  ><i size="18" data-feather="edit-2"></i
+                ></a>
+                <a
+                  class="cursor-pointer text-danger"
+                  (click)="openDeleteModal(row,modalDelete)"
+                  container="body"
+                  placement="top "
+                  ngbTooltip="Supprimer Personnel"
+                  ><i size="18" data-feather="trash-2"></i
+                ></a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+   
+   
+   <!-- ADD FOrm personnel -->
+   <ng-template #addFormPersonnel let-modal>
+      <section id="multiple-column-form">
+        <div class="row match-height">
+          <div class="col-12">
+              <div class="modal-header">
+                <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter Personnel</h5>
+              </div>
+              <div class="modal-body" tabindex="0" ngbAutofocus>
+                <form #addPersonnelForm="ngForm">
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Role personnel</label>
+                      <ng-select [items]="roles" name="role_personnel" bindLabel="viewValue"  bindValue="value" 
+                      (ngModelChange)="onChangeRole($event)"
+                      placeholder="Choisir role"  
+                      [(ngModel)]="role_personnelVar"
+                      #role_personnelVarRef="ngModel"
+                      required >
+                      </ng-select>
+                      <span *ngIf="addPersonnelForm.submitted && role_personnelVarRef.invalid" class="invalid-form">
+                        
+                        <small class="form-text text-danger" *ngIf="role_personnelVarRef.errors.required"
+                          >Ce champ est obligatoire!</small
+                        >
+                      </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Nom du Personnel</label>
+                      <input type="text" class="form-control" id="nom" name ="nom" placeholder="Saisir nom du personnel"
+                      [(ngModel)]="nomVar"
+                      #nomVarRef="ngModel"
+                      pattern=[a-zA-Z\s]{0,30}
+                      [class.error]="addPersonnelForm.submitted && nomVarRef.invalid"
+                      [disabled]="isDisabled"
+                      required
+                      />
+                      <span *ngIf="addPersonnelForm.submitted && nomVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="nomVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                        <small class="form-text text-danger" *ngIf="nomVarRef.errors.pattern"
+                          >Ce champ doit contenir seulement des caractéres!</small 
+                        >
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Prénom du Personnel</label>
+                      <input type="text" class="form-control" id="prenom" name ="prenom" placeholder="Saisir Prénom du personnel" 
+                      [(ngModel)]="prenomVar"
+                      #prenomVarRef="ngModel"
+                      pattern=[a-zA-Z\s]{0,30}
+                      [class.error]="addPersonnelForm.submitted && prenomVarRef.invalid"
+                      [disabled]="isDisabled"
+                      required
+                      />
+                      <span *ngIf="addPersonnelForm.submitted && prenomVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="prenomVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                        <small class="form-text text-danger" *ngIf="prenomVarRef.errors.pattern"
+                          >Ce champ doit contenir seulement des caractéres!</small 
+                        >
+                      </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Numéro CIN</label>
+                      <input type="number" class="form-control" id="cin" name ="cin" placeholder="Saisir numéro cin"
+                      [(ngModel)]="cinVar"
+                      #cinVarRef="ngModel"
+                      [class.error]="addPersonnelForm.submitted && cinVarRef.invalid"
+                      pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+                      [disabled]="isDisabled"
+                      required
+                      />
+                      <span *ngIf="addPersonnelForm.submitted && cinVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="cinVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                        <small class="form-text text-danger" *ngIf="cinVarRef.errors.pattern"
+                          >Numéro CIN invalid!</small 
+                        >
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Numéro de téléphone</label>
+                      <input type="number" class="form-control" id="tel" name ="tel" placeholder="Saisir numéro de téléphone" 
+                      [(ngModel)]="telVar"
+                      #telVarRef="ngModel"
+                      pattern="[2,4,5,7,9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+                      [class.error]="addPersonnelForm.submitted && telVarRef.invalid"
+                      [disabled]="isDisabled"
+                      required
+                      />
+                      <span *ngIf="addPersonnelForm.submitted && telVarRef.invalid" class="invalid-form">
+                        
+                        <small class="form-text text-danger" *ngIf="telVarRef.errors.pattern">
+                          Numéro de téléphone est invalide !</small
+                        >
+                        <small class="form-text text-danger" *ngIf="telVarRef.errors.required"
+                          >Ce champ est obligatoire!</small
+                        >
+                      </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Adresse E-email</label>
+                      <input type="text" class="form-control" id="email" name ="email" placeholder="Saisir adresse e-email"
+                      [(ngModel)]="emailVar"
+                      #emailVarRef="ngModel"
+                      [class.error]="addPersonnelForm.submitted && emailVarRef.invalid"
+                      [disabled]="isDisabled"
+                      required
+                      />
+                      <span *ngIf="addPersonnelForm.submitted && emailVarRef.invalid" class="invalid-form">
+                        
+                        <small class="form-text text-danger" *ngIf="emailVarRef.errors.required"
+                          >Ce champ est obligatoire!</small
+                        >
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <fieldset class="form-group">
+                        <label for="file-upload-single">Permis</label>
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            accept="image/*" 
+                            class="custom-file-input"
+                            type="file"
+                            ng2FileSelect
+                            id="file-upload-single"
+                            (change)="onSelectImage2($event)"
+                            [disabled]="isDisabled"
+                            [required]="isRequired"
+                          />
+                          <label class="custom-file-label">{{this.permis}}</label>
+                          <span *ngIf="addPersonnelForm.submitted && isRequired && !permis" class="invalid-form">
+                        
+                            <small class="form-text text-danger" *ngIf="isRequired && !permis"
+                              >Ce champ est obligatoire!</small
+                            >
+                          </span>
+                        </div>
+                      </fieldset>
+                      </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Matricule véhicule</label>
+                      <input type="text" class="form-control" id="matricule_vehID" name ="matricule_veh" placeholder="Saisir matricule véhicule" 
+                      [(ngModel)]="matricule_vehVar"
+                      #matricule_vehVarRef="ngModel"
+                      [class.error]="addPersonnelForm.submitted && matricule_vehVarRef.invalid" 
+                      [disabled]="isDisabled"
+                      [required]="isRequired"
+                      />
+                      <span *ngIf="addPersonnelForm.submitted && matricule_vehVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="matricule_vehVarRef.errors.required"
+                          >Ce champ est obligatoire!</small
+                        >
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <fieldset class="form-group">
+                        <label for="file-upload-single">carte grise</label>
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            accept="image/*" 
+                            class="custom-file-input"
+                            type="file"
+                            ng2FileSelect
+                            id="file-upload-single"
+                            (change)="onSelectImage1($event)"
+                            [disabled]="isDisabled"
+                            [required]="isRequired"
+                          />
+                          <label class="custom-file-label">{{this.carteGrise}}</label>
+                          <span *ngIf="addPersonnelForm.submitted && isRequired && !carteGrise" class="invalid-form">
+                        
+                            <small class="form-text text-danger" *ngIf="isRequired && !carteGrise"
+                              >Ce champ est obligatoire!</small
+                            >
+                          </span>
+                        </div>
+                      </fieldset>
+                      </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Hub</label>
+                      <ng-select [items]="listHub" name= "hub" bindLabel="titre"  bindValue="id_hub" [(ngModel)]="hubVar"
+                        #hubVarRef="ngModel"
+                        placeholder="Choisir Hub"
+                        [class.error]="addPersonnelForm.submitted && hubVarRef.invalid" 
+                        [disabled]="isDisabled"
+                        required > 
+                      </ng-select>
+                      <span *ngIf="addPersonnelForm.submitted && hubVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="hubVarRef.errors.required"
+                          >Ce champ est obligatoire!</small
+                        >
+                      </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <fieldset class="form-group">
+                        <label for="file-upload-single">Choisir image:</label>
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            accept="image/*" 
+                            class="custom-file-input"
+                            type="file"
+                            ng2FileSelect
+                            id="file-upload-single"
+                            (change)="onSelectImage($event)"
+                            [disabled]="isDisabled"
+                          />
+                          <label class="custom-file-label">{{this.userFile}}</label>
+                        </div>
+                      </fieldset>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                  <button id="ajouterBtn" class="btn btn-primary btn-submit float-right mr-1"  [disabled]="disabledButton"
+                  (click)="onAddPersonnelWithImage(addPersonnelForm)" rippleEffect ><i class="fa fa-spinner fa-spin" [hidden]="!disabledButton"></i>Ajouter</button>
+                  <button class="btn btn-outline-secondary btn-submit float-right mr-1" 
+                  (click)="modal.close('Accept click')" rippleEffect >Annuler</button>
+                </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+     <!-- Modal update Personnel -->
+     <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Personnel</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="media">
+          <a href="javascript:void(0);" class="mr-25">
+            <img src="{{ apiServerUrl+'/imagePersonnel/'+editPersonnel?.iduser}}" class="rounded mr-50" *ngIf="editPersonnel?.image ; else noPhoto" height="76" width="80" />
+          </a>
+          <ng-template #noPhoto>
+            <a href="javascript:void(0);" class="mr-25">
+              <div class="avatar  avatar-xl rounded mr-50" 
+              [ngClass]="{
+                'bg-light-info': editPersonnel?.role_personnel === 'magasinier',
+                'bg-light-success': editPersonnel?.role_personnel === 'livreur',
+                'bg-light-warning': editPersonnel?.role_personnel === 'commercial',
+                'bg-light-danger': editPersonnel?.role_personnel === 'gérant'
+              }"
+              >
+                <div class="avatar-content">{{editPersonnel?.nom | initials }}{{ editPersonnel?.prenom | initials}}</div>
+              </div>
+            </a>
+        </ng-template>
+          <!-- upload and reset button -->
+          <div class="media-body mt-75 ml-1">
+            <br><br>
+            <button class="btn btn-sm btn-outline-secondary float-right mr-1 mb-75" rippleEffect>Supprimer</button>
+            
+            <button
+              (click)="file.click()"
+              for="account-upload"
+              class="btn btn-sm btn-primary mb-75 float-right mr-1 mr-75"
+              rippleEffect
+            >
+              Importer une photo
+            </button>
+            <input
+            type="file"
+            #file
+            accept="image/*" 
+            id="account-upload"
+            hidden
+            accept="image/*"
+            (change)="uploadImage($event)"
+            />
+            
+          </div>
+          
+          <!--/ upload and reset button -->
+        </div>
+        <hr size="0.05" width="100%"  style="opacity:0.1" color="black">
+            <form class="form" #editForm="ngForm">
+              <div class="row">
+              
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Nom personnel</label>
+                  <input  class="form-control" [(ngModel)]  ="editPersonnel.nom" id="nom" name="nom"  type="text"/> 
+                </div>
+            
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Prénom Personnel</label>
+                <input class="form-control" [(ngModel)]  ="editPersonnel.prenom" id="prenom" name="prenom" />
+              </div>
+            </div>
+              <div class="row">
+               
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Numéro CIN</label>
+                  <input  class="form-control" [(ngModel)]  ="editPersonnel.cin" id="cin" name="cin"  type="number"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Numéro téléphone</label>
+                  <input class="form-control" [(ngModel)]  ="editPersonnel.tel" id="tel" name="tel" type="number" />
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Adresse E-email</label>
+                  <input  class="form-control" [(ngModel)]  ="editPersonnel.email" id="email" name="email"  type="text"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Role Personnel </label>
+                  <ng-select [items]="roles" name="role_personnel"  id="role_personnel" bindLabel="viewValue"  bindValue="value" 
+                  (ngModelChange)="onChangeRole($event)"
+                  placeholder="Choisir role"  
+                  [(ngModel)] ="editPersonnel.role_personnel" >
+                  </ng-select>
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Permis</label>
+                  <input  class="form-control" [(ngModel)]  ="editPersonnel.permis" id="permis" name="permis"  type="text"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Matricule véhicule</label>
+                  <input class="form-control" [(ngModel)]  ="editPersonnel.matricule_veh" id="matricule_veh" name="matricule_veh" />
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Carte Grise</label>
+                  <input  class="form-control" [(ngModel)] ="editPersonnel.carte_grise" id="carte_grise" name="carte_grise"  type="text"/> 
+                  <input  class="form-control" [(ngModel)] ="editPersonnel.photo" id="photo" name="photo"  type="hidden"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label"  >Hub</label>
+                  <ng-select [items]="listHub" id="hub" name="hub" bindLabel="titre"  bindValue="id_hub" 
+                  [(ngModel)] ="editPersonnel.hub.id_hub"
+                   > 
+                  </ng-select>
+                </div>
+              </div>
+            </form>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" id ="btnAnnulerUpdate" class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdatePersonnel(editForm.value)" rippleEffect>
+          Modifier
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Personnel-->
+    <!-- Modal delete Personnel -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Personnel</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce personnel ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeletePersonnel(deletePersonnel?.iduser)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Personnel -->
+
+    <ng-template #modalView let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Details de Personnel</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+
+     
+        <div class="row">
+          <div class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+            <div class="user-avatar-section">
+              <div class="d-flex justify-content-start">
+                <a href="javascript:void(0);" class="mr-25">
+                  <img src="{{ apiServerUrl+'/imagePersonnel/'+viewPersonnel?.iduser}}" class="rounded mr-50" *ngIf="viewPersonnel.image ; else noPhoto" height="76" width="80" />
+                </a>
+                <ng-template #noPhoto>
+                  <a href="javascript:void(0);" class="mr-25">
+                    <div class="avatar  avatar-xl rounded mr-50" 
+                    [ngClass]="{
+                      'bg-light-info': viewPersonnel?.role_personnel === 'magasinier',
+                      'bg-light-success': viewPersonnel?.role_personnel === 'livreur',
+                      'bg-light-warning': viewPersonnel?.role_personnel === 'commercial',
+                      'bg-light-danger': viewPersonnel?.role_personnel === 'gérant'
+                    }"
+                    >
+                      <div class="avatar-content">{{viewPersonnel?.nom | initials }}{{ viewPersonnel?.prenom | initials}}</div>
+                    </div>
+                  </a>
+              </ng-template>
+
+                <div class="d-flex flex-column ml-1">
+                  <div class="user-info mb-1">
+                    <h4 class="mb-0">{{ viewPersonnel?.nom }} {{viewPersonnel?.prenom}}</h4>
+                    <span class="card-text">{{ viewPersonnel?.email }}</span>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+ 
+          </div>
+          <div class="col-xl-6 col-lg-12 mt-2 mt-xl-0">
+            <div class="user-info-wrapper">
+              
+              <div class="d-flex flex-wrap my-50">
+                <div class="user-info-title">
+                  <i data-feather="star" class="mr-1"></i>
+                  <span class="card-text user-info-title font-weight-bold mb-0">Role</span>
+                </div>
+                <p class="card-text mb-0">{{ viewPersonnel?.role_personnel }}</p>
+              </div>
+              <div class="d-flex flex-wrap">
+                <div class="user-info-title">
+                  <i data-feather="phone" class="mr-1"></i>
+                  <span class="card-text user-info-title font-weight-bold mb-0">Telephone</span>
+                </div>
+                <p class="card-text mb-0">{{ viewPersonnel?.tel }}</p>
+              </div>
+              <div class="d-flex flex-wrap">
+                <div class="user-info-title">
+                  <i data-feather="user" class="mr-1"></i>
+                  <span class="card-text user-info-title font-weight-bold mb-0">cin</span>
+                </div>
+                <p class="card-text mb-0">{{ viewPersonnel?.cin }}</p>
+              </div>
+           
+              <div class="d-flex flex-wrap my-50">
+                <div class="user-info-title">
+                  <i data-feather="flag" class="mr-1"></i>
+                  <span class="card-text user-info-title font-weight-bold mb-0">Hub</span>
+                </div>
+                <p class="card-text mb-0">{{viewPersonnel?.hub?.gouvernorat}}</p>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+            
+          
+      </div>
+
+    </ng-template>
+
+</div>
+</div>

@@ -1,0 +1,199 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <!-- Horizontal Wizard -->
+    <!-- Basic Horizontal form layout section start -->
+    <section id="basic-horizontal-layouts">
+      <div class="card">
+         <div class="row match-height">
+        
+        <div class="col-md-12 col-12">
+          <div class="card-header">
+            <h5 class="card-header">Information Société Principale</h5>
+
+          </div>
+            <div class="card-body">
+              <form class="form form-horizontal" #addSocieteForm="ngForm">
+                <div class="row">
+                  <div class="col-12" style="
+                  margin-bottom: 10px;
+              ">
+                    <div class="col-sm-3 col-form-label" style="
+                    padding: 0;
+                ">
+                      <label for="adresse">Logo de Société</label>
+                    </div>
+                    <div class="media">
+                      <a href="javascript:void(0);" class="mr-25">
+                        <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" />
+                      </a>
+                      <!-- <ng-template #noPhoto>
+                        <a href="javascript:void(0);" class="mr-25">
+                          <div class="avatar bg-light-primary avatar-xl rounded mr-50">
+                            <div class="avatar-content">{{societe?.nomComplet | initials }}</div>
+                          </div>
+                        </a>
+                      </ng-template> -->
+                     
+                   
+                   <div  style="margin-top:2.75rem !important">
+        
+                      <button (click)="file.click()" for="account-upload"
+                        class="btn btn-sm btn-primary mb-75 float-right mr-1 mr-75" rippleEffect>
+                        Importer une photo
+                      </button>
+                      <input type="file" #file accept="image/*" id="account-upload" 
+                      (change)="onSelectImage($event)" accept="image/*"/>
+                        </div>
+                      </div>
+                   
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                       
+                      
+                        <label for="first-name">Nom Société</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <input type="text" id="nomComplet" class="form-control" name="nomComplet" placeholder="Nom Société" 
+                        [(ngModel)]="nomCompletVar"
+                        #nomCompletVarRef="ngModel"
+                        [class.error]="addSocieteForm.submitted && nomCompletVarRef.invalid"
+                        required
+                        />
+                        <span *ngIf="addSocieteForm.submitted && nomCompletVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="nomCompletVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                        
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="matriculeFiscale">Matricule Fiscale</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <input type="matriculeFiscale" id="matriculeFiscale" class="form-control" name="matriculeFiscale" placeholder="Matricule Fiscale"
+                        [(ngModel)]="matriculeFiscaleVar"
+                        #matriculeFiscaleVarRef="ngModel"
+                        [class.error]="addSocieteForm.submitted && matriculeFiscaleVarRef.invalid"
+                        required
+                        />
+                        <span *ngIf="addSocieteForm.submitted && matriculeFiscaleVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="matriculeFiscaleVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                        
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="telephone">Télephone</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <input
+                          type="number"
+                          id="telephone"
+                          class="form-control"
+                          name="telephone"
+                          placeholder="Télephone"
+                      
+                          [(ngModel)]="telephoneVar"
+                          #telephoneVarRef="ngModel"
+                          [class.error]="addSocieteForm.submitted && telephoneVarRef.invalid"
+                          required
+                          />
+                          <span *ngIf="addSocieteForm.submitted && telephoneVarRef.invalid" class="invalid-form">
+                            <small class="form-text text-danger" *ngIf="telephoneVarRef.errors.required"
+                              >Ce champ est obligatoire!</small 
+                            >
+                          
+                          </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="sigle">Sigle</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <input type="sigle" id="sigle" class="form-control" name="sigle" placeholder="Sigle"
+                        [(ngModel)]="sigleVar"
+                        #sigleVarRef="ngModel"
+                        [class.error]="addSocieteForm.submitted && sigleVarRef.invalid"
+                        required
+                        />
+                        <span *ngIf="addSocieteForm.submitted && sigleVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="sigleVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="adresse">Adresse</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <input type="adresse" id="adresse" class="form-control" name="adresse" placeholder="Adresse" 
+                        [(ngModel)]="adresseVar"
+                        #adresseVarRef="ngModel"
+                        [class.error]="addSocieteForm.submitted && adresseVarRef.invalid"
+                        required
+                        />
+                        <span *ngIf="addSocieteForm.submitted && adresseVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="adresseVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="adresse">Adresse Email</label>
+                      </div>
+                      <div class="col-sm-9">
+                      
+                        <input   [(ngModel)]="emailVar"
+                        #emailVarRef="ngModel"
+                        required class="form-control" type="text" id="email" name="email" placeholder="Email"   >
+                        <span *ngIf="addSocieteForm.submitted && emailVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="emailVarRef.errors.required"
+                            >Ce champ est obligatoire!</small 
+                          >
+                        
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-12">
+                    <div class="row" style="
+                    justify-content: end;
+                ">
+                    <button (click)="onAddSociete(addSocieteForm)" type="submit" rippleEffect class="btn btn-primary mr-1">Submit</button>
+                  </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+      </div>
+    </section>
+    <!--/ Horizontal Wizard -->
+  </div>
+</div>

@@ -1,0 +1,201 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body" id="main-container">
+        <!-- content-header component -->
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-kitchen-sink">
+
+            <!-- Kitchen Sink Datatables -->
+            <core-card-snippet style="
+            padding: 20px;
+            ">
+                <h4 class="card-title">Liste des dispatchs</h4>
+                <div class="row">
+
+                    <div class="col-md-6 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                            <label class="d-flex align-items-center">Afficher
+                                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                colis</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                            <label class="d-flex align-items-center">
+                                Filtrer par date de création: 
+                                <input type="date" class="form-control ml-25 btn-outline-primary"
+                                    (change)="filterUpdate($event)" /></label>
+                        </div>
+                    </div>
+                </div>
+                <ngx-datatable [rows]="listDispatch" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                    [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+                    [limit]="basicSelectedOption">
+                    <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                        [resizeable]="false">
+                        <ng-template ngx-datatable-header-template let-value="value"
+                            let-allRowsSelected="allRowsSelected">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                                    (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                                <label class="custom-control-label" for="headerChkbxRef"></label>
+                            </div>
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                            let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                                    (change)="customChkboxOnSelect(row,rowIndex)" id="rowChkbxRef{{rowIndex}}" />
+                                <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="ID" prop="idDispatch" [width]="70"></ngx-datatable-column>
+
+                    <ngx-datatable-column name="Livreur" prop="livreur.prenom" [width]="100"></ngx-datatable-column>
+
+
+                    <ngx-datatable-column name="Date de création" prop="dateCreation" [width]="200">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value | date:'dd/MM/yyyy'}}
+                        </ng-template>
+
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Liste des colis"  [width]="200">
+                        <ng-template ngx-datatable-cell-template let-row="row">
+                            <div class="d-flex align-items-center col-actions">
+                                <a style="
+                               margin-left: 5px;
+                           " class="mr-1" container="body" (click)="showColis(listColisModal,row.colis)" placement="top" ngbTooltip="Liste des colis"><i
+                                        size="18" data-feather="eye"></i></a>
+
+
+                            </div>
+                        </ng-template>
+
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </core-card-snippet>
+        </section>
+        <!--/ Kitchen Sink Datatables -->
+
+        <!-- Inline Editing Datatables -->
+
+        <!--/ Inline Editing Datatables -->
+
+
+        <!--/ Responsive Datatable -->
+
+        <!-- Multilangual Datatables -->
+
+        <!--/ Multilangual Datatables -->
+    </div>
+    <ng-template #addModal let-modal>
+        <section id="multiple-column-form">
+            <div class="row match-height">
+                <div class="col-12">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" id="myModalLabel160">Dispatch</h5>
+                    </div>
+                    <div class="modal-body" tabindex="0" ngbAutofocus>
+
+                        <form #addDispatchForm="ngForm">
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <ng-select [items]="listLivreur" name="livreur" bindLabel="nom"
+                                        bindValue="iduser" [(ngModel)]="livreur" #livreurVarRef="ngModel"
+                                        placeholder="Choisir Livreur"
+                                        class="ng-select ng-select-single ng-select-searchable ng-select-clearable ng-untouched ng-pristine ng-invalid"
+                                        [class.error]="addDispatchForm.submitted && livreurVarRef.invalid" required>
+                                    </ng-select>
+                                    <span *ngIf="addDispatchForm.submitted && livreurVarRef.invalid"
+                                        class="invalid-form">
+                                        <small class="form-text text-danger" *ngIf="livreurVarRef.errors.required">Ce
+                                            champ est obligatoire!</small>
+                                    </span>
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button id="ajouterBtn" class="btn btn-primary btn-submit float-right mr-1"
+                                    (click)="onDispatch(addDispatchForm)" rippleEffect>Ajouter</button>
+                                <button class="btn btn-outline-secondary btn-submit float-right mr-1"
+                                    (click)="modal.close('Accept click')" rippleEffect>Annuler</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+</div>
+<ng-template #listColisModal let-modal>
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="myModalLabel160">Liste des colis</h5>
+                </div>
+                <div class="modal-body" tabindex="0" ngbAutofocus>
+
+                    <ngx-datatable
+                    [rows]="listColis"
+                    [rowHeight]="58"
+                    class="bootstrap core-bootstrap"
+                    [limit]="10"
+                    [columnMode]="ColumnMode.force"
+                    [headerHeight]="40"
+                    [footerHeight]="50"
+                    [scrollbarH]="true"
+                    [selectionType]="SelectionType.checkbox"
+                    [limit]="basicSelectedOption"
+                    let row
+                  >
+                    <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="150"></ngx-datatable-column>
+                    <ngx-datatable-column name="Fournisseur" prop="fournisseur.nom_societe" [width]="150"></ngx-datatable-column>
+          
+                    <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.nom_c}} {{ row.prenom_c}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="150"></ngx-datatable-column>
+                    <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value | date:'dd/MM/yyyy'}}
+                      </ng-template>
+          
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+                    <!-- <ngx-datatable-column name="Etat" prop="etat" [width]="150" >
+                      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div
+                          class="badge badge-pill"
+                          [ngClass]="{
+                            'badge-light-primary': row.etat === 'cree',
+                            'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
+                            'badge-light-warning': row.etat === 'livre',
+                            'badge-light-secondary': row.etat === 'livrePaye',
+                            'badge-light-dark': row.etat === 'planificationRetour' || row.etat === 'enCoursDeTransfert',
+                            'badge-light-danger': row.etat === 'retourne',
+                            'badge-light-info': row.etat === 'enAttenteDEnlevement'
+                          }"
+                        >
+                       {{value}}
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column> -->
+                    <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+                    <ngx-datatable-column name="Adresse Livraison" prop="adresse" [width]="'auto'" [minWidth]="300"></ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-template>

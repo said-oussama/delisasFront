@@ -1,0 +1,364 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <!-- Horizontal Wizard -->
+    <section class="horizontal-wizard">
+      <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+        <div class="bs-stepper-header">
+          <div class="step" data-target="#social-links">
+            <button class="step-trigger">
+              <span class="bs-stepper-box">1</span>
+              <span class="bs-stepper-label">
+                <span class="bs-stepper-title">Information Client</span>
+                <span class="bs-stepper-subtitle">Ajouter les information du client</span>
+              </span>
+            </button>
+          </div>
+          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="step" data-target="#account-details">
+            <button class="step-trigger">
+              <span class="bs-stepper-box">2</span>
+              <span class="bs-stepper-label">
+                
+                <span class="bs-stepper-title">Information Colis</span>
+                <span class="bs-stepper-subtitle">Ajouter les informations du colis</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="bs-stepper-content">
+          <form (ngSubmit)="(HWForm.form.valid)" #HWForm="ngForm">
+            <div id="social-links" class="content">
+              <form form #socialLinkForm="ngForm">
+                
+                <div class="content-header">
+                  <h5 class="mb-0">Information Client</h5>
+                  <small>Saisir les information du Client.</small>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="nom_c">Nom du Client</label>
+                    <input type="text" class="form-control" id ="nom_c" name="nom_c" placeholder="Saisir Nom du client"
+                    [(ngModel)]="nom_cVar"
+                    #nom_cVarRef="ngModel"
+                    pattern=[a-zA-Z\s]{0,30}
+                    [class.error]="socialLinkForm.submitted && nom_cVarRef.invalid"
+                    required
+                    />
+                    <span *ngIf="socialLinkForm.submitted && nom_cVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="nom_cVarRef.errors.required"
+                        >Ce champ est obligatoire!</small 
+                      >
+                      <small class="form-text text-danger" *ngIf="nom_cVarRef.errors.pattern"
+                        >Ce champ doit contenir seulement des caractéres!</small 
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="email">Prénom du Client</label>
+                    <input type="text" class="form-control" id="prenom_c" name ="prenom_c" placeholder="Saisir Prénom du client" 
+                    [(ngModel)]="prenom_cVar"
+                    #prenom_cVarRef="ngModel"
+                    [class.error]="socialLinkForm.submitted && prenom_cVarRef.invalid"
+                    pattern=[a-zA-Z\s]{0,30}
+                    required
+                    />
+                    <span *ngIf="socialLinkForm.submitted && prenom_cVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="prenom_cVarRef.errors.required"
+                        >Ce champ est obligatoire!</small 
+                      >
+                      <small class="form-text text-danger" *ngIf="prenom_cVarRef.errors.pattern"
+                        >Ce champ doit contenir seulement des caractéres!</small 
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="tel_c_1">Numéro de téléphone </label>
+                    <input class="form-control" id="tel_c_1" name ="tel_c_1" placeholder="Saisir Numéro de téléphone" type="number"
+                    [class.error]="socialLinkForm.submitted && !tel_c_1VarRef.valid"
+                    [(ngModel)]="tel_c_1Var"
+                    #tel_c_1VarRef="ngModel"
+                    pattern="[2,4,5,7,9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+                    minlength="8"
+                    maxlength="8"
+                    required
+                    />
+                    <span *ngIf="socialLinkForm.submitted && tel_c_1VarRef.invalid" class="invalid-form">
+                      
+                      <small class="form-text text-danger" *ngIf="tel_c_1VarRef.errors.pattern">
+                        Numéro de téléphone est invalide !</small
+                      >
+                      <small class="form-text text-danger" *ngIf="tel_c_1VarRef.errors.required"
+                        >Ce champ est obligatoire!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="email">Numéro de téléphone 2 (facultatif)</label>
+                    <input type="text" class="form-control" id="tel_c_2" name ="tel_c_2" placeholder="Saisir Numéro de téléphone 2 " type="number"
+                    [(ngModel)]="tel_c_2Var"
+                    #tel_c_2VarRef="ngModel"
+                    pattern="[2,4,5,7,9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+                    minlength="8"
+                    maxlength="8"
+                    />
+                    <span *ngIf="socialLinkForm.submitted && tel_c_2VarRef.invalid" class="invalid-form">
+                      
+                      <small class="form-text text-danger" *ngIf="tel_c_2VarRef.errors.pattern">
+                        Numéro de téléphone est invalide !</small
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label class="form-label" for="username">Gouvernorat</label>
+                      <ng-select [items]="gouvernoratList" name="gouvernorat" bindLabel="viewValue"  bindValue="value" [(ngModel)]="gouvernoratVar"
+                        placeholder="Choisir gouvernorat"  
+                        #gouvernoratVarRef="ngModel"
+                        [class.error]="socialLinkForm.submitted && gouvernoratVarRef.invalid"
+                        required >
+                      </ng-select>
+                    <span *ngIf="socialLinkForm.submitted && gouvernoratVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="gouvernoratVarRef.errors.required"
+                        >Ce champ est obligatoire!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="form-label" for="email">Délégation</label>
+                    <input type="text" class="form-control" id="delegation" name="delegation" placeholder="Saisir Délégation" 
+                    [(ngModel)]="delegationVar"
+                    #delegationVarRef="ngModel"
+                    /> 
+                    
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="form-label" for="email">Adresse </label>
+                    <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Saisir adresse" 
+                    [(ngModel)]="adresseVar"
+                    #adresseVarRef="ngModel"
+                    [class.error]="socialLinkForm.submitted && adresseVarRef.invalid"
+                    required
+                    />
+                    <span *ngIf="socialLinkForm.submitted && adresseVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="adresseVarRef.errors.required"
+                        >Ce champ est obligatoire!</small
+                      >
+                    </span>
+                  </div>
+  
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-outline-secondary btn-prev"
+                    disabled
+                    rippleEffect
+                  >
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Précédent</span>
+                  </button>
+                  <button
+                    (click)="horizontalWizardStepperNext(socialLinkForm)"
+                    type="submit"
+                    class="btn btn-primary btn-next"
+                    rippleEffect
+                  >
+                    <span class="align-middle d-sm-inline-block d-none">Suivant</span>
+                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div id="account-details" class="content">
+              <form #accountDetailsForm="ngForm">
+                <div class="content-header">
+                  <h5 class="mb-0">Information Colis</h5>
+                  <small class="text-muted">Saisir les informations du colis.</small>
+                </div>
+                <div class="row">
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label for="basicSelect">Service </label>
+                   
+                    <ng-select [items]="services" name="service" bindLabel="viewValue"  bindValue="value" [(ngModel)]="serviceVar"
+                    placeholder="Choisir service"  
+                    #serviceVarRef="ngModel"
+                    [class.error]="!serviceVarRef.valid && accountDetailsForm.submitted"
+                      required >
+                    </ng-select>
+                    <span *ngIf="accountDetailsForm.submitted && serviceVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="serviceVarRef.errors.required"
+                        >Ce champ est obligatoire!</small
+                      >
+                    </span>
+                  </div>
+                  <div *ngIf="serviceVar === 'echange'" class="form-group form-password-toggle col-md-3">
+
+                  <label class="form-label" >barCodeAncienColis</label>
+                  <input class="form-control" id="barCodeAncienColis" name="barCodeAncienColis" placeholder="Saisir barCodeAncienColis" type="number"
+                  [(ngModel)]="barCodeAncienColis"
+                  #barCodeAncienColisRef="ngModel" 
+                  [required]="serviceVar === 'echange'"
+                  [class.error]="!barCodeAncienColisRef.valid && accountDetailsForm.submitted"
+                  /> 
+                  <span *ngIf="accountDetailsForm.submitted && barCodeAncienColisRef.invalid" class="invalid-form">
+                    <small class="form-text text-danger" *ngIf="barCodeAncienColisRef.errors.required"
+                      >Ce champ est obligatoire!</small
+                    >
+                  </span>
+                  </div>
+                  <div class="form-group form-password-toggle col-md-3">
+                        <label class="form-label" >COD</label>
+                        <input class="form-control" id="cod" name="cod" placeholder="Saisir COD" type="number"
+                        [(ngModel)]="codVar"
+                        #codVarRef="ngModel" 
+                        required  
+                        [class.error]="!codVarRef.valid && accountDetailsForm.submitted"
+                        /> 
+                        <span *ngIf="accountDetailsForm.submitted && codVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="codVarRef.errors.required"
+                            >Ce champ est obligatoire!</small
+                          >
+                        </span>
+                        <input type="text" class="form-control" id="reference" name="reference" placeholder="Saisir COD" type="number"
+                        [(ngModel)]="referenceVar"
+                        #referenceVarRef="ngModel" hidden
+                        /> 
+                        <input type="text" class="form-control" id="fournisseur.id" name="fournisseur.id" placeholder="Saisir COD" type="number"
+                        [(ngModel)]="fournisseur_idVar"
+                        #fournisseur_idVarRef="ngModel" hidden
+                        /> 
+                  </div>
+               
+                  <div class="form-group form-password-toggle col-md-6">
+                        <label class="form-label" >Mode de paiement</label>
+                        <ng-select [items]="mode_pay" name="mode_paiement" bindLabel="viewValue"  bindValue="value" [(ngModel)]="mode_paiementVar"
+                        placeholder="Choisir mode de paiement"  
+                        #mode_paiementVarRef="ngModel"
+                        [class.error]="!mode_paiementVarRef.valid && accountDetailsForm.submitted"
+                          required >
+                        </ng-select>
+                        <span *ngIf="accountDetailsForm.submitted && mode_paiementVarRef.invalid" class="invalid-form">
+                          <small class="form-text text-danger" *ngIf="mode_paiementVarRef.errors.required"
+                            >Ce champ est obligatoire!</small
+                          >
+                        </span>
+                  </div>
+                 </div>
+                <div class="row">
+                  <div class="form-group form-password-toggle col-md-6">
+                    <label class="form-label" for="password">Désignation ( facultatif ) </label>
+                    <input type="text" class="form-control" id="designation" name="designation"placeholder="Saisir Désignation"
+                    [(ngModel)]="designationVar"
+                    pattern=[a-zA-Z0-9\s,_]{0,90}
+                    #designationVarRef="ngModel"
+                    />
+                    <span *ngIf="accountDetailsForm.submitted && designationVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="designationVarRef.errors.pattern"
+                        >Uniquement des caractères et des chiffres!</small
+                      >
+                    </span>
+                    
+                  </div>
+                  <div class="form-group form-password-toggle col-md-6">
+                    <label class="form-label" >Nombre des produits ( facultatif )</label>
+                    <input class="form-control" id="nb_p" name="nb_p" placeholder="Saisir le nombre des produits" type="number"
+                    [(ngModel)]="nb_pVar"
+                    #nb_pVarRef="ngModel"
+                    /> 
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" for="password">Longeur ( facultatif )</label>
+                    <input class="form-control" id="longeur" name="longeur" placeholder="Saisir Longeur" type="number"
+                    [(ngModel)]="longeurVar"
+                    #longeurVarRef="ngModel" />
+                  </div>
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" >Largeur ( facultatif )</label>
+                    <input  class="form-control" id="largeur" name="largeur" placeholder="Saisir Largeur" type="number" 
+                    [(ngModel)]="largeurVar"
+                    #largeurVarRef="ngModel"
+                    /> 
+                  </div>
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" for="password">Hauteur ( facultatif )</label>
+                    <input  class="form-control" id="hauteur" name="hauteur" placeholder="Saisir Hauteur" type ="number" 
+                    [(ngModel)]="hauteurVar"
+                    #hauteurVarRef="ngModel"
+                    />
+                  </div>
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" >Poids ( facultatif )</label>
+                    <input  class="form-control" id="poids" name="poids" placeholder="Saisir Poids" type ="number"
+                    [(ngModel)]="poidsVar"
+                    #poidsVarRef="ngModel"
+                    /> 
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <label for="basicTextarea">Remarque ( facultatif )</label>
+                    <fieldset class="form-group">
+                      <textarea class="form-control" id="remarque" name="remarque" rows="3" placeholder="Saisir Remarque"
+                      [(ngModel)]="remarqueVar"
+                      #remarqueVarRef="ngModel"
+                      pattern=[a-zA-Z0-9\s,_]{0,90}
+                     ></textarea>
+                    </fieldset>
+                    <span *ngIf="accountDetailsForm.submitted && remarqueVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="remarqueVarRef.errors.pattern"
+                        >Uniquement des caractères et des chiffres!</small
+                      >
+                    </span>
+                  </div>
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" for="password">Taille ( facultatif )</label>
+                    <ng-select [items]="tailleList" name="taille" bindLabel="viewValue"  bindValue="value" [(ngModel)]="tailleVar"
+                    placeholder="Choisir Taille"  
+                    #tailleVarRef="ngModel" 
+                     >
+                    </ng-select>
+                  
+                  </div>
+                  <div class="form-group form-password-toggle col-md-3">
+                    <label class="form-label" >Fragile ( facultatif )</label>
+                    
+                    <div class="custom-control custom-switch" for="fragile">
+                      <input type="checkbox" class="custom-control-input" checked id="fragile" />
+                      <label class="custom-control-label" name="fragile" [(ngModel)]="fragileVar" #fragileVarRef="ngModel"  for="fragile"></label>
+                    </div>
+                  </div>
+                </div>
+
+                
+                <div class="d-flex justify-content-between">
+                  <button
+                  id="thisbtn"
+                    type="button"
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Précédent</span>
+                  </button>
+                  
+                  <button id="ajouterBtn" class="btn btn-primary btn-submit "   (click)="onAddColis(socialLinkForm,accountDetailsForm)" rippleEffect 
+                  
+                  >Ajouter</button>
+                  
+                </div>
+              </form>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!--/ Horizontal Wizard -->
+  </div>
+</div>

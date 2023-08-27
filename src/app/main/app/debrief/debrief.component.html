@@ -1,0 +1,521 @@
+<div class="content-wrapper container-xxl p-0">
+  <!-- content header start -->
+  <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <!-- content header end -->
+
+  <!-- Kitchen Sink Datatables -->
+  <section id="ngx-datatable-kitchen-sink">
+    <h4 class="card-title">Gestion Debrief</h4>
+    <div class="card">
+      <div class="card-body">
+        <div class="users-list-filter">
+          <form>
+            <div class="row">
+              <div class="col-12 col-md-4">
+                <fieldset class="form-group">
+                  <span>Hub</span>
+                  <ng-select [items]="hubList" [(ngModel)]="selectedHub" name="selectedRole" bindLabel="titre"
+                    placeholder="Choisi un hub" (change)="onChangeHub()"></ng-select>
+                </fieldset>
+              </div>
+              <div  class="col-12 col-md-4">
+                <fieldset class="form-group">
+                  <span>Livreur</span>
+
+                  <ng-select [items]="selectLivreur" [(ngModel)]="selectedLivreur" name="selectedLivreur"
+                    placeholder="Choisi un livreur" (change)="getRunsheet()">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item?.nom}} {{item?.prenom}}
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                      {{item?.nom}} {{item?.prenom}}
+                    </ng-template>
+                  </ng-select>
+                </fieldset>
+              </div>
+              <div *ngIf="selectRunsheet.length > 0" class="col-12 col-md-4">
+                <fieldset class="form-group">
+                  <span>Runsheet</span>
+
+                  <ng-select [items]="selectRunsheet" [(ngModel)]="selectedRunsheet" name="selectedPlan"
+                    placeholder="Choisi un runsheet" (change)="filterByLivreur()">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item?.barCode}}-{{item?.creationDate | date: 'dd/MM/yyyy'}}
+
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                      {{item?.barCode}}-{{item?.creationDate | date: 'dd/MM/yyyy'}}
+                    </ng-template>
+                  </ng-select>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div [hidden]="!selectedLivreur || colisList.length === 0" class="card">
+      <div class="card-body">
+        <div class="users-list-filter">
+          <form>
+            <div class="row">
+              <h4 class="card-title">Ajouter la liste des colis</h4>
+            </div>
+
+            <div class="row d-flex align-items-end mb-50" style="
+      justify-content: left;
+  ">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="barCode">Barcode de colis</label>
+                  <input (blur)="openViewModal()" type="text" class="form-control" [(ngModel)]="barCodeColis"
+                    name="barCodeColis" id="barCodeColis" placeholder="barCodeColis" />
+                </div>
+              </div>
+              <!-- 
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <button class="btn btn-outline-danger text-nowrap px-1"  rippleEffect>
+                    <i data-feather="plus" class="mr-25"></i>
+                    <span>Ajouter</span>
+                  </button>
+                </div>
+              </div> -->
+
+            </div>
+          </form>
+        </div>
+        <section id="component-swiper-multiple">
+          <swiper class="swiper-container swiper-navigations swiper-container-initialized swiper-container-horizontal" [config]="swiperMultiple">
+            <div class="swiper-slide rounded swiper-shadow col-12 col-md-12">
+              <div class="card enterprise-pricing text-center">
+                <div class="card-body">
+                  <h3 style="
+                                    margin: 15px;
+                                ">En cours de livraison</h3>
+                  <span class="pricing-basic-value font-weight-bolder text-primary " style="
+                  font-size: 3.5rem;
+                  line-height: .8;
+                  ">{{enCoursDeLivraisonTotal}}</span>
+                  <div style="
+                  margin-left: 20px;
+              " class="row">
+                    <span class="pricing-basic-value font-weight-bolder text-primary " style="
+                    font-size: 1.5rem;
+                    line-height: .8;
+                    "> Total COD : {{enCoursDeLivraisonPrixTotal}}</span>
+                  </div>
+
+                  <div style="
+                  margin-top: 20px;
+                  ">
+                    <div class="row mb-30" style="
+                  margin-bottom: 20px;
+                  ">
+
+                      <button type="button" (click)="colisLivre()" class="btn btn-outline-success ml-1"
+                        rippleEffect>Colis livré</button>
+                        <button type="button" (click)="openAnomalyModal(modalAnomaly)" class="btn btn-outline-warning ml-1"
+                        rippleEffect>Assigner Anomalie</button>
+                      <!-- <ng-select style="
+                      margin-left: 20px;
+                      width: 200px;
+                  " (change)="onSelectAnomalie()" [items]="anomalies" id="anomalie" name="acronyme"
+                        bindLabel="acronyme" [(ngModel)]="anomaly" placeholder="Choisir Anomalie"
+                        #anomalieVarRef="ngModel">
+
+                        <ng-template ng-label-tmp let-item="item">
+                          <span>{{ item?.acronyme }}</span>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                          <span>{{ item.acronyme }}</span>
+                        </ng-template>
+                      </ng-select> -->
+
+                    </div>
+                    <ngx-datatable [selected]="selected" #encours [rows]="enCoursDeLivraison" [rowHeight]="58"
+                      class="bootstrap core-bootstrap" [limit]="10" [columnMode]="ColumnMode.force" [headerHeight]="40"
+                      [footerHeight]="50" [scrollbarH]="true" [selectionType]="SelectionType.checkbox"
+                      [limit]="basicSelectedOption" (activate)="onActivate($event)" (select)="onSelect($event)">
+                      <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                        [resizeable]="false">
+                        <ng-template ngx-datatable-header-template let-value="value"
+                          let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                              (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                          </div>
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                          let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                              (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="170"></ngx-datatable-column>
+                      <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="170">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.nom_c}} {{ row.prenom_c}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200">
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                          {{value | date:'dd/MM/yyyy'}}
+                        </ng-template>
+
+                      </ngx-datatable-column>
+
+
+                      <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+                      <ngx-datatable-column name="COD" prop="cod" [width]="120"></ngx-datatable-column>
+
+                    </ngx-datatable>
+                    <hr />
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="swiper-slide rounded swiper-shadow col-12 col-md-12">
+              <div class="card enterprise-pricing text-center">
+                <div class="card-body">
+                  <h3 style="
+                  margin: 15px;
+              ">Retour</h3>
+                  <span class="pricing-basic-value font-weight-bolder text-primary " style="
+font-size: 3.5rem;
+line-height: .8;
+">{{planificationRetourTotal}}</span>
+
+                  <div style="
+margin-left: 20px;
+" class="row">
+                    <span class="pricing-basic-value font-weight-bolder text-primary " style="
+  font-size: 1.5rem;
+  line-height: .8;
+  "> Total COD : {{planificationRetourPrixTotal}}</span>
+                  </div>
+                  <div style="
+margin-top: 20px;
+">
+                    <div class="row mb-30" style="
+margin-bottom: 20px;
+">
+                      <div>
+
+                        <button (click)="retourStock()" type="button" class="btn btn-outline-info ml-1"
+                          rippleEffect>Retour Stock</button>
+                        <button (click)="retourne()" type="button" class="btn btn-outline-danger ml-1"
+                          rippleEffect>Retournée </button>
+
+
+                      </div>
+                    </div>
+                    <ngx-datatable [selected]="selectedPR" #planification [rows]="planificationRetour" [rowHeight]="58"
+                      class="bootstrap core-bootstrap" [limit]="10" [columnMode]="ColumnMode.force" [headerHeight]="40"
+                      [footerHeight]="50" [scrollbarH]="true" [selectionType]="SelectionType.checkbox"
+                      [limit]="basicSelectedOption" (activate)="onActivate($event)" (select)="onSelectPR($event)">
+                      <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                        [resizeable]="false">
+                        <ng-template ngx-datatable-header-template let-value="value"
+                          let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                              (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                          </div>
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                          let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                              (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="170"></ngx-datatable-column>
+                      <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="170">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.nom_c}} {{ row.prenom_c}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200">
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                          {{value | date:'dd/MM/yyyy'}}
+                        </ng-template>
+
+                      </ngx-datatable-column>
+
+
+                      <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+                      <ngx-datatable-column name="COD" prop="cod" [width]="120"></ngx-datatable-column>
+
+                    </ngx-datatable>
+                    <hr />
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide rounded swiper-shadow col-12 col-md-12">
+              <div class="card enterprise-pricing text-center">
+                <div class="card-body">
+                  <h3 style="
+                  margin: 15px;
+              ">Pickup</h3>
+                  <span class="pricing-basic-value font-weight-bolder text-primary " style="
+font-size: 3.5rem;
+line-height: .8;
+">{{enAttenteDEnlevementTotal}}</span>
+                  <div style="
+margin-left: 20px;
+" class="row">
+                    <span class="pricing-basic-value font-weight-bolder text-primary " style="
+  font-size: 1.5rem;
+  line-height: .8;
+
+  "> Total COD : {{enAttenteDEnlevementPrixTotal}}</span>
+                  </div>
+                  <div style="
+margin-top: 20px;
+">
+                    <div class="row mb-30" style="
+margin-bottom: 20px;
+">
+                      <div>
+
+                        <button (click)="entrerStock()" type="button" class="btn btn-outline-info ml-1"
+                          rippleEffect>Entré Stock</button>
+                        <button (click)="assignerEnlevement()" type="button" class="btn btn-outline-danger ml-1"
+                          rippleEffect>Anomalie d'enlèvement</button>
+
+
+                      </div>
+                    </div>
+                    <ngx-datatable #enAttente [selected]="selectedPickup" [rows]="enAttenteDEnlevement" [rowHeight]="58"
+                      class="bootstrap core-bootstrap" [limit]="10" [columnMode]="ColumnMode.force" [headerHeight]="40"
+                      [footerHeight]="50" [scrollbarH]="true" [selectionType]="SelectionType.checkbox"
+                      [limit]="basicSelectedOption" (activate)="onActivate($event)" (select)="onSelectPickup($event)">
+                      <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                        [resizeable]="false">
+                        <ng-template ngx-datatable-header-template let-value="value"
+                          let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                              (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                          </div>
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                          let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                              (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="150"></ngx-datatable-column>
+                      <ngx-datatable-column name="Fournisseur" prop="fournisseur.nom_societe" [width]="150">
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.nom_c}} {{ row.prenom_c}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="150">
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                          {{value | date:'dd/MM/yyyy'}}
+                        </ng-template>
+
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+
+                      <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+
+                    </ngx-datatable>
+                    <hr />
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide rounded swiper-shadow col-12 col-md-12">
+              <div class="card enterprise-pricing text-center">
+                <div class="card-body">
+                  <h3 style="
+                  margin: 15px;
+              ">Retour échange</h3>
+                  <span class="pricing-basic-value font-weight-bolder text-primary mb-50" style="
+font-size: 3.5rem;
+line-height: .8;
+">{{planificationRetourEchangeTotal}}</span>
+                  <div style="
+margin-left: 20px;
+" class="row">
+                    <span class="pricing-basic-value font-weight-bolder text-primary " style="
+  font-size: 1.5rem;
+  line-height: .8;
+
+  "> Total COD : {{planificationRetourEchangePrixTotal}}</span>
+                  </div>
+
+                  <div style="
+margin-top: 20px;
+">
+                    <ngx-datatable [columnMode]="ColumnMode.force" [rows]="planificationRetourEchange" [rowHeight]="58"
+                      class="bootstrap core-bootstrap debrief-card" [headerHeight]="40" [footerHeight]="50">
+                      <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="150"></ngx-datatable-column>
+                      <ngx-datatable-column name="Fournisseur" prop="fournisseur.nom_societe" [width]="150">
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.nom_c}} {{ row.prenom_c}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="150">
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                          {{value | date:'dd/MM/yyyy'}}
+                        </ng-template>
+
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+
+                      <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+
+                    </ngx-datatable>
+                    <hr />
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </swiper>
+
+        </section>
+        <div class="row" style="
+        justify-content: right;
+    ">
+
+          <div class="form-group">
+            <button [disabled]="isCloturerDisabled()" (click)="createDebrief()"
+              class="btn btn-outline-danger text-nowrap px-1" rippleEffect>
+              <i class="mr-25"></i>
+              <span>Clôturer debrief</span>
+            </button>
+          </div>
+          <div style="
+          margin-right: 5px;
+      " class="form-group">
+            <button (click)="saveDraftDebrief()" class="btn btn-outline-warning text-nowrap px-1" rippleEffect>
+              <i class="mr-25"></i>
+              <span>Laisser Debrief non Clôturer </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/ Kitchen Sink Datatables -->
+  <!-- ADD FOrm HUB -->
+
+  <!-- Modal update HUB -->
+
+  <!-- / Modal update Personnel-->
+  <!-- Modal delete Personnel -->
+
+  <!-- / Modal delete Personnel -->
+</div>
+<ng-template #modalDraft let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Debrief draft sauvegardé avec succée</h5>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div>
+      Debrief draft sauvegardé avec succée.
+    </div>
+    <div class="invoice-total-amount">Total COD des colis livrés est : {{totalCodColisLivre}} TND</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary" (click)="navigate(modalDraft)"
+      rippleEffect>
+      Continuer
+    </button>
+
+  </div>
+</ng-template>
+
+<ng-template #modalDebrief let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Debrief cloturé avec succée</h5>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div>
+      Debrief cloturé avec succée .
+    </div>
+    <div class="invoice-total-amount">Total COD des colis livrés est : {{totalCODColisLivreTotal}} TND</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary" (click)="navigate(modalDebrief)"
+      rippleEffect>
+      Continuer
+    </button>
+
+  </div>
+</ng-template>
+<ng-template #modalAnomaly let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Assigner un anomalie</h5>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="row">
+
+          <div class="form-group form-password-toggle col-11">
+          <ng-select  [items]="anomalies" id="anomalie" name="acronyme"
+          bindLabel="acronyme" [(ngModel)]="anomaly" placeholder="Choisir Anomalie"
+          #anomalieVarRef="ngModel">
+
+          <ng-template ng-label-tmp let-item="item">
+            <span>{{ item?.acronyme }}</span>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+            <span>{{ item.acronyme }}</span>
+          </ng-template>
+        </ng-select>
+          </div>
+          <div class="form-group form-password-toggle col-11">
+            <label class="form-label" for="password">Description d'anomalie</label>
+            <input  class="form-control" [(ngModel)]="description" id="description" name="description"  type="text" >
+          </div>
+                  
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" id="btnAnnulerDelete"class="btn btn-outline-success" (click)="onSelectAnomalie()" rippleEffect>
+      Submit
+    </button>
+    <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+      Fermer
+    </button>
+   
+  </div>
+</ng-template>

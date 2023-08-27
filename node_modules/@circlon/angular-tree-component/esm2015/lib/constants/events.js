@@ -1,0 +1,20 @@
+export const TREE_EVENTS = {
+    toggleExpanded: 'toggleExpanded',
+    activate: 'activate',
+    deactivate: 'deactivate',
+    nodeActivate: 'nodeActivate',
+    nodeDeactivate: 'nodeDeactivate',
+    select: 'select',
+    deselect: 'deselect',
+    focus: 'focus',
+    blur: 'blur',
+    initialized: 'initialized',
+    updateData: 'updateData',
+    moveNode: 'moveNode',
+    copyNode: 'copyNode',
+    event: 'event',
+    loadNodeChildren: 'loadNodeChildren',
+    changeFilter: 'changeFilter',
+    stateChange: 'stateChange'
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXZlbnRzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvYW5ndWxhci10cmVlLWNvbXBvbmVudC9zcmMvbGliL2NvbnN0YW50cy9ldmVudHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxDQUFDLE1BQU0sV0FBVyxHQUFHO0lBQ3pCLGNBQWMsRUFBRSxnQkFBZ0I7SUFDaEMsUUFBUSxFQUFFLFVBQVU7SUFDcEIsVUFBVSxFQUFFLFlBQVk7SUFDeEIsWUFBWSxFQUFFLGNBQWM7SUFDNUIsY0FBYyxFQUFFLGdCQUFnQjtJQUNoQyxNQUFNLEVBQUUsUUFBUTtJQUNoQixRQUFRLEVBQUUsVUFBVTtJQUNwQixLQUFLLEVBQUUsT0FBTztJQUNkLElBQUksRUFBRSxNQUFNO0lBQ1osV0FBVyxFQUFFLGFBQWE7SUFDMUIsVUFBVSxFQUFFLFlBQVk7SUFDeEIsUUFBUSxFQUFFLFVBQVU7SUFDcEIsUUFBUSxFQUFFLFVBQVU7SUFDcEIsS0FBSyxFQUFFLE9BQU87SUFDZCxnQkFBZ0IsRUFBRSxrQkFBa0I7SUFDcEMsWUFBWSxFQUFFLGNBQWM7SUFDNUIsV0FBVyxFQUFFLGFBQWE7Q0FDM0IsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBUUkVFX0VWRU5UUyA9IHtcclxuICB0b2dnbGVFeHBhbmRlZDogJ3RvZ2dsZUV4cGFuZGVkJyxcclxuICBhY3RpdmF0ZTogJ2FjdGl2YXRlJyxcclxuICBkZWFjdGl2YXRlOiAnZGVhY3RpdmF0ZScsXHJcbiAgbm9kZUFjdGl2YXRlOiAnbm9kZUFjdGl2YXRlJyxcclxuICBub2RlRGVhY3RpdmF0ZTogJ25vZGVEZWFjdGl2YXRlJyxcclxuICBzZWxlY3Q6ICdzZWxlY3QnLFxyXG4gIGRlc2VsZWN0OiAnZGVzZWxlY3QnLFxyXG4gIGZvY3VzOiAnZm9jdXMnLFxyXG4gIGJsdXI6ICdibHVyJyxcclxuICBpbml0aWFsaXplZDogJ2luaXRpYWxpemVkJyxcclxuICB1cGRhdGVEYXRhOiAndXBkYXRlRGF0YScsXHJcbiAgbW92ZU5vZGU6ICdtb3ZlTm9kZScsXHJcbiAgY29weU5vZGU6ICdjb3B5Tm9kZScsXHJcbiAgZXZlbnQ6ICdldmVudCcsXHJcbiAgbG9hZE5vZGVDaGlsZHJlbjogJ2xvYWROb2RlQ2hpbGRyZW4nLFxyXG4gIGNoYW5nZUZpbHRlcjogJ2NoYW5nZUZpbHRlcicsXHJcbiAgc3RhdGVDaGFuZ2U6ICdzdGF0ZUNoYW5nZSdcclxufTtcclxuIl19

@@ -1,0 +1,81 @@
+<div class="content-wrapper container-xxl p-0">
+  <!-- content header start -->
+  <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <!-- content header end -->
+
+  <!-- Kitchen Sink Datatables -->
+  <section id="ngx-datatable-kitchen-sink" >
+
+    <div class="card">
+      <div class="card-body">
+        <h3 style="
+        margin: 15px;
+    ">List debiefs</h3>
+       <ngx-datatable #encours [rows]="listOfDebriefs" [rowHeight]="58" class="bootstrap core-bootstrap"
+       [limit]="10" [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50"
+       [scrollbarH]="true"  [limit]="basicSelectedOption"
+       >
+
+
+       <ngx-datatable-column name="ID" prop="id" [width]="170"></ngx-datatable-column>
+       <!-- <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="170">
+         <ng-template let-row="row" ngx-datatable-cell-template>
+           {{row.nom_c}} {{ row.prenom_c}}
+         </ng-template>
+       </ngx-datatable-column> -->
+       <ngx-datatable-column name="Etat" prop="etat" [width]="150" >
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <div
+            class="badge badge-pill"
+            [ngClass]="{
+              'badge-light-primary': row.etat === 'nonCloture',
+              'badge-light-success': row.etat == 'cloture'
+            
+            }"
+          >
+         {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+       <ngx-datatable-column name="Date de création" prop="creationDate" [width]="200">
+         <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value | date: 'dd/MM/yyyy'}}
+         </ng-template>
+
+       </ngx-datatable-column>
+       <ngx-datatable-column name="Livreur" prop="livreur" [width]="200">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value?.nom}} {{value?.prenom}}
+        </ng-template>
+
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Action" [width]="40" [sortable]="false">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div class="d-flex align-items-center col-actions">
+      
+
+            <a *ngIf="row.etat !== 'cloture' " class="mr-1 text-primary" (click)="updateDebrief(row)" container="body" placement="top" ngbTooltip="Traiter Debrief"
+              ><i size="18" data-feather="edit-2"></i
+            ></a>
+        
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+     </ngx-datatable>
+     
+       
+      </div>
+    </div>
+  </section>
+  <!--/ Kitchen Sink Datatables -->
+  <!-- ADD FOrm HUB -->
+ 
+  <!-- Modal update HUB -->
+ 
+  <!-- / Modal update Personnel-->
+  <!-- Modal delete Personnel -->
+ 
+  <!-- / Modal delete Personnel -->
+</div>
+

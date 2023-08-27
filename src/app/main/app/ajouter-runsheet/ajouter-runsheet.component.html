@@ -1,0 +1,221 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet>
+        <h4 class="card-title">Ajouter la liste des colis</h4>
+
+        <div class="row d-flex align-items-end ml-50" style="
+      justify-content: left;
+  ">
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <label for="barCode">Barcode de colis</label>
+              <input  (blur)="ajouter()" type="text" class="form-control" [(ngModel)]="barCodeColis" name="barCodeColis" id="barCodeColis"
+                placeholder="barCodeColis" />
+            </div>
+          </div>
+
+      
+       
+
+
+
+
+        
+        </div>
+        <hr />
+
+        <ngx-datatable [rows]="items" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+          [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+          [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" let row>
+          <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Fournisseur" prop="fournisseur.nom_societe" [width]="150"></ngx-datatable-column>
+
+          <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.nom_c}} {{ row.prenom_c}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'dd/MM/yyyy'}}
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+          <!-- <ngx-datatable-column  style="width: 200.625px;" name="Etat" prop="etat" [width]="210" >
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill badge-light-secondary"
+                [ngClass]="{
+                  'badge-light-primary': row.etat === 'cree',
+                  'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
+                  'badge-light-warning': row.etat === 'livre',
+                  'badge-light-secondary': row.etat === 'livrePaye',
+                  'badge-light-dark': row.etat === 'planificationRetour' || row.etat === 'enCoursDeTransfert',
+                  'badge-light-danger': row.etat === 'retourne',
+                  'badge-light-info': row.etat === 'enAttenteDEnlevement'
+                }"
+              >
+               {{value}}
+              </div>
+            </ng-template>
+          </ngx-datatable-column> -->
+          <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+          <ngx-datatable-column name="Adresse Livraison" prop="adresse" [width]="'auto'" [minWidth]="300"></ngx-datatable-column>
+          <ngx-datatable-column name="ACTION"  [width]="200">
+            <ng-template ngx-datatable-cell-template let-row="row">
+                <div class="d-flex align-items-center col-actions">
+                    <a style="
+                   margin-left: 5px;
+               " class="mr-1" container="body" (click)="openDeleteModal(modalDelete,row.bar_code)" placement="top" ngbTooltip="Liste des colis"><i
+                            size="18" data-feather="trash"></i></a>
+
+
+                </div>
+            </ng-template>
+
+        </ngx-datatable-column>
+        </ngx-datatable>
+        <div class="row d-flex align-items-end" style="
+        justify-content: right;
+    ">
+          <div class="col-1 col-12">
+
+          </div>
+          <div style="
+          margin-left: 50px;
+      " class="col-md-2 col-12">
+            <div class="form-group">
+              <button [disabled]="items.length == 0" class="btn btn-outline-danger text-nowrap px-1" (click)="ajouterConsole(addModal)" rippleEffect>
+                <i data-feather="plus" class="mr-25"></i>
+                <span>Ajouter Runsheet</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </core-card-snippet>
+    </section>
+    
+    <!--/ Kitchen Sink Datatables -->
+    <!-- ADD FOrm HUB -->
+    <ng-template #addModal let-modal>
+      <section id="multiple-column-form">
+          <div class="row match-height">
+              <div class="col-12">
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" id="myModalLabel160">Choisir un livreur</h5>
+                  </div>
+                  <div class="modal-body" tabindex="0" ngbAutofocus>
+                      <section id="horizontal-wizard-id" class="horizontal-wizard">
+                          <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+
+                              <div class="bs-stepper-content">
+                                  <form #addRunsheetForm="ngForm">
+                                      <div class="row">
+
+                                          <div class="form-group col-md-6">
+                                              <label class="form-label" for="email">Choisir un livreur</label>
+
+                                              <ng-select [items]="listLivreur" name="livreur"
+                                                  bindLabel="nom" bindValue="iduser"
+                                                  [(ngModel)]="livreur" #livreurVarRef="ngModel"
+                                                  [class.error]="addRunsheetForm.submitted && livreurVarRef.invalid"
+                                                  required>
+                                              </ng-select>
+                                              <span *ngIf="addRunsheetForm.submitted && livreurVarRef.invalid"
+                                                  class="invalid-form">
+                                                  <small class="form-text text-danger"
+                                                      *ngIf="livreurVarRef.errors.required">Ce champ est
+                                                      obligatoire!</small>
+                                              </span>
+
+                                          </div>
+                                      </div>
+
+                                      <button id="ajouterBtn" class="btn btn-primary btn-submit "
+                                          (click)="onAddConsole()" rippleEffect>Ajouter</button>
+
+                                  </form>
+                              </div>
+                          </div>
+                      </section>
+
+                  </div>
+              </div>
+          </div>
+      </section>
+  </ng-template>
+    <!-- Modal update HUB -->
+    <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Console</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="card-body">
+          <form class="form" #editForm="ngForm">
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Départ</label>
+                <input class="form-control" [(ngModel)]="editHub.depart" id="depart" name="depart" type="text" />
+              </div>
+              <!--  <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Gouvernorat Hub</label>
+                <ng-select [items]="selectMulti"  ngModel ="{{editHub.gouvernorat}}" id="gouvernorat" name="gouvernorat" > </ng-select>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Arrivée </label>
+                <input class="form-control" [(ngModel)]="editHub.arrivee" id="arrivee" name="arrivee" type="text" />
+
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Livreur</label>
+                <ng-select [items]="selectMulti" [multiple]="false" id="personnel.iduser" name="personnel.iduser"
+                  bindLabel="nom" bindValue="iduser" [closeOnSelect]="true" [searchable]="false"
+                  [(ngModel)]="editHub.personnel.iduser">
+                </ng-select>
+
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerUpdate" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateConsole(editHub)" rippleEffect>
+          Modifier
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Personnel-->
+    <!-- Modal delete Personnel -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Colis du runsheet</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce colis du runsheet ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteFournisseur()"
+          rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Personnel -->

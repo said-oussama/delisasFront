@@ -1,0 +1,213 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet>
+        <h4 class="card-title">Ajouter la liste des colis</h4>
+
+        <div class="row d-flex align-items-end" style="
+      justify-content: center;
+  ">
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <label for="barCode">Barcode de colis</label>
+              <input (blur)="ajouter()" type="text" class="form-control" [(ngModel)]="barCodeColis" name="barCodeColis" id="barCodeColis"
+                placeholder="barCodeColis" />
+            </div>
+          </div>
+
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <label for="hubDepart">Hub de départ</label>
+              <input disabled type="text" class="form-control" id="hubDepart" [(ngModel)]="hubDepart" name="hubDepart"
+                id="hubDepart" placeholder="hubDepart" />
+            </div>
+          </div>
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <label for="hubArrive">Hub d'arrivé</label>
+              <input disabled type="text" class="form-control" id="hubArrive" [(ngModel)]="hubArrive" name="hubArrive"
+                id="hubArrive" placeholder="hubArrive" />
+            </div>
+          </div>
+
+
+
+
+          <!-- <div class="col-md-2 col-12">
+            <div class="form-group">
+              <button class="btn btn-outline-danger text-nowrap px-1" (click)="ajouter()" rippleEffect>
+                <i data-feather="plus" class="mr-25"></i>
+                <span>Ajouter</span>
+              </button>
+            </div>
+          </div> -->
+        </div>
+        <hr />
+     
+
+        <hr />
+
+        <ngx-datatable [rows]="items" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+          [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+          [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" let row>
+          <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="150"></ngx-datatable-column>
+
+
+
+          <ngx-datatable-column name="hubDepart" prop="hubDepart" [width]="110"></ngx-datatable-column>
+          <ngx-datatable-column name="hubArrive" prop="hubArrive" [width]="110"></ngx-datatable-column>
+          <ngx-datatable-column name="ACTION"  [width]="200">
+            <ng-template ngx-datatable-cell-template let-row="row">
+                <div class="d-flex align-items-center col-actions">
+                    <a style="
+                   margin-left: 5px;
+               " class="mr-1" container="body" (click)="openDeleteModal(modalDelete,row.bar_code)" placement="top" ngbTooltip="Liste des colis"><i
+                            size="18" data-feather="trash"></i></a>
+
+
+                </div>
+            </ng-template>
+
+        </ngx-datatable-column>
+        </ngx-datatable>
+        <div class="row d-flex align-items-end" style="
+        justify-content: right;
+    ">
+          <div class="col-1 col-12">
+
+          </div>
+          <div style="
+          margin-left: 50px;
+      " class="col-md-2 col-12">
+            <div class="form-group">
+              <button [disabled]="items.length == 0" class="btn btn-outline-danger text-nowrap px-1" (click)="ajouterConsole(addModal)" rippleEffect>
+                <i data-feather="plus" class="mr-25"></i>
+                <span>Ajouter console</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </core-card-snippet>
+    </section>
+    
+    <!--/ Kitchen Sink Datatables -->
+    <!-- ADD FOrm HUB -->
+    <ng-template #addModal let-modal>
+      <section id="multiple-column-form">
+          <div class="row match-height">
+              <div class="col-12">
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter console</h5>
+                  </div>
+                  <div class="modal-body" tabindex="0" ngbAutofocus>
+                      <section id="horizontal-wizard-id" class="horizontal-wizard">
+                          <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+
+                              <div class="bs-stepper-content">
+                                  <form #addConsoleForm="ngForm">
+                                      <div class="row">
+
+                                          <div class="form-group col-md-6">
+                                              <label class="form-label" for="email">Choisir un livreur</label>
+
+                                              <ng-select [items]="listLivreur" name="livreur"
+                                                  bindLabel="nom" bindValue="iduser"
+                                                  [(ngModel)]="livreur" #livreurVarRef="ngModel"
+                                                  [class.error]="addConsoleForm.submitted && livreurVarRef.invalid"
+                                                  required>
+                                              </ng-select>
+                                              <span *ngIf="addConsoleForm.submitted && livreurVarRef.invalid"
+                                                  class="invalid-form">
+                                                  <small class="form-text text-danger"
+                                                      *ngIf="livreurVarRef.errors.required">Ce champ est
+                                                      obligatoire!</small>
+                                              </span>
+
+                                          </div>
+                                      </div>
+
+                                      <button id="ajouterBtn" class="btn btn-primary btn-submit "
+                                          (click)="onAddConsole()" rippleEffect>Ajouter</button>
+
+                                  </form>
+                              </div>
+                          </div>
+                      </section>
+
+                  </div>
+              </div>
+          </div>
+      </section>
+  </ng-template>
+    <!-- Modal update HUB -->
+    <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Console</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="card-body">
+          <form class="form" #editForm="ngForm">
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Départ</label>
+                <input class="form-control" [(ngModel)]="editHub.depart" id="depart" name="depart" type="text" />
+              </div>
+              <!--  <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Gouvernorat Hub</label>
+                <ng-select [items]="selectMulti"  ngModel ="{{editHub.gouvernorat}}" id="gouvernorat" name="gouvernorat" > </ng-select>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Arrivée </label>
+                <input class="form-control" [(ngModel)]="editHub.arrivee" id="arrivee" name="arrivee" type="text" />
+
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label">Livreur</label>
+                <ng-select [items]="selectMulti" [multiple]="false" id="personnel.iduser" name="personnel.iduser"
+                  bindLabel="nom" bindValue="iduser" [closeOnSelect]="true" [searchable]="false"
+                  [(ngModel)]="editHub.personnel.iduser">
+                </ng-select>
+
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerUpdate" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateConsole(editHub)" rippleEffect>
+          Modifier
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Personnel-->
+    <!-- Modal delete Personnel -->
+    <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Fournisseur</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce colis du console ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete" class="btn btn-outline-secondary"
+          (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteFournisseur()"
+          rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Personnel -->
