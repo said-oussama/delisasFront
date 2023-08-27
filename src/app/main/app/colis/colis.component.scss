@@ -1,0 +1,14 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+
+.datatable-scroll {
+  width: auto !important;
+}
+.btn-outline-info {
+  border: 1px solid #ff9800 !important;
+  background-color: transparent !important;
+  color: #ff5722 !important;
+}
+.btn-outline-info:hover:not(.disabled):not(:disabled) {
+  background-color: rgb(255 152 0 / 4%) !important;
+  color: #ff5722 !important;
+}

@@ -1,0 +1,137 @@
+<div class="content-wrapper container-xxl p-0">
+  <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+  <div class="content-body">
+    <section class="invoice-preview-wrapper">
+      <div class="row invoice-preview">
+        <!-- Invoice -->
+        <div class="col-xl-12 col-md-8 col-12 printRef">
+          <div class="card invoice-preview-card">
+              <div class="card-body invoice-padding pt-0">
+                <div class="row invoice-spacing">
+                  
+                  <div class="col-xl-12 p-0 mt-xl-0 mt-2">
+                    <h4 class="mb-0" >Information personnel</h4> <br> 
+                    
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td class="pr-1">
+                                  <a href="javascript:void(0);" class="mr-25">
+                                      <img src="{{ apiServerUrl+'/imagePersonnel/'+personnel?.iduser}}" class="rounded mr-50"  height="76" width="80" />
+                                  </a>
+                                  <!-- *ngIf="personnel.image ; else noPhoto"
+                                    <ng-template #noPhoto>
+                                     <a href="javascript:void(0);" class="mr-25">
+                                        <div class="avatar  avatar-xl rounded mr-50" 
+                                        [ngClass]="{
+                                          'bg-light-info': viewPersonnel?.role_personnel === 'magasinier',
+                                          'bg-light-success': viewPersonnel?.role_personnel === 'livreur',
+                                          'bg-light-warning': viewPersonnel?.role_personnel === 'commercial',
+                                          'bg-light-danger': viewPersonnel?.role_personnel === 'gérant'
+                                        }" >
+                                          <div class="avatar-content">{{personnel.nom | initials }}{{ personnel.prenom | initials}}</div>
+                                        </div>
+                                      </a>
+                                  </ng-template> -->
+                                
+                              </td>
+                              <td> 
+                                  <h4 class="mb-0">{{ personnel?.nom }} {{personnel?.prenom}}</h4>
+                                  <span class="card-text">{{ personnel?.email }}</span>
+                              </td>
+                            </tr>
+                              
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-xl-6">
+                        <table>
+                          <tbody>
+                      
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="user" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Numéro de Cin</span>
+                                </div>
+                              </td>
+                              <td>{{ personnel?.cin }}</td>
+                            </tr>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="phone" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Numéro de Téléphone</span>
+                                </div>
+                              </td>
+                              <td>{{ personnel?.tel }}</td>
+                            </tr>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="calendar" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Hub</span>
+                                </div>
+                              </td>
+                              <td><span class="badge badge-glow badge-warning">{{ personnel?.hub?.gouvernorat }}</span></td>
+                            </tr>  
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="calendar" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Role</span>
+                                </div>
+                              </td>
+                              <td><span class="badge badge-glow badge-primary">{{ personnel?.role_personnel }}</span></td>
+                            </tr> 
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="calendar" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Permis</span>
+                                  
+                                </div>
+                              </td>
+                              <td>
+                                <span><a class="mr-1 text-secondary" (click)="downloadPatente(personnel.iduser,'permis')" container="body"
+                                  placement="top" ngbTooltip="Télecharget Permis"><span class="badge badge-glow badge-light-success">Télecharger</span></a></span>
+                              </td>
+                            </tr> 
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="calendar" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Carte Grise</span>
+                                  
+                                </div>
+                              </td>
+                              <td>
+                                <span><a class="mr-1 text-secondary" (click)="downloadPatente(personnel.iduser,'carteGrise')" container="body"
+                                  placement="top" ngbTooltip="Télecharget Carte grise"><span class="badge badge-glow badge-light-success">Télecharger</span></a></span>
+                              </td>
+                            </tr> 
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+            <!-- Address And Contact Ends -->
+
+          
+           
+          </div>
+        </div>
+        <!--/ Invoice -->
+
+        
+      </div>
+    </section>
+  </div>
+
+</div>

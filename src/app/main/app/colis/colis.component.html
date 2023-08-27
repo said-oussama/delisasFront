@@ -1,0 +1,406 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body"  id="main-container">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+          <!-- Statistics Card -->
+          <div class="col-xl-12 col-md-6 col-12"  >
+            <div class="card card-statistics">
+              <div class="card-header">
+                <h4 class="card-title">Statistique</h4>
+                <div class="d-flex align-items-center">
+                </div>
+              </div>
+              <div class="card-body statistics-body">
+                <div class="row">
+                  <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                    <div class="media">
+                      <div class="avatar bg-light-secondary mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis(undefined)"  class="btn  btn-just-icon">
+                            <i data-feather="clipboard" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.total}}</h4>
+                        <p class="card-text font-small-3 mb-0">Tout les colis</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <p></p><br>
+                  <br>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                    <div class="media">
+                      <div class="avatar bg-light-primary mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('cree')"  class="btn  btn-just-icon" >
+                            <i data-feather="edit"  class="avatar-icon"> </i>
+                          </a> 
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.cree}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis crées</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                    <div class="media">
+                      <div class="avatar bg-light-secondary mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('enAttenteDEnlevement')"  class="btn  btn-just-icon">
+                            <i data-feather="watch" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.enAttenteDEnlevement}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis en attente d'enlevement</p>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="col-sm-6 col-xl-3 mb-2 mb-sm-0">
+                    <div class="media">
+                      <div class="avatar bg-light-info mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('enStock')"  class="btn  btn-just-icon">
+                            <i data-feather="archive" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.enStock}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis en stock</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-success mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('enCoursDeLivraison')"  class="btn  btn-just-icon">
+                          <i data-feather="truck" class="avatar-icon"></i>
+                        </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.enCoursDeLivraison}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis en cours de livraison</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              <div class="row">
+                <p></p><br>
+                <br>
+              </div>
+                <div class="row">
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-warning mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('livre')"  class="btn  btn-just-icon">
+                          <i data-feather="check-square" class="avatar-icon"></i>
+                        </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.livre}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis livrés</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-success mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('aenleve')" class="btn  btn-just-icon">
+                            <i data-feather="dollar-sign" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.aenleve}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis a enlevé</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-success mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('livrePaye')" class="btn  btn-just-icon">
+                            <i data-feather="dollar-sign" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.livrePaye}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis livrés et payés</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-warning mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('planificationRetour')"  class="btn  btn-just-icon">
+                            <i data-feather="rotate-cw" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.planificationRetour}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis planifiés retour</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-danger mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('retourne')"   class="btn  btn-just-icon">
+                          <i data-feather="refresh-cw" class="avatar-icon"></i>
+                        </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.retourne}}</h4>
+                        <p class="card-text font-small-3 mb-0">Colis retournés </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <p></p><br>
+                  <br>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-warning mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('enCoursDeTransfert')"  class="btn  btn-just-icon">
+                          <i data-feather="truck" class="avatar-icon"></i>
+                        </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.enCoursDeTransfert}}</h4>
+                        <p class="card-text font-small-3 mb-0">En Cours De Transfert</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="media">
+                      <div class="avatar bg-light-success mr-2">
+                        <div class="avatar-content">
+                          <a  (click)="filterColis('retourEchange')" class="btn  btn-just-icon">
+                            <i data-feather="refresh-cw" class="avatar-icon"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="media-body my-auto">
+                        <h4 class="font-weight-bolder mb-0">{{totalstate.retourEchange}}</h4>
+                        <p class="card-text font-small-3 mb-0">Retour Echange</p>
+                      </div>
+                    </div>
+                  </div>
+              
+            
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/ Statistics Card -->
+
+    <!-- Kitchen Sink Datatables -->
+    <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet >
+        <h4 class="card-title">Gestion des colis</h4>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center"
+                >Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                colis</label
+              >
+            </div>
+          </div>
+          
+        </div>
+          <div class="row">
+            
+            <div class="col-md-6 col-12">
+              <div class="d-flex justify-content-between align-items-center m-1">
+               <!-- <label class="d-flex align-items-center"
+                >Filtre par fournisseur
+                <select class="form-control mx-25" [(ngModel)]="selectedFour" (ngModelChange)="filterFournisseur(selectedFour);" >
+                  <option value="none" > none  </option>
+
+                  <optgroup  *ngFor="let t of listFournisseur">
+                    <option>{{t.nom_societe}} </option>
+
+                   </optgroup>
+
+                </select>
+                
+                </label
+              > -->
+              <div class="btn-group">
+                <div ngbDropdown>
+                  <button
+                    ngbDropdownToggle
+                    class="btn btn-flat-primary"
+                    type="button"
+                    id="dropdownMenuButton100"
+                    name="selectedFour"
+                    rippleEffect
+                    
+                  >
+                   <strong>Fournisseur</strong> 
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenuButton100">
+                    <a ngbDropdownItem href="javascript:void(0)"  (click)="filterFournisseur('none')"> <strong>none</strong>  </a>
+       
+                      <a ngbDropdownItem href="javascript:void(0)" *ngFor="let t of listFournisseur" (click)="filterFournisseur(t.nom_societe)"><strong>{{t.nom_societe}}</strong> </a>
+  
+                  </div>
+                </div>
+              </div>
+              </div> 
+            </div>
+            
+          <div class="col-md-6 col-6 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"
+                ><input
+                  type="search"
+                  placeholder="Recherche"
+                  class="form-control ml-25 btn-outline-primary"
+                  (keyup)="filterUpdate($event)"
+                  
+              /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable
+          [rows]="kitchenSinkRows"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [selectionType]="SelectionType.checkbox"
+          [limit]="basicSelectedOption"
+          let row
+        >
+          <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Fournisseur" prop="fournisseur.nom_societe" [width]="150"></ngx-datatable-column>
+
+          <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="150">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.nom_c}} {{ row.prenom_c}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'short'}}
+            </ng-template>
+
+          </ngx-datatable-column>
+          <ngx-datatable-column name="COD" prop="cod" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column  style="width: 200.625px;" name="Etat" prop="etat" [width]="210" >
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill badge-light-success"
+                [ngClass]="{
+                  'badge-light-primary': row.etat === 'cree',
+                  'badge-light-primary': row.etat === 'aenleve',
+                  'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
+                  'badge-light-warning': row.etat === 'livre',
+                  'badge-light-secondary': row.etat === 'livrePaye',
+                  'badge-light-dark': row.etat === 'planificationRetour' || row.etat === 'enCoursDeTransfert',
+                  'badge-light-danger': row.etat === 'retourne',
+                  'badge-light-info': row.etat === 'enAttenteDEnlevement' || row.etat === 'retourEchange'
+                }"
+              >
+             {{value}}
+            </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+          <ngx-datatable-column name="Adresse Livraison" prop="adresse" [width]="'auto'" [minWidth]="300"></ngx-datatable-column>
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+    <!-- Modal -->
+    <ng-template #modalVC let-modal >
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="exampleModalCenterTitle" >Suivi du </h5>
+        
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus >
+        <div *ngIf="listeState.length>0 ; else noData">
+          <div class="col-md-12">
+              <h4 class="card-title"></h4>
+              <div class="card-body">
+                <ul class="timeline" *ngFor ="let state of listeState">
+                  <li class="timeline-item">
+                    <span class="timeline-point  timeline-point-indicator"
+                    
+                    [ngClass]="{
+                      'timeline-point-success': state.etat === 'En cours de livraison' ,
+                      'timeline-point-warning': state.etat === 'Livré',
+                      'timeline-point-dark': state.etat === 'Livré payé',
+                      'timeline-point-danger': state.etat === 'Retourné',
+                      'timeline-point-info': state.etat === 'En stock',
+                      'timeline-point-secondary': state.etat === 'Planifié retour'
+                    }"
+                    > 
+                    </span>
+                    <div class="timeline-event">
+                      <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                        <h6>{{state.etat}}</h6>
+                        <span class="timeline-event-time">{{state.revtstmp | date :'short'}}</span>
+                      </div>
+                      <!--<p>Invoices have been paid to the company.</p> --> 
+                    </div>
+                  </li>
+                </ul>
+              </div>
+          </div>
+      <!--/ Table Basic -->
+      </div>
+      <ng-template #noData>
+        <div #noData>
+          <h5 class="font-weight-normal">Aucun changement pour l'instant. </h5>
+        </div>
+      </ng-template>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
+          Quitter
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal -->
+    
+  </div>
+</div>

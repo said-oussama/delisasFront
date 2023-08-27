@@ -1,0 +1,259 @@
+<div class="content-wrapper container-xxl p-0">
+  <!-- content header start -->
+  <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <!-- content header end -->
+
+  <!-- Kitchen Sink Datatables -->
+  <section id="ngx-datatable-kitchen-sink" *ngIf="displayForm==false; else addFormHub">
+    <core-card-snippet>
+      <h4 class="card-title">Gestion Hub</h4>
+      <div class="row">
+        <div class="col-12 mb-50">
+          <button type="button" class="btn btn-primary ml-1"(click)="openCreateModal(addFormHub)"  rippleEffect>
+            <span [data-feather]="'plus'" [class]="'mr-0 mr-sm-1'"></span>Ajouter Hub</button
+          >
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="d-flex justify-content-between align-items-center m-1">
+            <label class="d-flex align-items-center"
+              >Afficher
+              <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              hub</label
+            >
+          </div>
+        </div>
+        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+          <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+            <label class="d-flex align-items-center"
+              ><input
+                type="search"
+                placeholder="Recherche"
+                class="form-control ml-25 btn-outline-primary"
+                (keyup)="filterUpdate($event)"
+            /></label>
+          </div>
+        </div>
+      </div>
+      <ngx-datatable
+        [rows]="listHub"
+        [rowHeight]="58"
+        class="bootstrap core-bootstrap"
+        [limit]="10"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [scrollbarH]="true"
+        [limit]="basicSelectedOption"
+      >
+        <ngx-datatable-column name="Hub ID" prop="id_hub" [width]="90"> </ngx-datatable-column>
+        <ngx-datatable-column name="Titre Hub" prop="titre" [width]="180"> </ngx-datatable-column>
+        <ngx-datatable-column name="Adresse" prop="adresse" [width]="150"></ngx-datatable-column>
+        <ngx-datatable-column name="Gouvernorat" prop="gouvernorat" [width]="100"></ngx-datatable-column>
+        <ngx-datatable-column name="Liste gouvernorat" prop="gouvernorat_lie" [width]="'auto'" [minWidth]="300"></ngx-datatable-column>
+        <ngx-datatable-column name="Action" [width]="40" [sortable]="false">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <div class="d-flex align-items-center col-actions">
+              <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body" placement="top" ngbTooltip="Modifier Hub"
+                ><i size="18" data-feather="edit-2"></i
+              ></a>
+              <a
+                class="cursor-pointer text-danger"
+                (click)="onDeleteHub(row,modalDelete)"
+                container="body"
+                placement="top "
+                ngbTooltip="Supprimer Hub"
+                ><i size="18" data-feather="trash-2"></i
+              ></a>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </core-card-snippet>
+  </section>
+  <!--/ Kitchen Sink Datatables -->
+  <!-- ADD FOrm HUB -->
+  <ng-template #addFormHub let-modal>
+    <section id="multiple-column-form">
+      <div class="row match-height">
+        <div class="col-12">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary" id="myModalLabel160">Ajouter Hub</h5>
+          </div>
+          <div class="modal-body" tabindex="0" ngbAutofocus>
+            
+              <form #addHubForm="ngForm">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label"  >Titre Hub</label>
+                    <input
+                     type="text" class="form-control" name= "titre" class="form-control" id="titre"placeholder="Saisir titre hub "
+                    [(ngModel)]="titreVar"
+                    #titreVarRef="ngModel"
+                    [class.error]="addHubForm.submitted && titreVarRef.invalid"
+                    required
+                    /> 
+                    <span *ngIf="addHubForm.submitted && titreVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="titreVarRef.errors.required"
+                        >Ce champ est obligatoire!</small 
+                      >
+                      </span>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label"  >Gouvernorat Hub</label>
+                    <ng-select [items]="selectMulti"  name= "gouvernorat"  
+                    [(ngModel)]="gouvernoratVar"
+                    #gouvernoratVarRef="ngModel"
+                    [class.error]="addHubForm.submitted && gouvernoratVarRef.invalid"
+                    required
+                    > 
+                    <span *ngIf="addHubForm.submitted && gouvernoratVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="gouvernoratVarRef.errors.required"
+                        >Ce champ est obligatoire!</small 
+                      >
+                    </span>
+                  </ng-select>
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label"  >Adresse Hub</label>
+                      <input type="text" class="form-control" id="adresse" name ="adresse" placeholder="Saisir nom du personnel"
+                      [(ngModel)]="adresseVar"
+                      #adresseVarRef="ngModel"
+                      [class.error]="addHubForm.submitted && adresseVarRef.invalid"
+                      required
+                    /> 
+                    <span *ngIf="addHubForm.submitted && adresseVarRef.invalid" class="invalid-form">
+                      <small class="form-text text-danger" *ngIf="adresseVarRef.errors.required"
+                        >Ce champ est obligatoire!</small 
+                      >
+                      </span>
+                    </div>
+                    <div class="form-group form-password-toggle col-md-6">
+                      <label class="form-label" >Liste des gouvernorats</label>
+                      <ng-select
+                      [items]="selectMulti"
+                      [multiple]="true"
+                      name="gouvernorat_lie"
+                      id="gouvernorat_lie"
+                      [closeOnSelect]="true"
+                      [searchable]="true"
+                      bindLabel="gouv"
+                      [(ngModel)]="selectMultiSelected"
+                      
+                      #gouvernoratListVarRef="ngModel"
+                      [class.error]="addHubForm.submitted && gouvernoratListVarRef.invalid"
+                      required
+                      
+                      > 
+                      <span *ngIf="addHubForm.submitted && gouvernoratListVarRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="gouvernoratListVarRef.errors.required"
+                          >Ce champ est obligatoire!</small 
+                        >
+                      </span>
+                    </ng-select>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                <button id="ajouterBtn" class="btn btn-primary btn-submit float-right mr-1" 
+                (click)="onAddHub(addHubForm)" rippleEffect >Ajouter</button>
+                <button class="btn btn-outline-secondary btn-submit float-right mr-1" 
+                (click)="modal.close('Accept click')" rippleEffect >Annuler</button>
+              </div>
+              </form>
+            </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+   <!-- Modal update HUB -->
+   <ng-template #modalUpdate let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Hub</h5>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="card-body">
+          <form class="form" #editForm="ngForm">
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" >Titre Hub</label>
+                <input  class="form-control" ngModel ="{{editHub.titre}}" id="titre" name="titre"  type="text"/> 
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" for="password">Gouvernorat Hub</label>
+                <ng-select [items]="selectMulti"  ngModel ="{{editHub.gouvernorat}}" id="gouvernorat" name="gouvernorat" > </ng-select>
+              </div> 
+            </div>
+            <div class="row">
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" >Adresse Hub</label>
+                <input  class="form-control" ngModel ="{{editHub.adresse}}" id="adresse" name="adresse"  type="text"/> 
+              </div>
+              <div class="form-group form-password-toggle col-md-6">
+                <label class="form-label" >Liste des gouvernorats</label>
+                <input  class="form-control" ngModel ="{{editHub.id_hub}}" id="id_hub" name="id_hub"  type="hidden"/>
+                <ng-select
+                      [items]="selectMulti"
+                      [multiple]="true"
+                      name="gouvernorat_lie"
+                      id="gouvernorat_lie"
+                      [closeOnSelect]="true"
+                      [searchable]="false"
+                      [(ngModel)] ="editHub.gouvernorat_lie"
+                    >
+                    </ng-select>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id ="btnAnnulerUpdate" class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+        Annuler
+      </button>
+      <button type="button" class="btn btn-primary" (click)="onUpdateHub(editForm.value)" rippleEffect>
+        Modifier
+      </button>
+    </div>
+  </ng-template>
+  <!-- / Modal update Personnel-->
+  <!-- Modal delete Personnel -->
+  <ng-template #modalDelete let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Supprimer hub</h5>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <div class="row">
+
+      
+      {{toBeMovedColis.length}} colis doivent être déplacé à un autre hub !
+    </div>
+    <div class="deleteModal">
+    <div class="row">
+      <div class="form-group col-md-6" style="padding-left: 0;margin-top: 5px;">
+        <label class="form-label"  >Choisissez un autre hub</label>
+        <ng-select [items]="availableHubs"  name= "hub"   
+        [(ngModel)]="newHub" bindLabel="titre"
+        > 
+    
+      </ng-select>
+    </div>
+    </div>
+    </div>
+  </div>
+    <div class="modal-footer">
+      <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+        Annuler
+      </button>
+      <button type="button" class="btn btn-danger" (click)="onAssignHubToAnomaly(deleteHub)" rippleEffect>
+        Supprimer
+      </button>
+    </div>
+  </ng-template>
+  <!-- / Modal delete Personnel -->
+</div>

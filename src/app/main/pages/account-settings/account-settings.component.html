@@ -1,0 +1,285 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- account setting page -->
+    <section id="page-account-settings">
+      <div class="row nav-vertical d-flex">
+        <div class="col-md-3 mb-2 mb-md-0">
+          <ul ngbNav #navVertical="ngbNav" class="nav nav-pills flex-column nav-left">
+            <li class="nav-item" ngbNavItem>
+              <a
+                ngbNavLink
+                class="nav-link d-flex py-75"
+                id="account-pill-general"
+                data-toggle="pill"
+                href="#account-vertical-general"
+                aria-expanded="true"
+              >
+                <i data-feather="user" class="font-medium-3 mr-1"></i>
+                <span class="font-weight-bold">General</span>
+              </a>
+              <ng-template ngbNavContent>
+                <div class="card">
+                  <div class="card-body">
+                    <!-- header media -->
+                    <div class="media">
+                      <a href="javascript:void(0);" class="mr-25">
+                        <img src="{{ apiServerUrl+'/logoFournisseur/'+userId}}" class="rounded mr-50" alt="profile image" height="76" width="80" />
+                      </a>
+                      <!-- upload and reset button -->
+                      <div class="media-body mt-75 ml-1">
+                        <button
+                          (click)="file.click()"
+                          for="account-upload"
+                          class="btn btn-sm btn-primary mb-75 mr-75"
+                          rippleEffect
+                        >
+                          Upload
+                        </button>
+                        <input
+                          type="file"
+                          #file
+                          id="account-upload"
+                          hidden
+                          accept="image/*"
+                          (change)="uploadImage($event)"
+                        />
+                        <button class="btn btn-sm btn-outline-secondary mb-75" rippleEffect>Reset</button>
+                      </div>
+                      <!--/ upload and reset button -->
+                    </div>
+                    <!--/ header media -->
+
+                    <!-- form -->
+                    <form class="form" #editForm="ngForm">
+                      <div class="row">
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label">Nom société</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.nom_societe" id="nom_societe"
+                            name="nom_societe" type="text" />
+                          <input class="form-control" [(ngModel)]="accountDetails.iduser" id="iduser" name="iduser" hidden />
+                          <input class="form-control" [(ngModel)]="accountDetails.logo" id="logo" name="logo" type="hidden" />
+          
+                        </div>
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label">Date Fin contrat</label>
+                          <input disabled type="date" class="form-control" id="date_fin_contrat" name="date_fin_contrat" min=""
+                          [(ngModel)]="accountDetails.date_fin_contrat" #date_fin_contratVarRef="ngModel" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label" for="password">Nom Fournisseur</label>
+                          <input disabled class="form-control" [(ngModel)]="accountDetails.nom_f" id="nom_f" name="nom_f" type="text" />
+                        </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label" for="password">Prénom Fournisseur</label>
+                          <input disabled class="form-control" [(ngModel)]="accountDetails.prenom_f" id="prenom_f" name="prenom_f"
+                            type="text" />
+                        </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label">Numéro CIN</label>
+                          <input disabled class="form-control" [(ngModel)]="accountDetails.cin" id="cin" name="cin" type="number" />
+                        </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label">Numéro de téléphone</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.tel" id="tel" name="tel" type="number" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label" for="password">E-mail Fournisseur</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.email" id="email" name="email"
+                            type="text" />
+                        </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label" for="password">Gouvernorat société</label>
+                          <ng-select [items]="gouvernoratList" name="gouvernorat_societe" id="gouvernorat_societe"
+                            bindLabel="viewValue" bindValue="value" placeholder="Choisir gouvernorat"
+                            [(ngModel)]="accountDetails.gouvernorat_societe">
+                          </ng-select>
+                        </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label">Délégation société</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.delegation_societe" (ngModelChange)="update()"
+                            id="delegation_societe" name="delegation_societe" type="text" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label" for="password">Adresse société</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.adresse_societe" id="adresse_societe"
+                            name="adresse_societe" type="text" />
+                        </div>
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label" for="password">Adresse livraison</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.adresse_livraison" id="adresse_livraison"
+                            name="adresse_livraison" type="text" />
+                        </div>
+                      </div>
+                      <div class="row">
+          
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label">Gouvernorat livraison</label>
+                          <ng-select [items]="gouvernoratList" name="gouvernorat_livraison" id="gouvernorat_livraison"
+                            bindLabel="viewValue" bindValue="value" placeholder="Choisir gouvernorat"
+                            [(ngModel)]="accountDetails.gouvernorat_livraison">
+                          </ng-select>
+                        </div>
+                        <div class="form-group form-password-toggle col-md-6">
+                          <label class="form-label" for="password">Délégation livraison</label>
+                          <input class="form-control" [(ngModel)]="accountDetails.delegation_livraison" id="delegation_livraison"
+                            name="delegation_livraison" type="text" />
+                        </div>
+          
+                      </div>
+                      <div class="row">
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label" for="password">Prix livraison</label>
+                          <input disabled class="form-control" [(ngModel)]="accountDetails.prix_livraison" id="prix_livraison"
+                            name="prix_livraison" ptype="number" />
+                        </div>
+                        <div class="form-group form-password-toggle col-md-3">
+                          <label class="form-label">Prix retour</label>
+                          <input disabled class="form-control" [(ngModel)]="accountDetails.prix_retour" id="prix_retour"
+                            name="prix_retour" type="number" />
+                    
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-12">
+                    <button (click)="onUpdateFournisseur()" type="submit" class="btn btn-primary mt-2 mr-1" rippleEffect>Save changes</button>
+                    <button type="reset" class="btn btn-outline-secondary mt-2" rippleEffect>Cancel</button>
+                  </div>
+                    <!--/ form -->
+                </div>
+              </ng-template>
+            </li>
+            <li class="nav-item" ngbNavItem>
+              <a
+                ngbNavLink
+                class="nav-link d-flex py-75"
+                id="account-pill-password"
+                data-toggle="pill"
+                href="#account-vertical-password"
+                aria-expanded="false"
+              >
+                <i data-feather="lock" class="font-medium-3 mr-1"></i>
+                <span class="font-weight-bold">Change Password</span>
+              </a>
+              <ng-template ngbNavContent>
+                <div class="card">
+                  <div class="card-body">
+                    <!-- form -->
+                    <form [formGroup]="form1" class="validate-form">
+                      <div class="row">
+                        <div class="col-12 col-sm-6">
+                          <div class="form-group">
+                            <label for="account-old-password">Old Password</label>
+                            <div class="input-group form-password-toggle input-group-merge">
+                              <input
+                                [type]="passwordTextTypeOld ? 'text' : 'password'"
+                                class="form-control"
+                                formControlName="oldPwd"
+                                id="account-old-password"
+                                name="password"
+                                placeholder="Old Password"
+                              />
+                              <div class="input-group-append">
+                                <span class="input-group-text cursor-pointer"
+                                  ><i
+                                    class="feather font-small-4"
+                                    [ngClass]="{
+                                      'icon-eye-off': passwordTextTypeOld,
+                                      'icon-eye': !passwordTextTypeOld
+                                    }"
+                                    (click)="togglePasswordTextTypeOld()"
+                                  ></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-6">
+                          <div class="form-group">
+                            <label for="account-new-password">New Password</label>
+                            <div class="input-group form-password-toggle input-group-merge">
+                              <input
+                                [type]="passwordTextTypeNew ? 'text' : 'password'"
+                                id="account-new-password"
+                                name="new-password"
+                                formControlName="newPwd"
+                                class="form-control"
+                                placeholder="New Password"
+                              />
+                              <div class="input-group-append">
+                                <span class="input-group-text cursor-pointer"
+                                  ><i
+                                    class="feather font-small-4"
+                                    [ngClass]="{
+                                      'icon-eye-off': passwordTextTypeNew,
+                                      'icon-eye': !passwordTextTypeNew
+                                    }"
+                                    (click)="togglePasswordTextTypeNew()"
+                                  ></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="form-group">
+                            <label for="account-retype-new-password">Retype New Password</label>
+                            <div class="input-group form-password-toggle input-group-merge">
+                              <input
+                                [type]="passwordTextTypeRetype ? 'text' : 'password'"
+                                class="form-control"
+                                id="account-retype-new-password"
+                                formControlName="confirmPwd"
+                                name="confirm-new-password"
+                                placeholder="New Password"
+                              />
+                              <div class="alert alert-danger" *ngIf="confirmPwd.valid && form1.invalid && form1.errors.pwdsDontMatch">
+                                Passwords do not match.
+                              </div>
+                              <div class="input-group-append">
+                                <span class="input-group-text cursor-pointer"
+                                  ><i
+                                    class="feather font-small-4"
+                                    [ngClass]="{
+                                      'icon-eye-off': passwordTextTypeRetype,
+                                      'icon-eye': !passwordTextTypeRetype
+                                    }"
+                                    (click)="togglePasswordTextTypeRetype()"
+                                  ></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <button type="submit" class="btn btn-primary mr-1 mt-1" rippleEffect>Save changes</button>
+                          <button type="reset" class="btn btn-outline-secondary mt-1" rippleEffect>Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                    <!--/ form -->
+                  </div>
+                </div>
+              </ng-template>
+            </li>
+          
+     
+          </ul>
+        </div>
+        <div [ngbNavOutlet]="navVertical" class="col-12 col-md-9"></div>
+      </div>
+    </section>
+    <!--/ account setting page -->
+  </div>
+</div>

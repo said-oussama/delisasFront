@@ -1,0 +1,282 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+     <!-- Kitchen Sink Datatables -->
+     <section id="ngx-datatable-kitchen-sink" >
+      <core-card-snippet>
+        <h4 class="card-title">Liste des colis creés</h4>
+        <div class="row">
+          <div class="col-12 mb-50">
+            <!--<button type="button" class="btn btn-icon btn-primary float-right mr-1" (click)="downloadExemplaire()" ngbTooltip="Télécharger exemplaire" rippleEffect>
+              <span [data-feather]="'download'"></span></button>-->
+            <button type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerDecharge()"rippleEffect>Télécharger Manifeste</button>
+
+           
+            <!--<button [disabled]="selected.length === 0" type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerBordereau()"rippleEffect>Télécharger Bordereau</button>-->
+            <!--<a csvLink [data]="exportCSVData" class="btn btn-outline-secondary float-right mr-1" rippleEffect
+            >Export CSV</a
+          >-->
+            <!--<button type="button" class="btn btn-outline-secondary float-right mr-1" (click)="file.click()" rippleEffect>Import Excel</button>-->
+            <input
+            type="file"
+            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            #file
+            id="account-upload"
+            hidden
+            (change)="excelRead($event)"
+          />
+          </div>
+          <div class="col-12 mb-50">
+            <!--<button type="button" class="btn btn-icon btn-primary float-right mr-1" (click)="downloadExemplaire()" ngbTooltip="Télécharger exemplaire" rippleEffect>
+              <span [data-feather]="'download'"></span></button>-->
+            <button type="button"  class="btn btn-outline-info ml-1" (click)="modifyColisList()"rippleEffect>Valider</button>
+
+           
+            <!--<button [disabled]="selected.length === 0" type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerBordereau()"rippleEffect>Télécharger Bordereau</button>-->
+            <!--<a csvLink [data]="exportCSVData" class="btn btn-outline-secondary float-right mr-1" rippleEffect
+            >Export CSV</a
+          >-->
+            <!--<button type="button" class="btn btn-outline-secondary float-right mr-1" (click)="file.click()" rippleEffect>Import Excel</button>-->
+            <input
+            type="file"
+            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            #file
+            id="account-upload"
+            hidden
+            (change)="excelRead($event)"
+          />
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center"
+                >Afficher
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                colis</label
+              >
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center"
+                ><input
+                  type="Recherche"
+                  placeholder="Filtre"
+                  class="form-control ml-25 btn-outline-primary"
+                  (keyup)="filterUpdate($event)"
+              /></label>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable
+          [rows]="listColisCrees"
+          [rowHeight]="58"
+          class="bootstrap core-bootstrap"
+          [limit]="10"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+          [limit]="basicSelectedOption"
+          [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption"
+          (activate)="onActivate($event)" (select)="onSelect($event)"        >
+        <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+        [resizeable]="false">
+        <ng-template ngx-datatable-header-template let-value="value"
+            let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                    (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                <label class="custom-control-label" for="headerChkbxRef"></label>
+            </div>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+            let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                    (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+        <ngx-datatable-column name="Code à barres" prop="bar_code" [width]="170"></ngx-datatable-column>
+        <ngx-datatable-column name="Nom du client" prop="nom_c" [width]="170">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.nom_c}} {{ row.prenom_c}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{value | date:'short'}}
+          </ng-template>
+
+        </ngx-datatable-column>
+        <ngx-datatable-column name="COD" prop="cod" [width]="120"></ngx-datatable-column>
+        
+        <ngx-datatable-column name="Service" prop="service" [width]="110"></ngx-datatable-column>
+        <!--<ngx-datatable-column name="Action" [width]="80" [sortable]="false">
+          <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+            <div class="d-flex align-items-center col-actions">
+              <a class="mr-1 text-primary" (click)="openUpdateModal(row, modalUpdate)" container="body" placement="top" ngbTooltip="Modifier colis"
+                ><i size="18" data-feather="edit-2"></i
+              ></a>
+              <a
+                class="cursor-pointer text-danger"
+                (click)="openDeleteModal(row,modalDelete)"
+                container="body"
+                placement="top "
+                ngbTooltip="Supprimer colis"
+                ><i size="18" data-feather="trash-2"></i
+              ></a>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>-->
+        </ngx-datatable>
+      </core-card-snippet>
+    </section>
+    <!--/ Kitchen Sink Datatables -->
+    <!-- Modal update Colis -->
+    <ng-template #modalUpdate let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="myModalLabel160">Modifier Colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form class="form" #editForm="ngForm"><br>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">service</label> <ng-select [items]="services" bindLabel="viewValue"  bindValue="value"
+                  [(ngModel)] ="editColis.service" id="service" name="service" > 
+                  </ng-select>
+                  <input  class="form-control" [(ngModel)]="editColis.bar_code" id="bar_code" name="bar_code"  type="hidden" >
+                  <input  class="form-control" [(ngModel)]="editColis.reference" id="reference" name="reference"  type="hidden" >
+                  <input  class="form-control" [(ngModel)]="editColis.etat" id="etat" name="etat"  type="hidden" >
+                  <input  class="form-control" [(ngModel)]="editColis.date_creation" id="date_creation" name="date_creation"  type="hidden" >
+                  <input  class="form-control" [(ngModel)]="editColis.fournisseur" id="fournisseur" name="fournisseur"  type="hidden" >
+                  <input  class="form-control" [(ngModel)]="editColis.hub" id="hub" name="hub"  type="hidden" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >COD</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.cod" id="cod" name="cod"  type="number"/> 
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Mode de paiement</label>
+                  <ng-select [items]="mode_pay" name="mode_paiement" id="mode_paiement" bindLabel="viewValue"  bindValue="value"
+                        placeholder="Choisir mode de paiement"  
+                        [(ngModel)]="editColis.mode_paiement">
+                  </ng-select>
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >Nombre des produits</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.nb_p" id="nb_p" name="nb_p"  type="number"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">designation</label>
+                  <input  class="form-control" [(ngModel)]="editColis.designation" id="designation" name="designation"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Remarque</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.remarque" id="remarque" name="remarque"  type="text"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">longeur</label>
+                  <input  class="form-control" [(ngModel)]="editColis.longeur" id="longeur" name="longeur"  type="number" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >largeur</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.largeur" id="largeur" name="largeur"  type="number"/> 
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">hauteur</label>
+                  <input  class="form-control" [(ngModel)]="editColis.hauteur" id="hauteur" name="hauteur"  type="number" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >poids</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.poids" id="poids" name="poids"  type="number"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">Nom client</label>
+                  <input  class="form-control" [(ngModel)]="editColis.nom_c" id="nom_c" name="nom_c"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >Prénom client</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.prenom_c" id="prenom_c" name="prenom_c"  type="text"/> 
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" for="password">Numéro de téléphone</label>
+                  <input  class="form-control" [(ngModel)]="editColis.tel_c_1" id="tel_c_1" name="tel_c_1"  type="number" >
+                </div>
+                <div class="form-group form-password-toggle col-md-3">
+                  <label class="form-label" >Numéro de téléphone 2 </label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.tel_c_2" id="tel_c_2" name="tel_c_2"  type="number"/> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Adresse client</label>
+                  <input  class="form-control" [(ngModel)]="editColis.adresse" id="adresse" name="adresse"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Gouvernorat client</label>
+                  <ng-select [items]="gouvernoratList" name="gouvernorat" id="gouvernorat" bindLabel="viewValue"  bindValue="value" 
+                        placeholder="Choisir gouvernorat"  
+                        [(ngModel)]  ="editColis.gouvernorat" >
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" for="password">Délégation client</label>
+                  <input  class="form-control" [(ngModel)]="editColis.delegation" id="delegation" name="delegation"  type="text" >
+                </div>
+                <div class="form-group form-password-toggle col-md-6">
+                  <label class="form-label" >Code postal client</label>
+                  <input  class="form-control" [(ngModel)]  ="editColis.code_postal" id="code_postal" name="code_postal"  type="text"/> 
+                </div>
+              </div>
+              
+            </form>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" id ="btnAnnulerUpdate" class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onUpdateColis(editForm.value)" rippleEffect>
+          Modifier
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal update Colis-->
+     <!-- Modal delete Colis -->
+     <ng-template #modalDelete let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Supprimer Colis</h5>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Voulez vous vraiment supprimer ce colis ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAnnulerDelete"class="btn btn-outline-secondary" (click)="modal.close('Accept click')" rippleEffect>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onDeleteColis(deleteColis.reference)" rippleEffect>
+          Supprimer
+        </button>
+      </div>
+    </ng-template>
+    <!-- / Modal delete Colis -->
+  </div>
+</div>

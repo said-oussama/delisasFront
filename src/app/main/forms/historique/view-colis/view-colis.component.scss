@@ -1,0 +1,22 @@
+@import '@core/scss/base/pages/dashboard-ecommerce.scss';
+@import '@core/scss/base/plugins/charts/chart-apex.scss';
+@import '@core/scss/angular/libs/toastr.component.scss';
+@import '@core/scss/angular/libs/form-wizard.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/angular/libs/sweet-alerts.component.scss';
+
+// Earning Chart Tooltip
+#earnings-donut-chart {
+  .apexcharts-tooltip {
+    &.apexcharts-theme-dark {
+      background: rgba($black, 0.8) !important;
+    }
+  }
+}
+
+.datatable-scroll {
+  width: auto !important;
+}
+
+

@@ -1,0 +1,445 @@
+
+<section class="modern-horizontal-wizard">
+    <div id="stepper3" class="bs-stepper wizard-modern modern-wizard-example">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#account-details-modern">
+          <button type="button" class="step-trigger">
+            <span class="bs-stepper-box">
+              <i data-feather="file-text" class="font-medium-3"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">Détails Colis</span>
+            </span>
+          </button>
+        </div>
+        
+        <div class="line">
+          <i data-feather="chevron-right" class="font-medium-2"></i>
+        </div>
+        <div class="step" data-target="#address-step-modern" >
+          <button type="button" class="step-trigger">
+            <span class="bs-stepper-box">
+              <i data-feather="file" class="font-medium-3"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">Historique</span>
+            </span>
+          </button>
+        </div>
+        <div class="line">
+          <i data-feather="chevron-right" class="font-medium-2"></i>
+        </div>
+        <div class="step" data-target="#social-links-modern">
+          <button type="button" class="step-trigger">
+            <span class="bs-stepper-box">
+              <i data-feather="tool" class="font-medium-3"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">Forcer l'état</span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <div id="account-details-modern" class="content"  >
+            <section class="invoice-preview-wrapper">
+                <div class="row invoice-preview">
+                  <!-- Invoice -->
+                  <div class="col-xl-12 col-md-12 col-12 printRef">
+                    <div >
+                        <div class="card-body invoice-padding pt-0">
+                          <div class="row invoice-spacing">
+                            
+                            <div class="col-xl-12 p-0 mt-xl-0 mt-2">
+                              <div class="row">
+                                <!-- <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+              
+                                </div> -->
+                                <div class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                                  <h4 class="mb-0" >Information Client :</h4>
+                                </div>
+                                <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+              
+                                </div>
+                              </div> <br>
+                              <div class="row">
+                                <div class="col-xl-6"> 
+                                  <table>
+                                    <tbody>
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="user" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Client </span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.nom_c }} {{ detail?.prenom_c }}</td>
+                                      </tr>
+                                      
+                                      <tr>
+                                          <td class="pr-1">
+                                            <div class="user-info-title">
+                                              <i data-feather="phone" class="mr-1"></i>
+                                              <span class="card-text user-info-title font-weight-bold mb-0">Numéro de Téléphone 1</span>
+                                            </div>
+                                          </td>
+                                          <td>{{ detail?.tel_c_1 }}</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="pr-1">
+                                            <div class="user-info-title">
+                                              <i data-feather="phone" class="mr-1"></i>
+                                              <span class="card-text user-info-title font-weight-bold mb-0">Numéro de Téléphone 2</span>
+                                            </div>
+                                          </td>
+                                          <td>{{ detail?.tel_c_2 }}</td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <div class="col-xl-6">
+                                  <table>
+                                    <tbody>
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="map" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Adresse </span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.adresse }}</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="map-pin" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Gouvernerat </span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.gouvernorat }}</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="home" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Délégation </span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.delegation }}</td>
+                                      </tr>
+                                      
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="card-body invoice-padding pt-0">
+                        <div class="row invoice-spacing">
+                          
+                          <div class="col-xl-12 p-0 mt-xl-0 mt-2">
+                            <div class="row">
+                              <!-- <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+            
+                              </div>  -->
+                              <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                                <h4 class="mb-0" >Information Colis :</h4>
+                              </div>
+                              <div class="col-xl-5 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+            
+                              </div>
+                            </div> <br>
+                            <div class="row">
+                              <div class="col-xl-6">
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td class="pr-1">
+                                        <div class="user-info-title">
+                                        <i data-feather="file-text" class="mr-1"></i>
+                                          <span class="card-text user-info-title font-weight-bold mb-0">Référence </span>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <span class="font-weight-bold">{{ detail?.reference }}</span>
+                                      </td>
+                                    </tr>
+                                    
+                                    
+                                    <tr>
+                                      <td class="pr-1">
+                                        <div class="user-info-title">
+                                          <i data-feather="calendar" class="mr-1"></i>
+                                          <span class="card-text user-info-title font-weight-bold mb-0">Date de Création</span>
+                                        </div>
+                                      </td>
+                                      <td>{{ detail?.date_creation | date:'short' }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="pr-1">
+                                        <div class="user-info-title">
+                                          <i data-feather="clipboard" class="mr-1"></i>
+                                          <span class="card-text user-info-title font-weight-bold mb-0">Service</span>
+                                        </div>
+                                      </td>
+                                      <td><span class="badge badge-glow badge-info" >{{ detail?.service }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="file" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Code à Barre ancien Colis</span>
+                                          </div>
+                                        </td>
+                                        <td><span >{{ detail?.barCodeAncienColis }}</span></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="align-justify" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Nombre de pièce</span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.nb_p }}</td>
+                                      </tr>
+                                    <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="user" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Fournisseur</span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.fournisseur.nom_f}} {{ detail?.fournisseur?.prenom_f}}</td>
+                                        
+                                      </tr>
+                                    <tr>
+                                      <td class="pr-1">
+                                        <div class="user-info-title">
+                                          <i data-feather="dollar-sign" class="mr-1"></i>
+                                          <span class="card-text user-info-title font-weight-bold mb-0 ">Prix </span>
+                                        </div>
+                                      </td>
+                                      <td><span class="badge badge-glow badge-success"  >{{ detail?.cod }} TND</span></td>
+                                    </tr>
+                                    
+                                      
+                                    
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="col-xl-6">
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                              <i data-feather="file" class="mr-1"></i>
+                                              <span class="card-text user-info-title font-weight-bold mb-0"> Code à Barre </span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.bar_code }}</td>
+                                      </tr>
+                                    
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="watch" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Date de Livraison</span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.dateLivraison | date:'short' }}</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="codepen" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Etat </span>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <span class="badge badge-glow badge-light-warning"
+                                          [ngClass]="{
+                                            'badge-light-primary': detail?.etat === 'cree',
+                                            'badge-light-success': detail?.etat === 'enStock' || detail?.etat  === 'enCoursDeLivraison',
+                                            'badge-light-warning': detail?.etat === 'livre',
+                                            'badge-light-secondary': detail?.etat === 'livrePaye',
+                                            'badge-light-dark': detail?.etat === 'planificationRetour' || detail?.etat  === 'enCoursDeTransfert',
+                                            'badge-light-danger': detail?.etat === 'retourne',
+                                            'badge-light-info': detail?.etat === 'enAttenteDEnlevement' || detail?.etat === 'retourEchange'
+                                          }"
+                                          >{{ detail?.etat }}</span></td>
+                                      </tr>
+                                    <tr>
+                                        
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="disc" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Longueur</span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.longeur }}</td>
+                                    
+                                      <td class="pr-1">
+                                        <div class="user-info-title">
+                                          <i data-feather="disc" class="mr-1"></i>
+                                          <span class="card-text user-info-title font-weight-bold mb-0">Largeur</span>
+                                        </div>
+                                      </td>
+                                      <td>{{ detail?.largeur }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="pr-1">
+                                        <div class="user-info-title">
+                                          <i data-feather="disc" class="mr-1"></i>
+                                          <span class="card-text user-info-title font-weight-bold mb-0">Hauteur</span>
+                                        </div>
+                                      </td>
+                                      <td>{{ detail?.hauteur }}</td>
+                                    
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="disc" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0">Poids</span>
+                                          </div>
+                                        </td>
+                                        <td>{{ detail?.poids }}</td>
+                                      </tr>
+                                      
+                                      <tr>
+                                        <td class="pr-1">
+                                          <div class="user-info-title">
+                                            <i data-feather="credit-card" class="mr-1"></i>
+                                            <span class="card-text user-info-title font-weight-bold mb-0 ">Mode de paiement</span>
+                                          </div>
+                                        </td>
+                                        <td><span class="badge badge-glow badge-warning" >{{ detail?.mode_paiement }}</span></td>
+                                      </tr>
+                                      
+                                    
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Address And Contact Ends -->
+          
+                    
+                     
+                    </div>
+                  </div>
+                  <!--/ Invoice -->
+          
+                  
+                </div>
+              </section>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-secondary btn-prev" disabled rippleEffect>
+                  <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                  <span class="align-middle d-sm-inline-block d-none">Précedent</span>
+                </button>
+                <button class="btn btn-primary btn-next" (click)="modernHorizontalNext()" rippleEffect>
+                  <span class="align-middle d-sm-inline-block d-none">Suivant</span>
+                  <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                </button>
+              </div>
+        </div>
+        <div id="address-step-modern" class="content" >
+            <div class="card-body" >
+                <ul class="timeline" *ngFor = "let eta of historiqueEtat"  >
+                  <li class="timeline-item"  >
+                      <div></div>
+                    <span class="timeline-point timeline-point-indicator"
+                    [ngClass]="{
+                        'timeline-point-primary': listofEtat[eta.etat] === 'cree',
+                        'timeline-point-success': listofEtat[eta.etat] === 'enStock' || listofEtat[eta.etat]  === 'enCoursDeLivraison',
+                        'timeline-point-warning': listofEtat[eta.etat] === 'livre',
+                        'timeline-point-secondary': listofEtat[eta.etat] === 'livrePaye',
+                        'timeline-point-dark': listofEtat[eta.etat] === 'planificationRetour' || listofEtat[eta.etat]  === 'enCoursDeTransfert',
+                        'timeline-point-danger': listofEtat[eta.etat] === 'retourne',
+                        'timeline-point-info': listofEtat[eta.etat] === 'en Attente DEnlevement' || listofEtat[eta.etat] === 'retourEchange'
+                      }"
+                    ></span>
+                    <div class="timeline-event">
+                      <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                        <div
+                           class="badge badge-pill badge-light-success" name="Etat" prop="etat" 
+                        
+                      [ngClass]="{
+                        'badge-light-primary': listofEtat[eta.etat] === 'cree',
+                        'badge-light-success': listofEtat[eta.etat] === 'enStock' || listofEtat[eta.etat]  === 'enCoursDeLivraison',
+                        'badge-light-warning': listofEtat[eta.etat] === 'livre',
+                        'badge-light-secondary': listofEtat[eta.etat] === 'livrePaye',
+                        'badge-light-dark': listofEtat[eta.etat] === 'planificationRetour' || listofEtat[eta.etat]  === 'enCoursDeTransfert',
+                        'badge-light-danger': listofEtat[eta.etat] === 'retourne',
+                        'badge-light-info': listofEtat[eta.etat] === 'en Attente DEnlevement' || listofEtat[eta.etat] === 'retourEchange'
+                      }"
+                    >
+                    {{ listofEtat[eta.etat] }}
+                    </div>
+                    
+                        <span name="Date de modification d'etat" prop="revtstmp"  >{{eta?.revtstmp | date:'short'}}</span>
+                      
+                    </div>
+                      
+                    </div>
+                  </li>
+                 
+                </ul>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-primary btn-prev" (click)="modernHorizontalPrevious()" rippleEffect>
+                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Précedent</span>
+                  </button>
+                <button class="btn btn-primary btn-next" (click)="modernHorizontalNext()" rippleEffect>
+                  <span class="align-middle d-sm-inline-block d-none">Suivant</span>
+                  <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                </button>
+              </div>
+        </div>
+        <div id="social-links-modern" class="content" >
+            <div class="row">
+                <div class="col-6">
+                  <h4>Changer état du colis</h4>
+                  <div class="form-group form-password-toggle col-11">
+                  <label class="form-label"  >Etat</label>
+                  <ng-select [items]="listEtat" bindLabel="viewValue"  bindValue="value"
+                      [(ngModel)] ="etat" id="etat" name="etat" >
+                 </ng-select>
+                </div>
+                </div>
+                <div class="col-6">
+                  <h4>Assigner un anomalie</h4>
+                  <div class="form-group form-password-toggle col-11">
+                    <label class="form-label"  >Etat</label>
+                    <ng-select  [items]="anomalies" id="anomalie" name="acronyme"
+                    bindLabel="acronyme" [(ngModel)]="anomaly" placeholder="Choisir Anomalie"
+                    #anomalieVarRef="ngModel">
+       
+                    <ng-template ng-label-tmp let-item="item">
+                      <span>{{ item?.acronyme }}</span>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                      <span>{{ item?.acronyme }}</span>
+                    </ng-template>
+                  </ng-select>
+                    </div>
+                    
+                            </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary btn-prev" (click)="modernHorizontalPrevious()" rippleEffect>
+                  <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                  <span class="align-middle d-sm-inline-block d-none">Précedent</span>
+                </button>
+                <button class="btn btn-primary btn-submit" rippleEffect (click)="submit()">Submit</button>
+              </div>
+
+
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,234 @@
+<div class="content-wrapper container-xxl p-0">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  
+    <div class="content-body">
+      <section class="invoice-preview-wrapper">
+        <div class="row invoice-preview">
+          <!-- Invoice -->
+          <div class="col-xl-12 col-md-8 col-12 printRef">
+            <div class="card invoice-preview-card">
+                <div class="card-body invoice-padding pt-0">
+                  <div class="row invoice-spacing">
+                    
+                    <div class="col-xl-12 p-0 mt-xl-0 mt-2">
+                      <div class="row">
+                        <!-- <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+      
+                        </div> -->
+                        <div class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                          <h4 class="mb-0" >Information fournisseur :</h4>
+                        </div>
+                        <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+      
+                        </div>
+                      </div> <br>
+                      <div class="row">
+                        <div class="col-xl-6"> 
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td class="pr-1">
+                                    <a href="javascript:void(0);" class="mr-25">
+                                        <img src="{{ apiServerUrl+'/logoFournisseur/'+fournisseur?.iduser}}" class="rounded mr-50" *ngIf="fournisseur?.image ; else noPhoto" height="76" width="80" />
+                                    </a>
+                                    <ng-template #noPhoto>
+                                       <a href="javascript:void(0);" class="mr-25">
+                                          <div class="avatar  avatar-xl rounded mr-50"  >
+                                            <div class="avatar-content">{{fournisseur?.nom_f | initials }}{{ fournisseur?.prenom_f | initials}}</div>
+                                          </div>
+                                        </a>
+                                    </ng-template>
+                                  
+                                </td>
+                                <td> 
+                                    <h4 class="mb-0">{{ fournisseur?.nom_f }} {{fournisseur?.prenom_f}}</h4>
+                                    <span class="card-text">{{ fournisseur?.email }}</span>
+                                </td>
+                              </tr>
+                                
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-xl-6">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td class="pr-1">
+                                  <div class="user-info-title">
+                                    <i data-feather="user" class="mr-1"></i>
+                                    <span class="card-text user-info-title font-weight-bold mb-0">Numéro de Cin</span>
+                                  </div>
+                                </td>
+                                <td>{{ fournisseur?.cin }}</td>
+                              </tr>
+                              <tr>
+                                <td class="pr-1">
+                                  <div class="user-info-title">
+                                    <i data-feather="phone" class="mr-1"></i>
+                                    <span class="card-text user-info-title font-weight-bold mb-0">Numéro de Téléphone</span>
+                                  </div>
+                                </td>
+                                <td>{{ fournisseur?.tel }}</td>
+                              </tr>
+                              <tr>
+                                <td class="pr-1">
+                                  <div class="user-info-title">
+                                    <i data-feather="calendar" class="mr-1"></i>
+                                    <span class="card-text user-info-title font-weight-bold mb-0 ">Date fin de contrat</span>
+                                  </div>
+                                </td>
+                                <td><span class="badge badge-glow badge-warning">{{ fournisseur?.date_fin_contrat }}</span></td>
+                              </tr>  
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="card-body invoice-padding pt-0">
+                <div class="row invoice-spacing">
+                  
+                  <div class="col-xl-12 p-0 mt-xl-0 mt-2">
+                    <div class="row">
+                      <!-- <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+    
+                      </div>  -->
+                      <div class="col-xl-3 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                        <h4 class="mb-0" >Information société :</h4>
+                      </div>
+                      <div class="col-xl-5 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+    
+                      </div>
+                    </div> <br>
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="user" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Nom de la société</span>
+                                </div>
+                              </td>
+                              <td>
+                                <span class="font-weight-bold">{{ fournisseur?.nom_societe }}</span>
+                              </td>
+                            </tr>
+                            
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="map" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Gouvernorat de la société</span>
+                                </div>
+                              </td>
+                              <td>{{ fournisseur?.gouvernorat_societe }}</td>
+                            </tr>
+                            
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="map-pin" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Adresse de la société</span>
+                                </div>
+                              </td>
+                              <td>{{ fournisseur?.adresse_societe }}</td>
+                            </tr>
+                            
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="home" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Délégation de la société</span>
+                                </div>
+                              </td>
+                              <td><span >{{ fournisseur?.delegation_societe }}</span></td>
+                            </tr>
+                            
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="credit-card" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Prix de livraison</span>
+                                </div>
+                              </td>
+                              <td><span class="badge badge-glow badge-success" style="font-size: 1.4rem;" >{{ fournisseur?.prix_livraison }} TND</span></td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-xl-6">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="file-text" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Patente</span>
+                                </div>
+                              </td>
+                              <td><a class="mr-1 text-primary" (click)="downloadPatente(fournisseur.iduser)" container="body"
+                                placement="top" ngbTooltip="Télecharget patente"><i size="18" data-feather="download"></i></a></td>
+                            </tr>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="map" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Gouvernorat de la livraison</span>
+                                </div>
+                              </td>
+                              <td>{{ fournisseur?.gouvernorat_livraison }}</td>
+                            </tr>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="map-pin" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0">Adresse de la livraison</span>
+                                </div>
+                              </td>
+                              <td>{{ fournisseur?.adresse_livraison }}</td>
+                            </tr>
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="home" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Délégation de la livraison</span>
+                                </div>
+                              </td>
+                              <td><span >{{ fournisseur?.gouvernorat_livraison }}</span></td>
+                            </tr>
+                            
+                            <tr>
+                              <td class="pr-1">
+                                <div class="user-info-title">
+                                  <i data-feather="credit-card" class="mr-1"></i>
+                                  <span class="card-text user-info-title font-weight-bold mb-0 ">Prix de retour</span>
+                                </div>
+                              </td>
+                              <td><span class="badge badge-glow badge-danger" style="font-size: 1.4rem;">{{ fournisseur?.prix_retour }} TND</span></td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Address And Contact Ends -->
+  
+            
+             
+            </div>
+          </div>
+          <!--/ Invoice -->
+  
+          
+        </div>
+      </section>
+    </div>
+  
+  </div>

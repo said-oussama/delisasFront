@@ -1,0 +1,98 @@
+<div class="auth-wrapper auth-v2">
+  <div class="auth-inner row m-0">
+    <!-- Brand logo--><a class="brand-logo" href="javascript:void(0);">
+      <img src="assets/images/logo/fgs.png" alt="brand-logo" height="48" width="60" />
+     </a>
+    <!-- /Brand logo-->
+    <!-- Left Text-->
+    <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
+      <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+        <img
+          class="img-fluid"
+          src="/assets/images/pages/login/login1.svg"
+          alt="Login V2"
+        />
+      </div>
+    </div>
+    <!-- /Left Text-->
+    <!-- Login-->
+    <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+        <h2 class="card-title font-weight-bold mb-1">Bienvenue à FGS! 👋</h2>
+        <p class="card-text mb-2">Connectez-vous à votre compte </p>
+        
+        <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+          <div class="alert-body">
+            <p>{{ error }}</p>
+          </div>
+        </ngb-alert>
+
+        <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label class="form-label" for="login-username">Nom d'utilisateur</label>
+            <input
+              type="text"
+              formControlName="username"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+              placeholder="Nom d'utilisateur"
+              aria-describedby="login-username"
+              autofocus=""
+              tabindex="1"
+            />
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Username is required</div>
+              
+            </div>
+          </div>
+          <div class="form-group">
+           
+            <div class="input-group input-group-merge form-password-toggle">
+              <input
+                [type]="passwordTextType ? 'text' : 'password'"
+                formControlName="password"
+                class="form-control form-control-merge"
+                [ngClass]="{ 'is-invalid error': submitted && f.password.errors }"
+                placeholder="············"
+                aria-describedby="login-password"
+                tabindex="2"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text cursor-pointer"
+                  ><i
+                    class="feather font-small-4"
+                    [ngClass]="{
+                      'icon-eye-off': passwordTextType,
+                      'icon-eye': !passwordTextType
+                    }"
+                    (click)="togglePasswordTextType()"
+                  ></i
+                ></span>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+              [ngClass]="{ 'd-block': submitted && f.password.errors }"
+            >
+              <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+          </div>
+          
+          <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>S'authentifier
+          </button>
+        </form>
+      
+        <div class="divider my-2">
+          <div class="divider-text">Ou</div>
+        </div>
+        <div class="auth-footer-btn d-flex justify-content-center">
+          <a class="btn btn-facebook" target="_blank" href="https://www.facebook.com/FGS-343996843460861"><i data-feather="facebook"></i></a
+          ><a class="btn btn-google" target="_blank" href="https://mail.google.com/mail/u/1/#inbox?compose=GTvVlcRwQnnDrmHRwjKssMgrGgnTWWjpNZmzxzCnjzHbHLltTlbhGqQFKHnVNRBgJHpxWzkGGGDnM"><i data-feather="mail"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- /Login-->
+  </div>
+</div>
