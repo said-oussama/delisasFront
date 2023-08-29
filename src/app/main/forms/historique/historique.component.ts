@@ -43,7 +43,9 @@ export class HistoriqueComponent implements OnInit {
   designation;
   public totalstate = {
     cree: 0,
+
     enleve: 0,
+
     enStock: 0,
     enCoursDeLivraison: 0,
     livre: 0,
@@ -53,13 +55,17 @@ export class HistoriqueComponent implements OnInit {
     enAttenteDEnlevement: 0,
     total: 0,
     enCoursDeTransfert: 0,
+
     retourEchange:0,
     aenleve:0
+
   }
   public displayForm: boolean = false;
   barCodeColis;
   listofEtat = [
+
     'cree','aenleve','en Attente DEnlevement', 'enleve', 'enStock', 'enCoursDeLivraison','livre','livrePaye','planificationRetour', 'retourne' ,'enCoursDeTransfert', 'retourEchange'
+
 
   ];
 
@@ -75,12 +81,14 @@ export class HistoriqueComponent implements OnInit {
 
 
 
+
 listEtat = [
   { value: 'cree', viewValue: 'Crée' },{ value: 'aenleve', viewValue: 'a enlevé' }, { value: 'enAttenteDEnlevement', viewValue: "En Attente D'enlevement" }, { value: 'enleve', viewValue: "enlevé" }, { value: 'enStock', viewValue: 'En Stock' }
   ,{ value: 'enCoursDeLivraison', viewValue: 'En Cours De Livraison' }, { value: 'livre', viewValue: 'Livré' }, { value: 'livrePaye', viewValue: 'Livré Payé' }, { value: 'planificationRetour', viewValue: 'Planification Retour' } 
   , { value: 'retourne', viewValue: 'Rétourné' }, { value: 'enCoursDeTransfert', viewValue: 'En Cours De Transfert' }, { value: 'retourEchange', viewValue: 'Retour Echange' }
   
 ];
+
 
 
 

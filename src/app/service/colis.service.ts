@@ -23,9 +23,11 @@ export class ColisService {
 //this.fournisseurID=this.currentUser.iduser
   }
 
+
   public getTotalDeliveredMoney(f:number): Observable<Colis[]> {
     return this.http.get<Colis[]>(`${this.apiServerUrl}/total-delivered-money/{fournisseurID}`);
   }
+
 
   public getAllColisByFournisseur(f:number): Observable<Colis[]> {
     return this.http.get<Colis[]>(`${this.apiServerUrl}/findAllColisByFournisseur/${f}`);
@@ -34,9 +36,11 @@ export class ColisService {
     return this.http.get<Colis[]>(`${this.apiServerUrl}/findColisByFournisseurAndEtat/${f}/cree`);
   }
 
+
   public getColisaenleve(f:any): Observable<Colis[]> {
     return this.http.get<Colis[]>(`${this.apiServerUrl}/findColisByFournisseurAndEtat/${f}/aenleve`);
   }
+
 
   public getColisEnAPrelevement(f:any): Observable<Colis[]> {
     return this.http.get<Colis[]>(`${this.apiServerUrl}/findColisByFournisseurAndEtat/${f}/enAttenteDePrelevement`);
@@ -157,11 +161,13 @@ importColis(colisList):  Observable<any> {
   
 ​forceModificationsColis(body): Observable<any> {
   return this.http.put<any>(`${this.apiServerUrl}/forceModificationsColis`,body);
+
   
   
 }
 forceModificationsColisList(body:any[]) {
   return this.http.post<Colis[]>(`${this.apiServerUrl}/aenleve`,body);  //colisPayloadList: ColisForceModificationsPayload[]
+
 
 
 }

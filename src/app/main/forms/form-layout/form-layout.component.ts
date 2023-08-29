@@ -26,6 +26,7 @@ import { User } from 'app/auth/models';
 })
 export class FormLayoutComponent implements OnInit {
 
+
   etat;
   listofEtat = [
     'cree','aenleve','en Attente DEnlevement', 'enleve', 'enStock', 'enCoursDeLivraison','livre','livrePaye','planificationRetour', 'retourne' ,'enCoursDeTransfert', 'retourEchange'
@@ -46,6 +47,7 @@ export class FormLayoutComponent implements OnInit {
 
   ref:number;
   colisRef: number;
+
 
 
 
@@ -78,8 +80,10 @@ export class FormLayoutComponent implements OnInit {
   public colisRecords;
   barCodeAncienColis;
   public SelectionType = SelectionType;
+
   anomaly ;
   designation;
+
 
   
 
@@ -174,7 +178,6 @@ export class FormLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    
 
     this.colisService.getColisCree(this.fournisseurID).subscribe(response => {
       this.rows = response;
@@ -309,6 +312,7 @@ export class FormLayoutComponent implements OnInit {
     }
 
   }
+
 
 //   colisAenlevee() {
 //     this.listReferenceForPdf = this.selected.map(item=> item.reference);
@@ -465,6 +469,7 @@ modifyColisList() {
     );
   }
 }
+
 
 
 
@@ -673,8 +678,10 @@ modifyColisList() {
     window.location.reload();
   }
 
+
   closeModel() {
     this.modalService.dismissAll();
   }
+
 
 }

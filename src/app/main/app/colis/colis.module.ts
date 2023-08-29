@@ -17,7 +17,9 @@ import { CoreDirectivesModule } from '@core/directives/directives';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from 'app/main/forms/forms.module';
 import { ColisComponent } from './colis.component';
+
 import { AEnleveComponent } from 'app/a-enleve/a-enleve.component';
+
 
 
 const routes: Routes = [

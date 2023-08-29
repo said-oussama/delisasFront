@@ -256,7 +256,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     // Set the application page title
-    this._title.setTitle("FGS");
+
+    this._title.setTitle("DELISAS");
+
   }
 
   /**

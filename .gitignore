@@ -43,5 +43,7 @@ testem.log
 .DS_Store
 Thumbs.db
 *.angulardoc.json
+
 node_modules
 node_modules
+

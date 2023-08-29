@@ -393,7 +393,11 @@ export class FournisseursComponent implements OnInit {
   }
   public async onUpdateFournisseur(fournisseur: Fournisseur): Promise<void> {
     let listColis: Colis[];
-    await this.fournisseurService.updateFournisseur(this.editFournisseur,fournisseur.iduser).toPromise().then(
+
+    fournisseur.prix_livraison=Number(fournisseur.prix_livraison);
+    fournisseur.prix_retour=Number(fournisseur.prix_retour);
+    await this.fournisseurService.updateFournisseur(fournisseur,fournisseur.iduser).toPromise().then(
+
       (response: Fournisseur) => {
         this._toastrService.success('Vous avez modifié le fournisseur ' + response.iduser + ' avec succès ! ',
           'Modification avec succès !', { toastClass: 'toast ngx-toastr', closeButton: true, timeOut: 2000 }).onHidden.pipe(takeUntil(this.destroy$)).subscribe(res => {

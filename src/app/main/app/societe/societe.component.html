@@ -26,7 +26,8 @@
                     <div class="media">
                       <a href="javascript:void(0);" class="mr-25">
 
-                        <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" />
+                        <img src="{{ apiServerUrl+'/logoSocietePrincipal'}}" class="rounded mr-50"
+                           height="76" width="80" />
 
                       </a>
                       <!-- <ng-template #noPhoto>
@@ -45,8 +46,8 @@
                         Importer une photo
                       </button>
 
-                      <input type="file" #file accept="image/*" id="account-upload" 
-                      (change)="onSelectImage($event)" accept="image/*"/>
+                      <input type="file" #file accept="image/*" id="account-upload" hidden accept="image/*"
+                      (change)="onSelectImage($event)" />
 
                         </div>
                       </div>

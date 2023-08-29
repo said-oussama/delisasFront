@@ -120,6 +120,7 @@
                     <div class="media">
                       <div class="avatar bg-light-success mr-2">
                         <div class="avatar-content">
+
                           <a  (click)="filterColis('aenleve')" class="btn  btn-just-icon">
                             <i data-feather="dollar-sign" class="avatar-icon"></i>
                           </a>
@@ -135,6 +136,7 @@
                     <div class="media">
                       <div class="avatar bg-light-success mr-2">
                         <div class="avatar-content">
+
 
                           <a  (click)="filterColis('livrePaye')" class="btn  btn-just-icon">
                             <i data-feather="dollar-sign" class="avatar-icon"></i>
@@ -333,7 +335,9 @@
                 class="badge badge-pill badge-light-success"
                 [ngClass]="{
                   'badge-light-primary': row.etat === 'cree',
+
                   'badge-light-primary': row.etat === 'aenleve',
+
 
                   'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
                   'badge-light-warning': row.etat === 'livre',

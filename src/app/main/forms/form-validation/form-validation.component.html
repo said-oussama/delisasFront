@@ -3,6 +3,7 @@
     <!-- content-header component -->
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
+
 <!-- Statistics Card -->
 <div class="col-xl-12 col-md-6 col-12">
   <div class="card card-statistics">
@@ -235,10 +236,12 @@
               <h4 class="font-weight-bolder mb-0">{{totalstate.retourEchange}}</h4>
               <p class="card-text font-small-3 mb-0">Retour Echange</p>
 
+
             </div>
           </div>
         </div>
       </div>
+
 
       <!-- Sixième ligne -->
       <div class="row">
@@ -254,6 +257,7 @@
 </div>
 
  
+
       <!--/ Statistics Card -->
     <!-- Kitchen Sink Datatables -->
     <section id="ngx-datatable-kitchen-sink" *ngIf="displayForm==false">
@@ -317,7 +321,9 @@
           <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
             <ng-template let-value="value" ngx-datatable-cell-template>
 
+
               {{value | date:'dd/MM/yyyy'}}
+
             </ng-template>
 
           </ngx-datatable-column>
@@ -959,7 +965,9 @@
               </div>
               
 
+
                   <span name="Date de modification d'etat" prop="revtstmp"  >{{eta.revtstmp | date:'dd/MM/yyyy'}}</span>
+
                 
               </div>
                 

@@ -269,6 +269,7 @@ export class EcommerceComponent implements OnInit {
       'enAttenteDEnlevement',
       'enleve',
 
+
       'enCoursDeTransfert'
     ]
     listOfStatus.forEach(status => {

@@ -17,7 +17,9 @@ export const locale = {
     retourne:"Rétourne",
     enAttenteDePrelevement:"En attente de prelevement",
 
+
     enleve:"enleve",
+
 
 
     livre:"Livré"

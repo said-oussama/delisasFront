@@ -11,7 +11,9 @@ export const locale = {
     enStock:"En Stock",
     cree:"Crée",
 
+
     enleve:"enleve",
+
 
     enCoursDeLivraison:"En cours de livraison",
     livrePaye:"Livré payé",

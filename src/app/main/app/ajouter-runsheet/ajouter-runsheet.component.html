@@ -44,7 +44,9 @@
           <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
             <ng-template let-value="value" ngx-datatable-cell-template>
 
+
               {{value | date:'dd/MM/yyyy'}}
+
 
             </ng-template>
 

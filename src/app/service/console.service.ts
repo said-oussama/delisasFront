@@ -51,6 +51,11 @@ export class ConsoleService  {
   public findColisHubDepartHubArrivee(barcode): Observable<Hub> {
     return this.http.get<Hub>(`${this.apiServerUrl}/findColisHubDepartHubArrivee/${barcode}`);
   }
+
+  public getAllHubs(): Observable<Hub> {
+    return this.http.get<Hub>(`${this.apiServerUrl}/retrieve-all-Hubs`);
+  }
+
   
   
   public getConsoleByBarCode(barcode): Observable<any> {

@@ -22,7 +22,9 @@ import { SocieteLivService } from 'app/service/societeLiv.service';
 })
 export class SocieteComponent implements OnInit { 
 
+
   imagePreview: string | ArrayBuffer;
+
   @ViewChild('addSocieteForm') public societeForm: NgForm;
   contentHeader : any;
   adresseVar;
@@ -83,13 +85,10 @@ export class SocieteComponent implements OnInit {
 
   }
 
-  onSelectImage(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
+  onSelectImage(event) {
+    if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreview = e.target.result;
-      };
+
       this.societeFile = file;
       this.societeFileName = file.name
 
@@ -98,7 +97,8 @@ export class SocieteComponent implements OnInit {
         this.message = "Only images are supported.";
         return;
       }
-      //var reader = new FileReader();
+
+      var reader = new FileReader();
 
       this.imagePath = file;
       reader.readAsDataURL(file);
