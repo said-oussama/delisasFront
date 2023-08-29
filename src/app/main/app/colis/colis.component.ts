@@ -41,6 +41,7 @@ export class ColisComponent implements OnInit {
   public totalstate = {
     cree: 0,
     aenleve:0,
+
     enStock: 0,
     enCoursDeLivraison: 0,
     livre: 0,
@@ -49,6 +50,7 @@ export class ColisComponent implements OnInit {
     retourne: 0,
     enAttenteDEnlevement: 0,
     enleve: 0,
+
     total: 0,
     enCoursDeTransfert: 0,
     retourEchange:0

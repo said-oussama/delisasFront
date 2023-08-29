@@ -48,6 +48,7 @@ const appRoutes: Routes = [
     loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
   },
   {
+
     path: 'apps',
     loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
     canActivate: [AuthGuard]
@@ -185,9 +186,8 @@ const appRoutes: Routes = [
     ContextMenuComponent,
     BasicCustomContextMenuComponent,
     AnimatedCustomContextMenuComponent,
-    SubMenuCustomContextMenuComponent,
-    //PaymentComponent,
-    //AEnleveComponent
+
+    SubMenuCustomContextMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -212,8 +212,8 @@ const appRoutes: Routes = [
     CoreThemeCustomizerModule,
     CardSnippetModule,
     LayoutModule,
-    ContentHeaderModule,
-    
+
+    ContentHeaderModule
   ],
 
   providers: [

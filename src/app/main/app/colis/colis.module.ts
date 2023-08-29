@@ -19,6 +19,7 @@ import { FormsModule } from 'app/main/forms/forms.module';
 import { ColisComponent } from './colis.component';
 import { AEnleveComponent } from 'app/a-enleve/a-enleve.component';
 
+
 const routes: Routes = [
   {
     path: 'list-colis',

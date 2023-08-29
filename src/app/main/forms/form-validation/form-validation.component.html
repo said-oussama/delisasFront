@@ -234,6 +234,7 @@
             <div class="media-body my-auto">
               <h4 class="font-weight-bolder mb-0">{{totalstate.retourEchange}}</h4>
               <p class="card-text font-small-3 mb-0">Retour Echange</p>
+
             </div>
           </div>
         </div>
@@ -252,6 +253,7 @@
   </div>
 </div>
 
+ 
       <!--/ Statistics Card -->
     <!-- Kitchen Sink Datatables -->
     <section id="ngx-datatable-kitchen-sink" *ngIf="displayForm==false">
@@ -314,7 +316,8 @@
           <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
           <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              {{value | date:'short'}}
+
+              {{value | date:'dd/MM/yyyy'}}
             </ng-template>
 
           </ngx-datatable-column>
@@ -955,7 +958,8 @@
               {{ listofEtat[eta.etat] }}
               </div>
               
-                  <span name="Date de modification d'etat" prop="revtstmp"  >{{eta.revtstmp | date:'short'}}</span>
+
+                  <span name="Date de modification d'etat" prop="revtstmp"  >{{eta.revtstmp | date:'dd/MM/yyyy'}}</span>
                 
               </div>
                 

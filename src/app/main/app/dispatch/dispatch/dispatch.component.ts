@@ -198,6 +198,8 @@ export class DispatchComponent implements OnInit {
    */
   ngOnInit() {
     this.dispatchService.getAllColisaenleve().pipe(takeUntil(this.destroy$)).subscribe(response => {
+
+    
       this.listColisCrees = response;
       this.tempData = response;
       // this.kitchenSinkRows = this.rows;

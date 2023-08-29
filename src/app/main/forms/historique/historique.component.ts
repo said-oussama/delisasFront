@@ -60,6 +60,7 @@ export class HistoriqueComponent implements OnInit {
   barCodeColis;
   listofEtat = [
     'cree','aenleve','en Attente DEnlevement', 'enleve', 'enStock', 'enCoursDeLivraison','livre','livrePaye','planificationRetour', 'retourne' ,'enCoursDeTransfert', 'retourEchange'
+
   ];
 
 
@@ -80,6 +81,7 @@ listEtat = [
   , { value: 'retourne', viewValue: 'Rétourné' }, { value: 'enCoursDeTransfert', viewValue: 'En Cours De Transfert' }, { value: 'retourEchange', viewValue: 'Retour Echange' }
   
 ];
+
 
 
 

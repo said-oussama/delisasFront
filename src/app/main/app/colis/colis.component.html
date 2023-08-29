@@ -135,6 +135,7 @@
                     <div class="media">
                       <div class="avatar bg-light-success mr-2">
                         <div class="avatar-content">
+
                           <a  (click)="filterColis('livrePaye')" class="btn  btn-just-icon">
                             <i data-feather="dollar-sign" class="avatar-icon"></i>
                           </a>
@@ -319,6 +320,7 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="150"></ngx-datatable-column>
           <ngx-datatable-column name="Date de création" prop="date_creation" [width]="150">
+
             <ng-template let-value="value" ngx-datatable-cell-template>
               {{value | date:'short'}}
             </ng-template>
@@ -332,6 +334,7 @@
                 [ngClass]="{
                   'badge-light-primary': row.etat === 'cree',
                   'badge-light-primary': row.etat === 'aenleve',
+
                   'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
                   'badge-light-warning': row.etat === 'livre',
                   'badge-light-secondary': row.etat === 'livrePaye',

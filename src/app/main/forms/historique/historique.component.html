@@ -100,7 +100,9 @@
           <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
           <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              {{value | date:'short'}}
+
+              {{value | date:'dd/MM/yyyy'}}
+
             </ng-template>
 
           </ngx-datatable-column>
@@ -122,6 +124,7 @@
                   'badge-light-danger': row.etat === 'retourne',
                   'badge-light-dark':row.etat === 'enCoursDeTransfert',
                   'badge-light-info':row.etat === 'retourEchange'
+
                 }"
               >
              {{ value }}

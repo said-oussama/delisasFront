@@ -42,6 +42,7 @@ listEtat = [
   ,{ value: 'enCoursDeLivraison', viewValue: 'En Cours De Livraison' }, { value: 'livre', viewValue: 'Livré' }, { value: 'livrePaye', viewValue: 'Livré Payé' }, { value: 'planificationRetour', viewValue: 'Planification Retour' } 
   , { value: 'retourne', viewValue: 'Rétourné' }, { value: 'enCoursDeTransfert', viewValue: 'En Cours De Transfert' }, { value: 'retourEchange', viewValue: 'Retour Echange' }
   
+
   ];
   // private
   private horizontalWizardStepper: Stepper;

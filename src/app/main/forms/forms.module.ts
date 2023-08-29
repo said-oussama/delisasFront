@@ -45,6 +45,7 @@ const routes = [
   //   },
   //  // data: { animation: 'decommerce' }
   // },
+
   {
     path: 'list-personnel',
     component: PersonnelComponent,

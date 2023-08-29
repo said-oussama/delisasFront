@@ -189,6 +189,7 @@ tailleList = [
             this._toastrService.success('Vous avez ajouté le colis '+ response.reference +' avec succès ! ',
             'Ajout avec succès !',{ toastClass: 'toast ngx-toastr', closeButton: true,timeOut:2000 }).onHidden.subscribe(res => {
               this._router.navigate(['']);
+              this._router.navigate(['/colis/list-colis']);
               HWForm.form.reset();
               HWForm2.form.reset();
             });
