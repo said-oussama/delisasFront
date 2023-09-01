@@ -83,7 +83,9 @@ export class AuthenticationService {
             // Display welcome toast!
             setTimeout(() => {
               this._toastrService.success(
-                'Vous êtes conneté(e)s à FGS.  🎉',
+
+                'Vous êtes conneté(e)s à DELISAS.  🎉',
+
                 '👋 Bienvenue, ' + user.username + '!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );

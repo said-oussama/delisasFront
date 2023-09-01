@@ -9,7 +9,8 @@ import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-dat
 
 import * as snippet from 'app/main/app/console/console.snippetcode';
 import { Hub } from 'app/Model/hub';
-import { Console } from 'app/Model/Console';
+
+import { Console } from 'app/Model/console';
 
 import { SocieteLiv } from 'app/Model/societeLiv';
 import { ConsoleService } from 'app/service/console.service';
@@ -44,7 +45,9 @@ export class AjouterConsoleComponent implements OnInit {
   public exportCSVData;//
   public testLivreurList: LivreurList[];
   public personnel_idVar;
-  livreur;
+
+  public livreur;
+
   public id_hubVar;
   public gouvernoratVar;//
   public adresseVar;
@@ -55,6 +58,10 @@ export class AjouterConsoleComponent implements OnInit {
   public testListColis: Colis[] = [];
   public ListColisRows: any;//
   public testPersonnel: Personnel;
+
+  public listHubs = [];
+  @ViewChild('colisForm',{}) colisForm: NgForm;
+
   listLivreur: any;
 
   count = 0;
@@ -165,7 +172,20 @@ export class AjouterConsoleComponent implements OnInit {
         ]
       }
     };
+
+  
+
+   
   }
+  private setSelectHubs() {
+  this.ConsoleService.getAllHubs().subscribe((data:any)=>{
+    for(var i = 0; i < data.length; i++){  // loop through the object array
+         this.listHubs.push(data[i].adresse);        // push each element to sys_id
+    }
+  })
+}
+
+
   openCreateModal(createModel) {
     this.modalService.open(createModel, {
       centered: true,
@@ -219,9 +239,11 @@ export class AjouterConsoleComponent implements OnInit {
           item.push(obj);
           this.count++;
           this.items = this.items.concat(item);
+
           this.hubDepart = null;
           this.hubArrive = null;
           this.barCodeColis = null;
+
 
         }
 

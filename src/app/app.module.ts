@@ -31,8 +31,10 @@ import { AnimatedCustomContextMenuComponent } from './main/extensions/context-me
 import { BasicCustomContextMenuComponent } from './main/extensions/context-menu/custom-context-menu/basic-custom-context-menu/basic-custom-context-menu.component';
 import { SubMenuCustomContextMenuComponent } from './main/extensions/context-menu/custom-context-menu/sub-menu-custom-context-menu/sub-menu-custom-context-menu.component';
 import { Role } from './auth/models';
+
 import { AEnleveComponent } from './a-enleve/a-enleve.component';
 import { PaymentComponent } from './payment/payment.component';
+
 
 const appRoutes: Routes = [
   {
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
+
     path: 'a-enleve',
     loadChildren: () => import('./a-enleve/a-enleve.module').then(m => m.AEnleveModule)
   },
@@ -48,6 +51,8 @@ const appRoutes: Routes = [
     loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
   },
   {
+
+
     path: 'apps',
     loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
     canActivate: [AuthGuard]
@@ -185,9 +190,8 @@ const appRoutes: Routes = [
     ContextMenuComponent,
     BasicCustomContextMenuComponent,
     AnimatedCustomContextMenuComponent,
-    SubMenuCustomContextMenuComponent,
-    //PaymentComponent,
-    //AEnleveComponent
+
+    SubMenuCustomContextMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -212,8 +216,8 @@ const appRoutes: Routes = [
     CoreThemeCustomizerModule,
     CardSnippetModule,
     LayoutModule,
-    ContentHeaderModule,
-    
+
+    ContentHeaderModule
   ],
 
   providers: [

@@ -58,7 +58,11 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Date de création" prop="creationDate" [width]="150">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              {{value | date:'short'}}
+
+
+              {{value | date:'dd/MM/yyyy'}}
+
+
             </ng-template>
   
           </ngx-datatable-column>
@@ -174,7 +178,11 @@
                             {{colis.tel_c_1}}
                         </td>
                         <td>
-                            {{colis.date_creation | date:'short'}}
+
+
+                            {{colis.date_creation | date:'dd/MM/yyyy'}}
+
+
                         </td>
                         <td>
                           {{colis.etat}}

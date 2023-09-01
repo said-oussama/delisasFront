@@ -1047,6 +1047,8 @@ export const menu: CoreMenu[] = [
         url: 'colis/list-colis'
       },
       {
+
+
         id: 'a-enleve',
         title: 'Colis a enlever',
         translate: 'MENU.FT.LAYOUTS',
@@ -1056,6 +1058,8 @@ export const menu: CoreMenu[] = [
         url: 'a-enleve'
       },
       {
+
+
         id: 'form-validation',
         title: 'Gestion Colis',
         translate: 'MENU.FT.VALIDATION',
@@ -1064,6 +1068,7 @@ export const menu: CoreMenu[] = [
         icon: 'archive',
         url: 'colis/gestion-colis'
       },
+
 
 
     
@@ -1254,6 +1259,8 @@ export const menu: CoreMenu[] = [
             url: 'liste-retour/liste-retour'
           }
         ]
+
+
       },
       {
         id: 'payment',
@@ -1263,6 +1270,8 @@ export const menu: CoreMenu[] = [
         role: ['Admin'],
         icon: 'clipboard',
         url: 'payment'
+
+
       }
       // ,
       // {
@@ -1421,4 +1430,17 @@ export const menu: CoreMenu[] = [
       }
     ]
   }*/
+
+
+  {
+    id: 'form-validation',
+    title: 'Gestion ticket',
+    translate: 'MENU.FT.VALIDATION',
+    type: 'item',
+    role: ['Fournisseur'],
+    icon: 'archive',
+    url: 'colis/gestion-colis'
+  },
+
+
 ];

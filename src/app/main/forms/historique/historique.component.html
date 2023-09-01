@@ -100,7 +100,11 @@
           <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
           <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              {{value | date:'short'}}
+
+
+              {{value | date:'dd/MM/yyyy'}}
+
+
             </ng-template>
 
           </ngx-datatable-column>
@@ -111,17 +115,14 @@
                 class="badge badge-pill badge-light-success"
                 [ngClass]="{
                   'badge-light-primary': row.etat === 'cree',
-                  'badge-light-primary': row.etat === 'aenleve',
-                  'badge-light-info': row.etat === 'enAttenteDEnlevement',
-                  'badge-light-primary': row.etat === 'enleve',
-                  'badge-light-success': row.etat == 'enStock',
-                  'badge-light-success': row.etat === 'enCoursDeLivraison',
+
+                  'badge-light-success': row.etat == 'enStock' || row.etat === 'enCoursDeLivraison',
                   'badge-light-warning': row.etat === 'livre',
                   'badge-light-secondary': row.etat === 'livrePaye',
-                  'badge-light-dark': row.etat === 'planificationRetour',
+                  'badge-light-dark': row.etat === 'planificationRetour' || row.etat === 'enCoursDeTransfert',
                   'badge-light-danger': row.etat === 'retourne',
-                  'badge-light-dark':row.etat === 'enCoursDeTransfert',
-                  'badge-light-info':row.etat === 'retourEchange'
+                  'badge-light-info': row.etat === 'enAttenteDEnlevement' || row.etat === 'retourEchange'
+
                 }"
               >
              {{ value }}

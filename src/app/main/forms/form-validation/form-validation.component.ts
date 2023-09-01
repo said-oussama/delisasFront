@@ -48,8 +48,11 @@ export class FormValidationComponent implements OnInit {
   public test: number = 0;
   public totalstate = {
     cree: 0,
+
     aenleve:0,
     enleve: 0,
+
+
     enStock: 0,
     enCoursDeLivraison: 0,
     livre: 0,
@@ -102,7 +105,10 @@ export class FormValidationComponent implements OnInit {
   public fournisseurVar;
   barCodeAncienColis;
   listofEtat = [
+
     'cree', 'en Attente DEnlevement', 'enleve', 'enCoursDeTransfert', 'enStock', 'enCoursDeLivraison','livre','planificationRetour', 'retourEchange', 'retourne','livrePaye','planificationRetourEchange'
+
+
   ];
   fragileList = [
     
@@ -158,7 +164,10 @@ export class FormValidationComponent implements OnInit {
     { value: 'espece', viewValue: 'Espèse' },
   ]
   listEtat = [
+
     { value: 'cree', viewValue: 'Crée' },{ value: 'aenleve', viewValue: 'a enlevé' }, { value: 'En stock', viewValue: 'enStock' }, { value: 'En stock', viewValue: 'enStock' }, { value: 'enAttenteDEnlevement', viewValue: 'En Attente D enlevement' },{ value: 'enleve', viewValue: 'enleve' }
+
+
     , { value: 'enCoursDeTransfert', viewValue: 'En Cours De Transfert' }, { value: 'enCoursDeTransfert', viewValue: 'En Cours De Transfert' }, { value: 'enCoursDeLivraison', viewValue: 'En Cours De Livraison' }
     , { value: 'planificationRetour', viewValue: 'Planification Retour' }, { value: 'retourEchange', viewValue: 'Retour Echange' }
     , { value: 'retourne', viewValue: 'Rétourné' }, { value: 'livre', viewValue: 'Livré' }, { value: 'livrePaye', viewValue: 'Livré Payé' }
@@ -266,8 +275,11 @@ export class FormValidationComponent implements OnInit {
   }
   countByEtat() {
     const listOfStatus = ['cree',
+
     'aenleve',
     'enleve',
+
+
     'enStock',
     'enCoursDeLivraison',
     'livre',

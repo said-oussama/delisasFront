@@ -11,7 +11,8 @@
           <div class="col-12 mb-50">
             <!--<button type="button" class="btn btn-icon btn-primary float-right mr-1" (click)="downloadExemplaire()" ngbTooltip="Télécharger exemplaire" rippleEffect>
               <span [data-feather]="'download'"></span></button>-->
-            <button type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerDecharge()"rippleEffect>Télécharger Manifeste</button>
+
+
 
            
             <!--<button [disabled]="selected.length === 0" type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerBordereau()"rippleEffect>Télécharger Bordereau</button>-->
@@ -39,6 +40,16 @@
             >Export CSV</a
           >-->
             <!--<button type="button" class="btn btn-outline-secondary float-right mr-1" (click)="file.click()" rippleEffect>Import Excel</button>-->
+
+            <button [disabled]="selected.length === 0" type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerDecharge()"rippleEffect>Télécharger Manifeste</button>
+             
+           <button [disabled]="selected.length === 0" type="button"  class="btn btn-outline-info ml-1" (click)="onTelechargerBordereau()"rippleEffect>Télécharger Bordereau</button>
+            <a csvLink [data]="exportCSVData" class="btn btn-outline-secondary float-right mr-1" rippleEffect
+            >Export CSV</a
+          >
+          <button type="button" class="btn btn-outline-secondary float-right mr-1" (click)="file.click()" rippleEffect>Import Excel</button>
+
+
             <input
             type="file"
             accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -114,7 +125,9 @@
         <ngx-datatable-column name="Numéro de téléphone" prop="tel_c_1" [width]="200"></ngx-datatable-column>
         <ngx-datatable-column name="Date de création" prop="date_creation" [width]="200">
           <ng-template let-value="value" ngx-datatable-cell-template>
-            {{value | date:'short'}}
+
+            {{value | date:'dd/MM/yyyy'}}
+
           </ng-template>
 
         </ngx-datatable-column>

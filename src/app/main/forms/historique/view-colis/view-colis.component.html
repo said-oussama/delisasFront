@@ -174,7 +174,10 @@
                                           <span class="card-text user-info-title font-weight-bold mb-0">Date de Création</span>
                                         </div>
                                       </td>
-                                      <td>{{ detail?.date_creation | date:'short' }}</td>
+
+
+                                      <td>{{ detail?.date_creation | date:'dd/MM/yyyy'}}</td>
+
                                     </tr>
                                     <tr>
                                       <td class="pr-1">
@@ -248,7 +251,11 @@
                                             <span class="card-text user-info-title font-weight-bold mb-0">Date de Livraison</span>
                                           </div>
                                         </td>
-                                        <td>{{ detail?.dateLivraison | date:'short' }}</td>
+
+
+                                        <td>{{ detail?.dateLivraison | date:'dd/MM/yyyy'}}</td>
+
+
                                       </tr>
                                       <tr>
                                         <td class="pr-1">
@@ -380,7 +387,10 @@
                     {{ listofEtat[eta.etat] }}
                     </div>
                     
-                        <span name="Date de modification d'etat" prop="revtstmp"  >{{eta?.revtstmp | date:'short'}}</span>
+
+
+                        <span name="Date de modification d'etat" prop="revtstmp"  >{{eta?.revtstmp | date:'dd/MM/yyyy'}}</span>
+
                       
                     </div>
                       

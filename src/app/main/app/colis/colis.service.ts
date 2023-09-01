@@ -8,7 +8,9 @@ import { environment } from 'environments/environment';
 
 @Injectable()
 export class DatatablesService implements Resolve<any> {
-  private fournisseurID = environment.FournisseurID;
+
+  private fournisseurID = environment.fournisseurID;
+
   rows: Colis[];
   rows2: Colis[];
 

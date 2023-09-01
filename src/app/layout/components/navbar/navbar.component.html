@@ -4,7 +4,8 @@
     <li class="nav-item">
       <a class="navbar-brand" [routerLink]="['/']">
         <span class="brand-logo">
-          <img src="assets/images/logo/fgs.jpg" alt="brand-logo" width="36" />
+
+          <img src="assets\images\logo\logo-delisas.png" alt="brand-logo" width="36" />
         </span>
         <h2 class="brand-text mb-0">{{ coreConfig.app.appName }}</h2>
       </a>
@@ -82,6 +83,7 @@
             <span class="user-status"><strong>{{ this.nomSL }}</strong></span>
           </div>
           <div *ngIf="this.currentUser.image ; else customAvatar">
+
           <span class="avatar"
             ><img
               class="round"

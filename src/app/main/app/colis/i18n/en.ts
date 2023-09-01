@@ -16,7 +16,11 @@ export const locale = {
     enCoursDeTransfert:"En cours de transfert",
     retourne:"Rétourne",
     enAttenteDePrelevement:"En attente de prelevement",
+
+
     enleve:"enleve",
+
+
 
     livre:"Livré"
     

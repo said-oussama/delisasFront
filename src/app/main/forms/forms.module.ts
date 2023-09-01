@@ -35,6 +35,7 @@ const routes = [
     },
    // data: { animation: 'decommerce' }
   },
+
   // {
   //   path: 'colis-a-enleve',
   //   component: FormLayoutComponent,
@@ -45,6 +46,8 @@ const routes = [
   //   },
   //  // data: { animation: 'decommerce' }
   // },
+
+
   {
     path: 'list-personnel',
     component: PersonnelComponent,

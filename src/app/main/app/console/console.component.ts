@@ -9,7 +9,10 @@ import { ColumnMode, DatatableComponent} from '@swimlane/ngx-datatable';
 
 import * as snippet from 'app/main/app/console/console.snippetcode';
 import { Hub } from 'app/Model/hub';
-import { Console } from 'app/Model/Console';
+
+ import { Console } from 'app/Model/console';
+
+
 
 import { SocieteLiv } from 'app/Model/societeLiv';
 import { ConsoleService } from 'app/service/console.service';

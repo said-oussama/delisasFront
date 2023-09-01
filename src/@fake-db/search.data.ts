@@ -762,7 +762,7 @@ export class SearchFakeData {
           icon: 'layout',
           link: '/forms/form-layout'
         },
-       
+
         {
           id: 94,
           target: 'wizard',

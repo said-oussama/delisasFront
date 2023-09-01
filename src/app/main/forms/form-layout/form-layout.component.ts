@@ -18,8 +18,6 @@ import { environment } from 'environments/environment';
 import { AuthenticationService } from 'app/auth/service/authentication.service';
 import { User } from 'app/auth/models';
 
-
-
 @Component({
   selector: 'app-form-layout',
   templateUrl: './form-layout.component.html',
@@ -27,6 +25,7 @@ import { User } from 'app/auth/models';
   encapsulation: ViewEncapsulation.None
 })
 export class FormLayoutComponent implements OnInit {
+
 
   etat;
   listofEtat = [
@@ -48,6 +47,8 @@ export class FormLayoutComponent implements OnInit {
 
   ref:number;
   colisRef: number;
+
+
 
 
 
@@ -79,8 +80,11 @@ export class FormLayoutComponent implements OnInit {
   public colisRecords;
   barCodeAncienColis;
   public SelectionType = SelectionType;
+
   anomaly ;
   designation;
+
+
   
 
   public gouvernoratList = [
@@ -167,15 +171,14 @@ export class FormLayoutComponent implements OnInit {
 
   constructor(private router: Router, private modalService: NgbModal,
     private colisService: ColisService, private _toastrService: ToastrService,
-    private serviceFournisseur: FournisseurService, private _authenticationService: AuthenticationService
 
-    ) {
+    private serviceFournisseur: FournisseurService, private _authenticationService: AuthenticationService) {
     this._unsubscribeAll = new Subject();
     this._authenticationService.currentUser.subscribe(x => (this.currentUser = x));
   }
 
   ngOnInit() {
-    
+
     this.colisService.getColisCree(this.fournisseurID).subscribe(response => {
       this.rows = response;
       
@@ -309,6 +312,7 @@ export class FormLayoutComponent implements OnInit {
     }
 
   }
+
 
 //   colisAenlevee() {
 //     this.listReferenceForPdf = this.selected.map(item=> item.reference);
@@ -468,6 +472,8 @@ modifyColisList() {
 
 
 
+
+
   onTelechargerBordereau() {
     this.listReferenceForPdf = this.selected.map(item=> item.reference);
     if (!this.listReferenceForPdf) {
@@ -497,6 +503,7 @@ modifyColisList() {
         this.chkBoxSelected.pop();//
         this.listrowIndex.pop();//
         this.listReferenceForPdf.pop();//
+
       }
       var element = <HTMLInputElement>document.getElementById("headerChkbxRef");
       element.checked = false;
@@ -671,7 +678,10 @@ modifyColisList() {
     window.location.reload();
   }
 
+
   closeModel() {
     this.modalService.dismissAll();
   }
+
+
 }
